@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nijiehaha.github.io/"/>
-  <updated>2019-12-31T02:45:07.079Z</updated>
+  <updated>2019-12-31T03:04:20.403Z</updated>
   <id>https://nijiehaha.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://nijiehaha.github.io/2019/12/18/%E7%9F%A5%E8%AF%86%E5%B0%8F%E9%9B%86/"/>
     <id>https://nijiehaha.github.io/2019/12/18/%E7%9F%A5%E8%AF%86%E5%B0%8F%E9%9B%86/</id>
     <published>2019-12-18T08:14:37.000Z</published>
-    <updated>2019-12-31T02:45:07.079Z</updated>
+    <updated>2019-12-31T03:04:20.403Z</updated>
     
-    <content type="html"><![CDATA[<p>这里记录一些单个小知识，当备忘录用了，会持续更新，嘻嘻嘻。</p><ul><li><p>持续交付的神器，<a href="https://docs.fastlane.tools/" target="_blank" rel="noopener">fastlane</a>真是太方便好用了，一个<code>gym</code>选项就满足了我的所有需求，苦笑～～～</p></li><li><p>Postman好人性化啊，关于multipart/form-data和application/x-www-form-urlencoded的小区别～～～</p></li><li><p><code>PHImageManager.default().requestImageData</code>有一个巨坑（我没找到比较好的办法），就是无论如何都会阻塞主线程一会儿，但是只要在当前线程<code>sleep</code>任意时间，就没事了，相当硬核，或者直接使用<code>PHImageManager.default().requestImage</code>这个api，速度快，<code>PHImageRequestOptions</code>设置成同步，效果佳，很香</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>这里记录一些单个小知识，当备忘录用了，会持续更新，嘻嘻嘻。</p><ul><li><p>持续交付的神器，<a href="https://docs.fastlane.tools/" target="_blank" rel="noopener">fastlane</a>真是太方便好用了，一个<code>gym</code>选项就满足了我的所有需求，苦笑～～～</p></li><li><p>Postman好人性化啊，关于multipart/form-data和application/x-www-form-urlencoded的小区别～～～</p></li><li><p><code>PHImageManager.default().requestImageData</code>有一个巨坑（我没找到比较好的办法），就是无论如何都会阻塞主线程一会儿，但是只要在当前线程<code>sleep</code>任意时间，就没事了，相当硬核，或者直接使用<code>PHImageManager.default().requestImage</code>这个api，速度快，<code>PHImageRequestOptions</code>设置成同步，效果佳，很香</p></li><li><p>hexo在远程git仓库，更改密码，无法推送，也不弹出密码，用户名的情况下，可以考虑删除hexo根目录下的<code>.deploy</code>文件夹</p></li></ul>]]></content>
     
     <summary type="html">
     
