@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="路小飞">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="路小飞">
+    
+    <meta name="keywords" content="路小飞">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>语义分析 · lufei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/lufei.jpg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<link rel="alternate" href="/atom.xml" title="lufei's Blog" type="application/atom+xml">
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >lufei&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">语义分析</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>lufei's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            语义分析
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "编译原理">编译原理</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">5.2k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/12/04</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习了<em>词法分析(Lexical Analysis)</em>和<em>语法分析(Syntactic Analysis, or Parsing)</em>，基本上就可以用自己熟悉的语言来实现一门简单的脚本语言了，可以为自己的语言实现想要的操作符和关键字，简单的运算，也可以处理语法错误，我给自己的语言取名叫<code>njscript</code>，并且实现REPL交互环境。</p>
+<p>当然，这玩意还是连玩具都算不上，因为我的算法能力太差，脑袋太笨，所以在<code>njscript</code>涉及到算法的时候，就打了退堂鼓，所以就跳过开始学习<em>语义分析(Semantic Analysis)</em></p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>简单来说，语义分析就是要让计算机理解我们的真实意图，把一些模棱两可的地方消除掉。</p>
+<p>语义分析的职责：</p>
+<ul>
+<li><p>某个表达式的计算结果是什么数据类型？如果有数据类型不匹配的情况，是否要做自动转换？</p>
+</li>
+<li><p>如果在一个代码块的内部和外部有相同名称的变量，我在执行的时候到底用哪个？ 就像“我喜欢又聪明又勇敢的你”中的“你”，到底指的是谁，需要明确。</p>
+</li>
+<li><p>在同一个作用域内，不允许有两个名称相同的变量，这是唯一性检查。你不能刚声明一个变量 a，紧接着又声明同样名称的一个变量 a，这就不允许了。</p>
+</li>
+</ul>
+<p>语义分析基本上就是做这样的事情，也就是根据语义规则进行分析判断。</p>
+<p>语义分析工作的某些成果，会作为属性标注在抽象语法树上。</p>
+<p>在这个树上还可以标记很多属性，有些属性是在之前的两个阶段就被标注上了，比如所处的源代码行号，这一行的第几个字符。这样，在编译程序报错的时候，就可以比较清楚地了解出错的位置。</p>
+<p>做了这些属性标注以后，编译器在后面就可以依据这些信息生成目标代码了。</p>
+<h1 id="作用域-Scope"><a href="#作用域-Scope" class="headerlink" title="作用域 (Scope)"></a>作用域 (Scope)</h1><p>作用域是指计算机语言中变量、函数、类等起作用的范围。</p>
+<p>C语言的作用域的规律大概是这样：</p>
+<ul>
+<li><p>变量的作用域有大有小，外部变量在函数内可以访问，而函数中的本地变量，只有本地才可以访问。</p>
+</li>
+<li><p>变量的作用域，从声明以后开始。</p>
+</li>
+<li><p>在函数里，我们可以声明跟外部变量相同名称的变量，这个时候就覆盖了外部变量。</p>
+</li>
+</ul>
+<p>C语言里还有块作用域的概念，就是用花括号包围的语句，if 和 else 后面就跟着这样的语句块。块作用域的特征跟函数作用域的特征相似，都可以访问外部变量，也可以用本地变量覆盖掉外部变量。</p>
+<p>不过，各个语言在这方面的设计机制是不同的，比如javascript是没有块作用域的，在块里和 for 语句试图重新定义变量 b，语法上是允许的，但我们每次用到的其实是同一个变量。</p>
+<p>虽然各门语言设计上的特性是不同的，但在运行期的机制都很相似，比如都会用到栈和堆来做内存管理。</p>
+<h1 id="生存期-Extent"><a href="#生存期-Extent" class="headerlink" title="生存期 (Extent)"></a>生存期 (Extent)</h1><p>生存期是变量可以访问的时间段，也就是从分配内存给它，到收回它的内存之间的时间。</p>
+<p>本地变量是用栈来管理的，所以它的作用域和生存期是一致的，出了作用域，生存期也就结束了，变量所占用的内存也就被释放了。</p>
+<p>但也有一些情况，变量的生存期跟语法上的作用域不一致，比如在堆中申请的内存，退出作用域以后仍然会存在。</p>
+<h1 id="面向对象的语义特征"><a href="#面向对象的语义特征" class="headerlink" title="面向对象的语义特征"></a>面向对象的语义特征</h1><h2 id="从类型角度"><a href="#从类型角度" class="headerlink" title="从类型角度"></a>从类型角度</h2><p>类型处理是语义分析时的重要工作。现代计算机语言可以用自定义的类来声明变量，这是一个巨大的进步。因为早期的计算机语言只支持一些基础的数据类型，比如各种长短不一的整型和浮点型，像字符串这种我们编程时离不开的类型，往往是在基础数据类型上封装和抽象出来的。所以，我们要扩展语言的类型机制，让程序员可以创建自己的类型。</p>
+<h2 id="从作用域角度"><a href="#从作用域角度" class="headerlink" title="从作用域角度"></a>从作用域角度</h2><p>首先是类的可见性。作为一种类型，它通常在整个程序的范围内都是可见的，可以用它声明变量。当然，一些像 Java 的语言，也能限制某些类型的使用范围，比如只能在某个命名空间内，或者在某个类内部。</p>
+<p>对象的成员的作用域是怎样的呢？我们知道，对象的属性（“属性”这里指的是类的成员变量）可以在整个对象内部访问，无论在哪个位置声明。也就是说，对象属性的作用域是整个对象的内部，方法也是一样。这跟函数和块中的本地变量不一样，它们对声明顺序有要求，像 C 和 Java 这样的语言，在使用变量之前必须声明它。</p>
+<h2 id="从生存期的角度"><a href="#从生存期的角度" class="headerlink" title="从生存期的角度"></a>从生存期的角度</h2><p>对象的成员变量的生存期，一般跟对象的生存期是一样的。在创建对象的时候，就对所有成员变量做初始化，在销毁对象的时候，所有成员变量也随着一起销毁。当然，如果某个成员引用了从堆中申请的内存，这些内存需要手动释放，或者由垃圾收集机制释放。</p>
+<p>但还有一些成员，不是与对象绑定的，而是与类型绑定的，比如 Java 中的静态成员。静态成员跟普通成员的区别，就是作用域和生存期不同，它的作用域是类型的所有对象实例，被所有实例共享。生存期是在任何一个对象实例创建之前就存在，在最后一个对象销毁之前不会消失。</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>想实现闭包，有两个前提：</p>
+<ul>
+<li><p>函数要变成一等公民。也就是要能把函数像普通数值一样赋值给变量，可以作为参数传递给其他函数，可以作为函数的返回值。</p>
+</li>
+<li><p>要让内层函数一直访问它环境中的变量，不管外层函数退出与否。</p>
+</li>
+</ul>
+<p>其实，只要函数能作为值传来传去，就一定会产生作用域不匹配的情况，这样的内在矛盾是语言设计时就决定了的。闭包是为了让函数能够在这种情况下继续运行所提供的一个方案。</p>
+<h2 id="静态作用域（Static-Scope）"><a href="#静态作用域（Static-Scope）" class="headerlink" title="静态作用域（Static Scope）"></a>静态作用域（Static Scope）</h2><p>如果一门语言的作用域是静态作用域，那么符号之间的引用关系能够根据程序代码在编译时就确定清楚，在运行时不会变。某个函数是在哪声明的，就具有它所在位置的作用域。它能够访问哪些变量，那么就跟这些变量绑定了，在运行时就一直能访问这些变量。</p>
+<blockquote>
+<p>动态作用域（Dynamic Scope）就是变量引用跟变量声明不是在编译时就绑定死了的。在运行时，它是在运行环境中动态地找一个相同名称的变量。在 macOS 或 Linux 中用的 bash 脚本语言，就是动态作用域的。</p>
+</blockquote>
+<p>静态作用域可以由程序代码决定，在编译时就能完全确定，所以又叫做词法作用域（Lexcical Scope）。</p>
+<p>不过这个词法跟词法分析时说的词法不大一样。这里，跟 Lexical 相对应的词汇可以认为是 Runtime，一个是编写时，一个是运行时。</p>
+<p>用静态作用域的概念描述一下闭包：因为我们的语言是静态作用域的，它能够访问的变量，需要一直都能访问，为此，需要把某些变量的生存期延长。</p>
+<p>当然，我们学习使用的大多数语言都是采用静态作用域的（所以我们下面的思路也是基于静态作用域）。</p>
+<h2 id="实现闭包思路"><a href="#实现闭包思路" class="headerlink" title="实现闭包思路"></a>实现闭包思路</h2><p>闭包的内在矛盾是运行时的环境和定义时的作用域之间的矛盾。那么我们把内部环境中需要的变量，打包交给闭包函数，它就可以随时访问这些变量了。</p>
+<p>实现了闭包的机制，函数也变成了一等公民，就是在一定程度上支持了函数式编程（functional programming）。</p>
+<p>函数式编程的一个典型特点就是高阶函数（High-order function）功能，高阶函数是这样一种函数，它能够接受其他函数作为自己的参数。</p>
+<h2 id="闭包小结"><a href="#闭包小结" class="headerlink" title="闭包小结"></a>闭包小结</h2><p>闭包就是把函数在静态作用域中所访问的变量的生存期拉长，形成一份可以由这个函数单独访问的数据。正因为这些数据只能被闭包函数访问，所以也就具备了对信息进行封装、隐藏内部细节的特性。</p>
+<p>“封装，把数据和对数据的操作封在一起”，这是相当面向对象的理解，所以，一个闭包可以看做是一个对象。反过来看，一个对象是不是也可以看做一个闭包，对象的属性，也可以看做被方法所独占的环境变量，其生存期也必须保证能够被方法一直正常的访问。</p>
+<h1 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h1><p>在做语法分析时我们可以得到一棵语法树，而基于这棵树能做什么，是语义的事情。比如，+ 号的含义是让两个数值相加，并且通常还能进行缺省的类型转换。所以，如果要区分不同语言的差异，不能光看语言的语法。比如 Java 语言和 JavaScript 在代码块的语法上是一样的，都是用花括号，但在语义上是不同的，一个有块作用域，一个没有。</p>
+<p>相比词法和语法的设计与处理，语义设计和分析要复杂很多。</p>
+<p>这一部分的重点是类型系统。</p>
+<p>围绕类型系统产生过一些争论，有的程序员会拥护动态类型语言，有的会觉得静态类型语言好。要想探究这个问题，我们需要对类型系统有个清晰的了解，最直接的方式，就是建立一个完善的类型系统。</p>
+<p>其实，类型系统是一门语言所有的类型的集合，操作这些类型的规则，以及类型之间怎么相互作用的（比如一个类型能否转换成另一个类型）。如果要建立一个完善的类型系统，形成对类型系统比较完整的认知，需要从两个方面出发：</p>
+<ul>
+<li><p>根据领域的需求，设计自己的类型系统的特征。</p>
+</li>
+<li><p>在编译器中支持类型检查、类型推导和类型转换。</p>
+</li>
+</ul>
+<h2 id="设计类型系统的特征"><a href="#设计类型系统的特征" class="headerlink" title="设计类型系统的特征"></a>设计类型系统的特征</h2><p>事实上，在机器代码这个层面，其实是分不出什么数据类型的。在机器指令眼里，那就是 0101，它并不对类型做任何要求，不需要知道哪儿是一个整数，哪儿代表着一个字符，哪儿又是内存地址。你让它做什么操作都可以，即使这个操作没有意义，比如把一个指针值跟一个字符相加。</p>
+<p>那么高级语言为什么要增加类型这种机制呢？</p>
+<p>对类型做定义很难，但大家公认的有一个说法：类型是针对一组数值，以及在这组数值之上的一组操作。比如，对于数字类型，你可以对它进行加减乘除算术运算，对于字符串就不行。</p>
+<p>所以，类型是高级语言赋予的一种语义，有了类型这种机制，就相当于定了规矩，可以检查施加在数据上的操作是否合法。因此类型系统最大的好处，就是可以通过类型检查降低计算出错的概率。所以，现代计算机语言都会精心设计一个类型系统，而不是像汇编语言那样完全不区分类型。</p>
+<p>不过，类型系统的设计有很多需要取舍和权衡的方面，比如：</p>
+<ul>
+<li><p>面向对象的拥护者希望所有的类型都是对象，而重视数据计算性能的人认为应该支持非对象化的基础数据类型；</p>
+</li>
+<li><p>你想把字符串作为原生数据类型，还是像 Java 那样只是一个普通的类？</p>
+</li>
+<li><p>是静态类型语言好还是动态类型语言好？</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<p>虽然类型系统的设计有很多需要取舍和权衡的方面，但它最需要考虑的是，是否符合这门语言想解决的问题，我们用静态类型语言和动态类型语言分析一下。</p>
+<p>根据类型检查是在编译期还是在运行期进行的，我们可以把计算机语言分为两类：</p>
+<ul>
+<li><p>静态类型语言（全部或者几乎全部的类型检查是在编译期进行的）。</p>
+</li>
+<li><p>动态类型语言（类型的检查是在运行期进行的）。</p>
+</li>
+</ul>
+<p>静态类型语言好处：因为编译期做了类型检查，所以程序错误较少，运行期不用再检查类型，性能更高，在编译时就对类型做很多处理，包括检查类型是否匹配，以及进行缺省的类型转换，大大降低了程序出错的可能性，还能让程序运行效率更高，因为不需要在运行时再去做类型检查和转换。</p>
+<p>动态类型语言好处：不要一遍遍的编译，方便进行快速开发。</p>
+<p>客观地讲，这些说法都有道理。目前的趋势是，某些动态类型语言在想办法增加一些机制，在编译期就能做类型检查，比如用 TypeScript 代替 JavaScript 编写程序，做完检查后再输出成 JavaScript。而某些静态语言呢，却又发明出一些办法，部分地绕过类型检查，从而提供动态类型语言的灵活性。</p>
+<p>再延伸一下，跟静态类型和动态类型概念相关联的，还有强类型和弱类型。强类型语言中，变量的类型一旦声明就不能改变，弱类型语言中，变量类型在运行期时可以改变。二者的本质区别是，强类型语言不允许违法操作，因为能够被检查出来，弱类型语言则从机制上就无法禁止违法操作，所以是不安全的。比如你写了一个表达式 a*b。如果 a 和 b 这两个变量是数值，这个操作就没有问题，但如果 a 或 b 不是数值，那就没有意义了，弱类型语言可能就检查不出这类问题。</p>
+<p>也就是，静态类型和动态类型说的是什么时候检查的问题，强类型和弱类型说的是就算检查，也检查不出来，或者没法检查的问题。</p>
+<h2 id="类型检查、类型推导和类型转换"><a href="#类型检查、类型推导和类型转换" class="headerlink" title="类型检查、类型推导和类型转换"></a>类型检查、类型推导和类型转换</h2><p>举个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = b + 10</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>如果 b 是一个浮点型，b+10 的结果也是浮点型。如果 b 是字符串型的，有些语言也是允许执行 + 号运算的，实际的结果是字符串的连接。这个分析过程，就是类型推导（Type Inference）。</p>
+</li>
+<li><p>当右边的值计算完，赋值给 a 的时候，要检查左右两边的类型是否匹配。这个过程，就是类型检查（Type Checking）。</p>
+</li>
+<li><p>如果 a 的类型是浮点型，而右边传过来的是整型，那么一般就要进行缺省的类型转换（Type Conversion）。</p>
+</li>
+</ul>
+<h1 id="引用的消解"><a href="#引用的消解" class="headerlink" title="引用的消解"></a>引用的消解</h1><p>在程序里使用变量、函数、类等符号时，我们需要知道它们指的是谁，要能对应到定义它们的地方。这个过程，可以叫引用消解。</p>
+<p>在集成开发环境中，当我们点击一个变量、函数或类，可以跳到定义它的地方。另一方面，当我们重构一个变量名称、方法名称或类名称的时候，所有引用它的地方都会同步修改。这是因为 IDE 分析了符号之间的交叉引用关系。</p>
+<h1 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h1><p>举个例子，对下面变量a取值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = 3;</span><br></pre></td></tr></table></figure>
+<p>假设 a 变量原来的值是 4，如果还是把它的值取出来，那么成了 3=4，这就变得没有意义了。所以，不能把 a 的值取出来，而应该取出 a 的地址，或者说 a 的引用，然后用赋值操作把 3 这个值写到 a 的内存地址。这时，我们说取出来的是 a 的左值（L-value）。</p>
+<p>左值最早是在 C 语言中提出的，通常出现在表达式的左边，如赋值语句的左边。左值取的是变量的地址（或者说变量的引用），获得地址以后，我们就可以把新值写进去了。</p>
+<p>与左值相对应的就是右值（R-value），右值就是我们通常所说的值，不是地址。</p>
+<h1 id="从类型体系的角度理解继承和多态"><a href="#从类型体系的角度理解继承和多态" class="headerlink" title="从类型体系的角度理解继承和多态"></a>从类型体系的角度理解继承和多态</h1><p>面向对象的另外两个重要特征：继承和多态</p>
+<p>继承的意思是一个类的子类，自动具备了父类的属性和方法，除非被父类声明为私有的。</p>
+<p>多态的意思是同一个类的不同子类，在调用同一个方法时会执行不同的动作。</p>
+<h2 id="对继承和多态做语义分析："><a href="#对继承和多态做语义分析：" class="headerlink" title="对继承和多态做语义分析："></a>对继承和多态做语义分析：</h2><p>首先，从类型处理的角度出发，我们要识别出新的类型。之后，就可以用它们声明变量了。</p>
+<p>第二，从作用域的角度来看，一个类的属性（或者说成员变量），是可以规定能否被子类访问的。以 Java 为例，除了声明为 private 的属性以外，其他属性在子类中都是可见的。所以父类的属性的作用域，可以说是以树状的形式覆盖到了各级子类。</p>
+<p>第三，要对变量和函数做类型的引用消解。</p>
+<p>但是对于强类型语言来说，编译期无法知道变量的真实类型，可能只知道它的父类型，这样就不能做正确的引用的消解，只能到运行期再解决这个问题。</p>
+<p>在运行期，我们能知道变量具体指向的是那个对象，对象里是保存了真实类型信息，在调用类的属性和方法时，我们可以根据运行时获得的，确定的类型信息进行动态绑定。</p>
+<p>比如，逐级查找某个方法的实现，如果本级和父类都有这个方法，那么本级的就会覆盖掉父类的，这样就实现了多态。</p>
+<p>如果当前类里面没有实现这个方法，它可以直接复用某一级的父类中的实现，这实际上就是继承机制在运行期的原理。</p>
+<h2 id="继承情况下对象的实例化"><a href="#继承情况下对象的实例化" class="headerlink" title="继承情况下对象的实例化"></a>继承情况下对象的实例化</h2><p>在存在继承关系的情况下，创建对象时，不仅要初始化自己这一级的属性变量，还要把各级父类的属性变量也都初始化。</p>
+<p>在逐级初始化的过程中，我们要先执行缺省的成员变量初始化，也就是变量声明时所带的初始化部分，然后调用这一级的构造方法。如果不显式指定哪个构造方法，就会执行不带参数的构造方法。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过上面这些介绍，基本可以看出来：语义分析的本质，就是针对上下文相关的情况做处理。</p>
+<p>囫囵吞枣，大概学习了一遍，哎，复杂程度指数级上涨，难受QAQ</p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/12/16/Kingfisher源码阅读-命名空间/" title= "Kingfisher源码阅读:命名空间">
+                    <div class="nextTitle">Kingfisher源码阅读:命名空间</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/12/03/语法分析/" title= "语法分析">
+                    <div class="prevTitle">语法分析</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nijiehaha" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开始"><span class="toc-number">2.</span> <span class="toc-text">开始</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#作用域-Scope"><span class="toc-number">3.</span> <span class="toc-text">作用域 (Scope)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生存期-Extent"><span class="toc-number">4.</span> <span class="toc-text">生存期 (Extent)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象的语义特征"><span class="toc-number">5.</span> <span class="toc-text">面向对象的语义特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#从类型角度"><span class="toc-number">5.1.</span> <span class="toc-text">从类型角度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从作用域角度"><span class="toc-number">5.2.</span> <span class="toc-text">从作用域角度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从生存期的角度"><span class="toc-number">5.3.</span> <span class="toc-text">从生存期的角度</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#闭包"><span class="toc-number">6.</span> <span class="toc-text">闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态作用域（Static-Scope）"><span class="toc-number">6.1.</span> <span class="toc-text">静态作用域（Static Scope）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现闭包思路"><span class="toc-number">6.2.</span> <span class="toc-text">实现闭包思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭包小结"><span class="toc-number">6.3.</span> <span class="toc-text">闭包小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#类型系统"><span class="toc-number">7.</span> <span class="toc-text">类型系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设计类型系统的特征"><span class="toc-number">7.1.</span> <span class="toc-text">设计类型系统的特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型检查、类型推导和类型转换"><span class="toc-number">7.2.</span> <span class="toc-text">类型检查、类型推导和类型转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引用的消解"><span class="toc-number">8.</span> <span class="toc-text">引用的消解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#左值和右值"><span class="toc-number">9.</span> <span class="toc-text">左值和右值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从类型体系的角度理解继承和多态"><span class="toc-number">10.</span> <span class="toc-text">从类型体系的角度理解继承和多态</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对继承和多态做语义分析："><span class="toc-number">10.1.</span> <span class="toc-text">对继承和多态做语义分析：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承情况下对象的实例化"><span class="toc-number">10.2.</span> <span class="toc-text">继承情况下对象的实例化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">11.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 17
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2019/12/18/知识小集/" >知识小集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/16</span><a class="archive-post-title" href= "/2019/12/16/Kingfisher源码阅读-命名空间/" >Kingfisher源码阅读:命名空间</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2019/12/04/语义分析/" >语义分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/03</span><a class="archive-post-title" href= "/2019/12/03/语法分析/" >语法分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/02</span><a class="archive-post-title" href= "/2019/12/02/手工打造词法分析器/" >手工打造词法分析器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2019/11/29/坑爹的Swift-REPL/" >坑爹的Swift REPL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/2019/11/28/LLDB调试C程序/" >LLDB调试C程序</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2019/11/26/关于遮罩-mask/" >关于遮罩(mask)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2019/11/15/hybrid框架-js异步回调实现/" >hybrid框架:js异步回调实现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2019/11/15/swift上的装饰器/" >swift上的装饰器(Decorator)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2019/06/03/内存管理/" >内存管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/24</span><a class="archive-post-title" href= "/2019/05/24/少年探案/" >少年探案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2019/04/30/iOS-dSYM/" >iOS 符号表(dSYM)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/08</span><a class="archive-post-title" href= "/2018/10/08/浅谈runloop/" >浅谈runloop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2018/09/11/NTA打洞/" >NTA打洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2018/09/11/NAT与内网穿透/" >NAT与内网穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/2018/09/07/我的第一篇博客/" >第一次写博客</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
+    
+        <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译原理"><span class="iconfont-archer">&#xe606;</span>编译原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
+    
+        <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
+    
+        <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
+    
+        <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "路小飞"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
