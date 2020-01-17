@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nijiehaha.github.io/"/>
-  <updated>2020-01-14T09:18:08.729Z</updated>
+  <updated>2020-01-17T03:46:01.378Z</updated>
   <id>https://nijiehaha.github.io/</id>
   
   <author>
@@ -21,17 +21,17 @@
     <link href="https://nijiehaha.github.io/2019/12/18/%E7%9F%A5%E8%AF%86%E5%B0%8F%E9%9B%86/"/>
     <id>https://nijiehaha.github.io/2019/12/18/%E7%9F%A5%E8%AF%86%E5%B0%8F%E9%9B%86/</id>
     <published>2019-12-18T08:14:37.000Z</published>
-    <updated>2020-01-14T09:18:08.729Z</updated>
+    <updated>2020-01-17T03:46:01.378Z</updated>
     
-    <content type="html"><![CDATA[<p>这里记录一些单个小知识，当备忘录用了，会持续更新，嘻嘻嘻。</p><ul><li><p>持续交付的神器，<a href="https://docs.fastlane.tools/" target="_blank" rel="noopener">fastlane</a>真是太方便好用了，一个<code>gym</code>选项就满足了我的所有需求，苦笑～～～</p></li><li><p>Postman好人性化啊，关于multipart/form-data和application/x-www-form-urlencoded的小区别～～～</p></li><li><p><code>PHImageManager.default().requestImageData</code>有一个巨坑（我没找到比较好的办法），就是无论如何都会阻塞主线程一会儿，但是只要在当前线程<code>sleep</code>任意时间，就没事了，相当硬核，或者直接使用<code>PHImageManager.default().requestImage</code>这个api，速度快，<code>PHImageRequestOptions</code>设置成同步，效果佳，很香</p></li><li><p>hexo在远程git仓库，更改密码，无法推送，也不弹出密码，用户名的情况下，可以考虑删除hexo根目录下的<code>.deploy</code>文件夹</p></li><li><p>iOS，实现镂空的效果，可以使用<code>CALayer</code>的<a href="https://developer.apple.com/documentation/quartzcore/calayer/1410861-mask" target="_blank" rel="noopener">mask</a>和<a href="https://developer.apple.com/documentation/quartzcore/calayer/1410773-contents" target="_blank" rel="noopener">contents</a>，或者直接使用<code>UIView</code>的<a href="https://developer.apple.com/documentation/uikit/uiview/1622557-mask" target="_blank" rel="noopener">mask</a>，我自己觉得最简单的是使用<code>UIBezierPath</code>的方法<a href="https://developer.apple.com/documentation/uikit/uibezierpath/1624348-reversing" target="_blank" rel="noopener">reversing()</a>，这个方法实现镂空，我个人觉得最巧妙了，当然还有其他的方法，都有点麻烦，比如利用<code>drawRect</code>来渲染绘制出来</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>这里记录一些单个小知识，当备忘录用了，会持续更新，嘻嘻嘻。</p><blockquote><p>持续交付的神器，<a href="https://docs.fastlane.tools/" target="_blank" rel="noopener">fastlane</a>真是太方便好用了，一个<code>gym</code>选项就满足了我的所有需求，苦笑～～～</p></blockquote><blockquote><p>Postman好人性化啊，关于multipart/form-data和application/x-www-form-urlencoded的小区别～～～</p></blockquote><blockquote><p><code>PHImageManager.default().requestImageData</code>有一个巨坑（我没找到比较好的办法），就是无论如何都会阻塞主线程一会儿，但是只要在当前线程<code>sleep</code>任意时间，就没事了，相当硬核，或者直接使用<code>PHImageManager.default().requestImage</code>这个api，速度快，<code>PHImageRequestOptions</code>设置成同步，效果佳，很香</p></blockquote><blockquote><p>hexo在远程git仓库，更改密码，无法推送，也不弹出密码，用户名的情况下，可以考虑删除hexo根目录下的<code>.deploy</code>文件夹</p></blockquote><blockquote><p>iOS，实现镂空的效果，可以使用<code>CALayer</code>的<a href="https://developer.apple.com/documentation/quartzcore/calayer/1410861-mask" target="_blank" rel="noopener">mask</a>和<a href="https://developer.apple.com/documentation/quartzcore/calayer/1410773-contents" target="_blank" rel="noopener">contents</a>，或者直接使用<code>UIView</code>的<a href="https://developer.apple.com/documentation/uikit/uiview/1622557-mask" target="_blank" rel="noopener">mask</a>，我自己觉得最简单的是使用<code>UIBezierPath</code>的方法<a href="https://developer.apple.com/documentation/uikit/uibezierpath/1624348-reversing" target="_blank" rel="noopener">reversing()</a>，这个方法实现镂空，我个人觉得最巧妙了，当然还有其他的方法，都有点麻烦，比如利用<code>drawRect</code>来渲染绘制出来</p></blockquote><blockquote><p><code>swift</code>5.0之后，关于<a href="https://deerchao.cn/tutorials/regex/regex.htm" target="_blank" rel="noopener">正则表达式</a>，有一个新的很方便的语法糖<code>#</code>，举个例子，类似这样：<code>#&quot;\dlufei\d&quot;#</code>，不需要再使用转移字符了，点赞</p></blockquote><blockquote><p>在<code>swift</code>中，要想使用正则表达式，一般使用<a href="https://developer.apple.com/documentation/foundation/nsregularexpression" target="_blank" rel="noopener">NSRegularExpression</a>，还可以使用<code>String</code>的<a href="https://developer.apple.com/documentation/foundation/nsstring/1410144-range" target="_blank" rel="noopener">range(of:)</a>接口，<a href="https://nshipster.com/swift-regular-expressions/" target="_blank" rel="noopener">参考Mattt大神的文章</a></p></blockquote><blockquote><p>接上条，还是关于正则表达式，还可以使用<a href="https://docs.swift.org/swift-book/ReferenceManual/Patterns.html" target="_blank" rel="noopener">模式匹配（pattern-match）</a>来为<code>NSRegularExpression</code>提供方便的扩展，<a href="https://swifter.tips/pattern-match/" target="_blank" rel="noopener">参考喵神文章</a></p></blockquote><blockquote><p><code>swift</code>的<a href="https://swift.org/core-libraries/#foundation" target="_blank" rel="noopener">核心库</a>是包含<em>Foundation</em>框架的，不过这个库是独立于<code>Objective-C runtime</code>来使用swift重新构建的</p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
         &lt;p&gt;这里记录一些单个小知识，当备忘录用了，会持续更新，嘻嘻嘻。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;持续交付的神器，&lt;a href=&quot;https://docs.fastlane.tools/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;fastlane&lt;/a&gt;真
+&lt;blockquote&gt;
+&lt;p&gt;持续交付的神器，&lt;a href=&quot;https://docs.fastlane.tools/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;fastlane&lt;
       
     
     </summary>
