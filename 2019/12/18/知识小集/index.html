@@ -273,7 +273,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">437</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">553</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -405,7 +405,7 @@ height:50vh;
 <p>Postman好人性化啊，关于multipart/form-data和application/x-www-form-urlencoded的小区别～～～</p>
 </blockquote>
 <blockquote>
-<p><code>PHImageManager.default().requestImageData</code>有一个巨坑（我没找到比较好的办法），就是无论如何都会阻塞主线程一会儿，但是只要在当前线程<code>sleep</code>任意时间，就没事了，相当硬核，或者直接使用<code>PHImageManager.default().requestImage</code>这个api，速度快，<code>PHImageRequestOptions</code>设置成同步，效果佳，很香</p>
+<p><strong>PHImageManager</strong>的<code>requestImageData</code>有一个巨坑（我没找到比较好的办法），就是无论如何都会阻塞主线程一会儿，但是只要在当前线程<code>sleep</code>任意时间，就没事了，相当硬核，或者直接使用<code>requestImage</code>这个api，速度快，<code>PHImageRequestOptions</code>设置成同步，效果佳，很香</p>
 </blockquote>
 <blockquote>
 <p>hexo在远程git仓库，更改密码，无法推送，也不弹出密码，用户名的情况下，可以考虑删除hexo根目录下的<code>.deploy</code>文件夹</p>
@@ -424,6 +424,12 @@ height:50vh;
 </blockquote>
 <blockquote>
 <p><code>swift</code>的<a href="https://swift.org/core-libraries/#foundation" target="_blank" rel="noopener">核心库</a>是包含<em>Foundation</em>框架的，不过这个库是独立于<code>Objective-C runtime</code>来使用swift重新构建的</p>
+</blockquote>
+<blockquote>
+<p><strong>Swift</strong>中的<a href="https://developer.apple.com/documentation/swift/range" target="_blank" rel="noopener">Range</a>，表示从下限到上限（但不包括上限）的半开间隔，举个例子：<code>0.0..&lt;5.0</code>，这就是一个简单的<strong>Range</strong>，<a href="https://developer.apple.com/documentation/swift/closedrange" target="_blank" rel="noopener">ColsedRange</a>, 表示一个从下限到上限（包括上限）的间隔，举个例子：<code>0...5</code>，<code>Partial</code>开头的区间表示单方向的区间</p>
+</blockquote>
+<blockquote>
+<p><strong>Swift</strong>中的语法糖，形如<code>String[Range]</code>，可以直接截取字符串，这是在标准库里，<code>Sring</code>中专门实现了<strong>subscript(r:Range&lt;String.Index&gt;) -&gt; subString</strong></p>
 </blockquote>
 
     </article>
@@ -745,6 +751,10 @@ top:50vh;
     
     
     
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 17
@@ -870,9 +880,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
-    
         <span class="sidebar-tag-name" data-tags="编译原理"><span class="iconfont-archer">&#xe606;</span>编译原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -917,9 +927,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
-    
         <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
