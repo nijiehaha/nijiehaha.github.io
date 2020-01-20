@@ -347,32 +347,22 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2019/06/03/内存管理/" >
+        <a class="abstract-title" href = "/2020/01/20/【译】Objective-C-Direct-Methods/" >
             
-                <span>内存管理</span>
+                <span>【译】Objective-C Direct Methods</span>
         </a>
         <div class="abstract-content">
-            看了andriod和iOS上不同的内存管理机制，写篇文章记录并总结一下，嘻嘻嘻。
-iOS的内存管理在日常iOS开发中，监控崩溃是一个很常见的事，但是总有一些崩溃是那么的无厘头，让人摸不着头绪，这种OOM有可能来自iOS的JetSam机制导致的一种“另类”崩溃，我们的日志系统是无法通过信号捕捉到的。
-
-JetSam 机制，指的就是操作系统为了控制内存资源过度使用而采用的一种资源管控机制 
-
-不同的系统版本对App运行时占用内存的限制不同，有一种方法就是查看手机中以 JetsamEvent开头的系统日志（设置 -&gt; 隐私 -&gt; 分析）。
-
-系统版本的升级也会增加占用的内存，App...
+            原文Objective-C Direct Methods
+正文当听说OC引入新功能的时候，我已经很难感到兴奋了。最近的一些关于OC的改进，都是为了服务于和Swift的互通，而不是关于OC这门语言本身了（看看nullabiltiy和lightwight generics）
+因此，当我了解到最近的Clang的合并补丁为OC的方法添加了直接分配的机制的时候，感到十分的兴奋。
+这种新功能的起源不是很清楚；我们最多能通过苹果内部的Radar编号(2684889)查询，不过它并不能告诉我们超过它相对年龄的事（根据我们的估计，也许在20年代初期）。幸好，这个功能拥有充足的文档和测试范围，能让我们很好的...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/03</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/20</span>
             </div>
             <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-</div>
             
         </div>
     </article>

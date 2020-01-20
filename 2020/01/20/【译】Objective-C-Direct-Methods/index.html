@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>lufei&#39;s Studio</title>
+    <title>【译】Objective-C Direct Methods · lufei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -204,12 +204,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >lufei&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">【译】Objective-C Direct Methods</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>lufei's Studio.</a>
 </header>
@@ -221,24 +232,63 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            【译】Objective-C Direct Methods
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.4k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/01/20</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -339,46 +389,123 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/06/03/内存管理/" >
-            
-                <span>内存管理</span>
-        </a>
-        <div class="abstract-content">
-            看了andriod和iOS上不同的内存管理机制，写篇文章记录并总结一下，嘻嘻嘻。
-iOS的内存管理在日常iOS开发中，监控崩溃是一个很常见的事，但是总有一些崩溃是那么的无厘头，让人摸不着头绪，这种OOM有可能来自iOS的JetSam机制导致的一种“另类”崩溃，我们的日志系统是无法通过信号捕捉到的。
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://nshipster.com/direct/#objc_direct-propertydirect-and-objc_direct_members" target="_blank" rel="noopener">Objective-C Direct Methods</a></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>当听说OC引入新功能的时候，我已经很难感到兴奋了。最近的一些关于OC的改进，都是为了服务于和Swift的互通，而不是关于OC这门语言本身了（看看<a href="https://developer.apple.com/swift/blog/?id=25" target="_blank" rel="noopener">nullabiltiy</a>和<a href="https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/using_imported_lightweight_generics_in_swift" target="_blank" rel="noopener">lightwight generics</a>）</p>
+<p>因此，当我了解到<a href="https://reviews.llvm.org/D69991" target="_blank" rel="noopener">最近的Clang的合并补丁</a>为OC的方法添加了直接分配的机制的时候，感到十分的兴奋。</p>
+<p>这种新功能的起源不是很清楚；我们最多能通过苹果内部的Radar编号(2684889)查询，不过它并不能告诉我们超过它相对年龄的事（根据我们的估计，也许在20年代初期）。幸好，这个功能拥有充足的文档和测试范围，能让我们很好的了解它的原理。（对实施者Pierre Habouzit，审核经理John McCall和其他LLVM贡献者表示由衷的感谢）</p>
+<p>本周在NSHipster上，我们借此机会回顾了OC方法的调度，并试图了解这一新语言功能对未来代码库的潜在影响。</p>
+<p>(Direct 方法最早可能会出现在Xcode 11.x上，但很可能会在WWDC 2020上宣布。)</p>
+<p>要了解Direct方法的重要性，您需要了解一些有关OC运行时的知识。但是，在此之前，让我们从oop本身的起源开始我们的讨论：</p>
+<h1 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h1><p>Alan Kay在1960年初期创造了这个词，之后，在Adele Goldberg，Dan Ingalls和他在Xerox parc的其他同事的帮助下，Kay通过创建Smalltalk编程语言，在70年代将该想法付诸实践。</p>
+<p>(在此期间，Xerox PARC 的研究人员还开发了 Xerox Alto，这将成为苹果Macintosh和所有其他GUI计算机的灵感来源)</p>
+<p>在1980年代，Brad Cox和Tom Love开始研究OC的第一个版本，这是一种语言，旨在采用Smalltalk的面向对象范式，并在C的坚实基础上加以实施。 90年代，该语言成为NeXT（后来成为Apple）的官方语言。</p>
+<p>对于我们这些在iPhone时代开始学习OC的人来说，该语言通常被视为另一项苹果专有技术，是该公司“Not invented here”文化的众多，晦涩的副产品之一。然而，我们并不能说 Objective-C 只是「面向对象的 C」而已，它是最早的几个面向对象语言之一，像其他语言一样，都有着强烈的面向对象特质。</p>
+<p>现在，oop是什么意思？这是个好问题。上世纪90年代的炒作周期使该词几乎毫无意义。但是，就我们今天的目的而言，让我们集中讨论Alan Kay在1998年写的一句话：</p>
+<blockquote>
+<p>I’m sorry that I long ago coined the term “objects” for this topic because it gets many people to focus on the lesser idea. The big idea is “messaging”</p>
+</blockquote>
+<h1 id="动态分派和OC运行时"><a href="#动态分派和OC运行时" class="headerlink" title="动态分派和OC运行时"></a>动态分派和OC运行时</h1><p>在OC中，程序由一组对象组成，这些对象通过传递依次调用方法或函数的消息而彼此交互。消息传递的这种行为由方括号语法表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[someObject aMethod:withAnArgument];</span><br></pre></td></tr></table></figure>
+<p>编译OC代码后，消息发送将转换为对名为<code>objc_msgSend</code>的函数的调用（字面意思是“将消息发送至带有参数的某个对象”）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_msgSend(object, @selector(message), withAnArgument);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>第一个参数是接收方（实例方法本身）</p>
+</li>
+<li><p>第二个参数是_cmd：选择器或方法的名称</p>
+</li>
+<li><p>任何方法参数都作为附加函数参数传递</p>
+</li>
+</ul>
+<p>Objc_msgSend负责确定响应此消息而调用哪个基础实现，该过程称为方法分派。</p>
+<p>在Objective-C中，每个类维护一个调度表来解析在运行时发送的消息。调度表中的每个条目都是一个方法，该方法将选择器（SEL）键入相应的实现（IMP），该实现是指向C函数的指针。当对象收到消息时，它查询其类的调度表。如果可以找到选择器的实现，则调用关联的函数。否则，对象将查询其超类的调度表。这将继续沿继承链向上进行，直到找到匹配项或根类（NSObject）认为选择器无法识别。</p>
+<p>(更不用说OC还可以让您做诸如替换方法实现和在运行时动态创建新类之类的事情。您可以做的事相当宽广。)</p>
+<p>如果您认为所有这些间接听起来都需要大量工作，从某种意义上来说，那是对的！</p>
+<p>如果您的代码中有一条常使用的代码调用路径，比如一个频繁被调用的消耗巨大的方法，那么您可以想象避免所有这些间接操作会有所益处。为此，一些开发人员已使用C函数作为替换动态分派的一种方式。</p>
+<h1 id="用C函数直接分派"><a href="#用C函数直接分派" class="headerlink" title="用C函数直接分派"></a>用C函数直接分派</h1><p>正如我们在<code>objc_msgSend</code>中所看到的，任何方法调用都可以通过将隐式<code>self</code>作为第一个参数传递而由等效函数表示。</p>
+<p>例如，考虑使用常规的动态分派方法对OC类进行以下声明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass: NSObject</span><br><span class="line">- (void)dynamicMethod;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>如果开发人员希望在<code>MyClass</code>上实现某些功能, 但是不要遍历所有消息来发送，那么，他们可以声明一个静态的C函数，该函数将<code>MyClass</code>的实例作为参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static void directFunction(MyClass *__unsafe_unretained object);</span><br></pre></td></tr></table></figure>
+<p>以下是每种方法的调用方式的展示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyClass *object = [[[MyClass] alloc] init];</span><br><span class="line"></span><br><span class="line">// Dynamic Dispatch</span><br><span class="line">[object dynamicMethod];</span><br><span class="line"></span><br><span class="line">// Direct Dispatch</span><br><span class="line">directFunction(object);</span><br></pre></td></tr></table></figure>
+<h1 id="Direct-方法"><a href="#Direct-方法" class="headerlink" title="Direct 方法"></a>Direct 方法</h1><p>Direct方法具有常规OC方法的外观，但是具有C函数的行为。调用Direct方法时，它直接调用其基础实现，而不是通过objc_msgSend。</p>
+<p>有了这个新的LLVM补丁，您现在可以有选择性地注释掉Objective-C方法，从而避免使用动态分派。</p>
+<h1 id="objc-direct-property-direct-和-objc-direct-members"><a href="#objc-direct-property-direct-和-objc-direct-members" class="headerlink" title="objc_direct, @property(direct), 和 objc_direct_members"></a>objc_direct, @property(direct), 和 objc_direct_members</h1><p>要使实例或类方法使用Direct分派，可以使用objc_direct<a href="https://nshipster.com/__attribute__/" target="_blank" rel="noopener">Clang属性</a>对其进行标记。同样，可以通过使用<code>direct</code>声明Object-C属性的方法来使其实现Direct分派。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass: NSObject</span><br><span class="line">@property(nonatomic) BOOL dynamicProperty;</span><br><span class="line">@property(nonatomic, direct) BOOL directProperty;</span><br><span class="line"></span><br><span class="line">- (void)dynamicMethod;</span><br><span class="line">- (void)directMethod __attribute__((objc_direct));</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>根据我们的计算，<code>direct</code>的添加使<code>@property</code>属性的总数达到16：</p>
+<ul>
+<li><code>getter</code> 和 <code>setter</code></li>
+<li><code>readwrite</code> 和 <code>readonly</code></li>
+<li><code>atomic</code> 和 <code>nonatomic</code></li>
+<li><code>weak</code>, <code>strong</code>, <code>copy</code>, <code>retain</code>，和 <code>unsafe_unretained</code></li>
+<li><code>nullable</code>, <code>nonnullable</code>, 和 <code>null_resttable</code></li>
+<li><code>class</code></li>
+</ul>
+<p>当使用<code>objc_direct_members</code>属性注释类别或类扩展的<code>@interface</code>时，其中包含的所有方法和属性声明都将视为direct的，除非该类事先声明过。</p>
+<blockquote>
+<p>您无法使用<code>objc_direct_members</code>属性注释原始类接口。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((objc_direct_members))</span><br><span class="line">@interface MyClass ()</span><br><span class="line">@property (nonatomic) BOOL directExtensionProperty;</span><br><span class="line">- (void)directExtensionMethod;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>用<code>objc_direct_members</code>注释<code>@implementation</code>具有相似的效果，会使未先前声明的成员被视为direct成员，包括任何由属性综合产生的隐式方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((objc_direct_members))</span><br><span class="line">@implementation MyClass</span><br><span class="line">- (BOOL)directProperty &#123;…&#125;</span><br><span class="line">- (void)dynamicMethod &#123;…&#125;</span><br><span class="line">- (void)directMethod &#123;…&#125;</span><br><span class="line">- (void)directExtensionMethod &#123;…&#125;</span><br><span class="line">- (void)directImplementationMethod &#123;…&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>动态方法不能在子类中被直接方法覆盖，direct方法也不能被覆盖。<br>  协议不能声明direct方法要求，而类也不能使用direct方法来实现协议要求。</p>
+</blockquote>
+<p>之前的示例已经示范过如何使用了，我们可以看到在调用方式上direct方法和动态方法是如何区分的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyClass *object = [[[MyClass] alloc] init];</span><br><span class="line"></span><br><span class="line">// Dynamic Dispatch</span><br><span class="line">[object dynamicMethod];</span><br><span class="line"></span><br><span class="line">// Direct Dispatch</span><br><span class="line">[object directMethod];</span><br></pre></td></tr></table></figure>
+<p>对于我们当中注重性能的开发人员而言，direct方法似乎是精彩的方案。但是有一个小转折：</p>
+<p><strong><em>在大多数情况下，direct方法可能不会带来明显的性能优势。</em></strong></p>
+<p>事实证明，<code>objc_msgSend</code>非常快。由于积极的缓存，广泛的低级优化以及现代处理器的固有性能，<code>objc_msgSend</code>的开销非常低。</p>
+<p>我们早已可以将iPhone硬件合理地描述为资源受限的环境了。因此，除非苹果正在为新的嵌入式平台做准备（AR眼镜？），否则我们对苹果在2019年实施OC的<strong>Direct</strong>方法的最合理的解释是性能以外的原因。</p>
+<h1 id="隐藏的动机"><a href="#隐藏的动机" class="headerlink" title="隐藏的动机"></a>隐藏的动机</h1><p>当将OC方法标记为direct方法时，其实现可以隐藏可见性。也就是说，direct方法只能在同一模块内调用。它甚至不会出现在OC运行时中。</p>
+<p>隐藏可见性有两个直接的优点：</p>
+<ul>
+<li>较小的二进制文件大小</li>
+<li>没有外部调用</li>
+</ul>
+<p>没有外部可见性，也没有从OC运行时动态调用它们的方法，直接方法实际上是私有方法。</p>
+<blockquote>
+<p>如果您想使用direct分派，但仍然希望使您的API可以从外部访问，则可以将其包装在C函数中。                          </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static inline void performDirectMethod(MyClass *__unsafe_unretained object) &#123;</span><br><span class="line">    [object directMethod];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>尽管Apple可以使用隐藏可见性来防止混乱和私有API的使用，但这似乎并不是主要动机。</p>
+<p>根据实施此功能的Pierre所说，此优化的主要好处是减少了代码大小。据报道，未使用的O元数据的权重可占已编译二进制文件中<code>__text</code>部分的5 – 10％。</p>
+<p>您可以想象，从现在起到明年的开发者大会，可以有几个工程师遍历每个SDK框架，用<code>objc_direct</code>注释私有方法，并用<code>objc_direct_members</code>注释私有类，这是逐步加强其SDK的轻量级方法。</p>
+<p>如果的确如此，那么我们对Objective-C的新功能也持怀疑态度。我认为既然不是服务于swift语言， 那就是服务于苹果公司。尽管这个功能在编程历史和Apple本身中占有重要地位，但很难不将OC视为历史。</p>
 
-JetSam 机制，指的就是操作系统为了控制内存资源过度使用而采用的一种资源管控机制 
-
-不同的系统版本对App运行时占用内存的限制不同，有一种方法就是查看手机中以 JetsamEvent开头的系统日志（设置 -&gt; 隐私 -&gt; 分析）。
-
-系统版本的升级也会增加占用的内存，App...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/12/18/知识小集/" title= "知识小集">
+                    <div class="prevTitle">知识小集</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -449,6 +576,24 @@ JetSam 机制，指的就是操作系统为了控制内存资源过度使用而�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原文"><span class="toc-number">1.</span> <span class="toc-text">原文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正文"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#面向对象编程"><span class="toc-number">3.</span> <span class="toc-text">面向对象编程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态分派和OC运行时"><span class="toc-number">4.</span> <span class="toc-text">动态分派和OC运行时</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用C函数直接分派"><span class="toc-number">5.</span> <span class="toc-text">用C函数直接分派</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Direct-方法"><span class="toc-number">6.</span> <span class="toc-text">Direct 方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#objc-direct-property-direct-和-objc-direct-members"><span class="toc-number">7.</span> <span class="toc-text">objc_direct, @property(direct), 和 objc_direct_members</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隐藏的动机"><span class="toc-number">8.</span> <span class="toc-text">隐藏的动机</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -882,6 +1027,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
