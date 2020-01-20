@@ -273,7 +273,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -397,7 +397,7 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近研究了一段时间<code>hybrid</code>，总结一下最近的收获，目前那些知名的<code>hybrid</code>项目，我觉得都没有必要集成，如果真有需要，你也应该根据自己的需求，自己实现一个<code>hybrid</code>，因为那些知名框架实在太臃肿了，如果要自己实现，原生调用<code>js</code>，不在本文讨论范围，如果你愿意，这样的文章太多了，本文主要关注的是<code>js</code>调用原生的时候，异步回调，如何处理，这是实现一个<code>JSBridge</code>的关键。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近学习了一段时间<code>hybrid</code>，写一点收获，本文主要关注的是<code>js</code>调用原生的时候，异步回调，如何处理，这是实现一个<code>JSBridge</code>的关键。</p>
 <p>下面，我们开始</p>
 <h1 id="js消息体"><a href="#js消息体" class="headerlink" title="js消息体"></a>js消息体</h1><p>代码类似这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var msgBody = &#123;&#125;;</span><br><span class="line">msgBody.handler = &apos;common&apos;;</span><br><span class="line">msgBody.action = &apos;nativeLog&apos;;</span><br><span class="line">msgBody.params = params; //任意json对象，用于传参.</span><br><span class="line">msgBody.callbackId = &apos;&apos;;</span><br><span class="line">msgBody.callbackFunction = &apos;&apos;;</span><br></pre></td></tr></table></figure></p>
 <p><code>callbackId</code>: 对每一次消息需要发起回调都会生成一个唯一ID，用来当回调发生时，找到最初的发起调用的 <code>JS Callback</code></p>
@@ -411,6 +411,7 @@ height:50vh;
 <p>那业务在注册 OC 消息处理函数的时候，就可以使用这个block 进行回调，大概是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[self registerHandler:@&quot;common&quot; Action:@&quot;nativeLog&quot; handler:^(msgObject *msg) &#123;</span><br><span class="line">    NSLog(@&quot;webview log : \n%@&quot;,msg)</span><br><span class="line">    NSDictionary *result = @&#123;@&quot;result&quot;:&quot;result&quot;&#125;;</span><br><span class="line">    //回调一个key value均为 result 字符串的字典当做数据</span><br><span class="line">    [msg callback:result];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
 <p>以上就是大概的思路。</p>
 <p>如果只是需要js和原生通信的话，<code>UIWebView</code>，<code>WKWebView</code>，<code>JavaScriptCore</code>都提供了很多方法，感兴趣的可以去了解一下，嘻嘻嘻QAQ</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://awhisper.github.io/2018/03/06/hybrid-webcontainer/" target="_blank" rel="noopener">从零收拾一个hybrid框架</a></p>
 
     </article>
     <!-- license  -->
@@ -534,7 +535,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#js消息体"><span class="toc-number">2.</span> <span class="toc-text">js消息体</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原生处理（以OC做示例）"><span class="toc-number">3.</span> <span class="toc-text">原生处理（以OC做示例）</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#js消息体"><span class="toc-number">2.</span> <span class="toc-text">js消息体</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原生处理（以OC做示例）"><span class="toc-number">3.</span> <span class="toc-text">原生处理（以OC做示例）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -547,6 +548,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -855,9 +858,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
-        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
@@ -902,9 +905,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
-    
         <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
         <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
     

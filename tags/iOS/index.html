@@ -423,9 +423,9 @@ swift中的lazySequence
                 <span>hybrid框架:js异步回调实现</span>
         </a>
         <div class="abstract-content">
-            前言最近研究了一段时间hybrid，总结一下最近的收获，目前那些知名的hybrid项目，我觉得都没有必要集成，如果真有需要，你也应该根据自己的需求，自己实现一个hybrid，因为那些知名框架实在太臃肿了，如果要自己实现，原生调用js，不在本文讨论范围，如果你愿意，这样的文章太多了，本文主要关注的是js调用原生的时候，异步回调，如何处理，这是实现一个JSBridge的关键。
+            前言最近学习了一段时间hybrid，写一点收获，本文主要关注的是js调用原生的时候，异步回调，如何处理，这是实现一个JSBridge的关键。
 下面，我们开始
-js消息体代码类似这样：123456var msgBody = &#123;&#125;;msgBody.handler = &apos;common&apos;;msgBody.action = &a...
+js消息体代码类似这样：123456var msgBody = &#123;&#125;;msgBody.handler = &apos;common&apos;;msgBody.action = &apos;nativeLog&apos;;msgBody.params = params; //任意json对象，用于传参.msgBody.callbackId = &apos;&apos;;msgBody.callbackFuncti...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -523,7 +523,8 @@ JetSam 机制，指的就是操作系统为了控制内存资源过度使用而�
                 <span>浅谈runloop</span>
         </a>
         <div class="abstract-content">
-            RunLoop 是 iOS 和 OSX 开发中非常基础的一个概念，首先，先简单介绍我目前已知的东西
+            参考深入理解RunLoop
+RunLoop 是 iOS 和 OSX 开发中的概念，首先，先简单介绍我目前已知的东西
 RunLoop和线程的关系：
 RunLoop的作用就是用来管理线程的，当线程的RunLoop开启后，线程就会在执行完任务后，处于休眠状态，随时等待接受新的任务，而不是退出。
 只有主线程的RunLoop是默认开启的，所以程序在开启后，会一直执行，不会退出，其他线程的RunLoop如果需要开启，就手动开启。
@@ -532,7 +533,7 @@ RunLoop内部是如何实现的：
 有一个判断循环的条件，满足条件，就一直循环。
 线程得到唤醒事件被唤醒，事件处理完毕以后，回到睡眠状态，等待下次唤醒。
 
-上面的谈论可能太笼统了，下面我们...
+上面的谈论可能太...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -633,6 +634,8 @@ RunLoop内部是如何实现的：
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
@@ -941,9 +944,9 @@ RunLoop内部是如何实现的：
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
-        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
@@ -988,9 +991,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
-    
         <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
         <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
     

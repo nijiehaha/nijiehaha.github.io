@@ -455,9 +455,9 @@ clang生成输出文件使用-g和-o生成调试信息和输出文件，我们�
                 <span>hybrid框架:js异步回调实现</span>
         </a>
         <div class="abstract-content">
-            前言最近研究了一段时间hybrid，总结一下最近的收获，目前那些知名的hybrid项目，我觉得都没有必要集成，如果真有需要，你也应该根据自己的需求，自己实现一个hybrid，因为那些知名框架实在太臃肿了，如果要自己实现，原生调用js，不在本文讨论范围，如果你愿意，这样的文章太多了，本文主要关注的是js调用原生的时候，异步回调，如何处理，这是实现一个JSBridge的关键。
+            前言最近学习了一段时间hybrid，写一点收获，本文主要关注的是js调用原生的时候，异步回调，如何处理，这是实现一个JSBridge的关键。
 下面，我们开始
-js消息体代码类似这样：123456var msgBody = &#123;&#125;;msgBody.handler = &apos;common&apos;;msgBody.action = &a...
+js消息体代码类似这样：123456var msgBody = &#123;&#125;;msgBody.handler = &apos;common&apos;;msgBody.action = &apos;nativeLog&apos;;msgBody.params = params; //任意json对象，用于传参.msgBody.callbackId = &apos;&apos;;msgBody.callbackFuncti...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -780,6 +780,8 @@ python上的装饰器(Decorator)python上的装饰器很酷，提供了@这个�
     
     
     
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 17
@@ -897,9 +899,9 @@ python上的装饰器(Decorator)python上的装饰器很酷，提供了@这个�
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
-        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
@@ -944,9 +946,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
-    
         <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
         <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
     
