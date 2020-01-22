@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nijiehaha.github.io/"/>
-  <updated>2020-01-22T07:24:17.150Z</updated>
+  <updated>2020-01-22T07:31:47.540Z</updated>
   <id>https://nijiehaha.github.io/</id>
   
   <author>
@@ -21,17 +21,17 @@
     <link href="https://nijiehaha.github.io/2020/01/22/2019%E5%B0%8F%E6%80%BB%E7%BB%93/"/>
     <id>https://nijiehaha.github.io/2020/01/22/2019%E5%B0%8F%E6%80%BB%E7%BB%93/</id>
     <published>2020-01-22T05:28:39.000Z</published>
-    <updated>2020-01-22T07:24:17.150Z</updated>
+    <updated>2020-01-22T07:31:47.540Z</updated>
     
-    <content type="html"><![CDATA[<p>2020年年会开完，基本就说明了，我的2019的工作时光结束了。</p><p>今年的学习收获，还是挺多的，</p><p>第一次开始把Swift用到了生产环境，不再只是写个小Demo这种小打小闹。<a href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="noopener">RxSwift</a>的使用更是让我觉得自己深深爱上了使用swift，当然这其中包含了一些曾经“时髦”的词汇，不过，我觉得吧，这些都不重要，重要的是RXSwift的使用，也确实提升了开发效率，配合一系列的优质swift框架，开发一个简单的 iOS App 其实越来越不是问题了。尤其是今年，苹果推出的<a href="https://developer.apple.com/documentation/combine" target="_blank" rel="noopener">Combine</a>框架，让我对函数响应式编程充满了信心，并且不得不说Rxswift的源码质量非常高，通过阅读源码，也是能获得很多swift的知识的，值得学习和花费时间。</p><p>坚持了一段时间的英语学习，也确实对我阅读英文文档，有了一丢丢的提升，我希望，来年我能像我羡慕的大佬那样，可以直接阅读优质的英文文章，不需要转换成中文，才能理解，不过我也知道，英语学习不可能一蹴而就，需要花费大量的时间来坚持学习，才能有所得，如果来年能实现这个愿望，我一定来还愿，并且愿意献出我来年的年会特等奖的机会（逃～</p><p>尝试阅读了龙书，看了一大半，这种看上去就害怕的书，确实不是那么好下咽的，只能说能学多少就学多少了，不过呢，我还是不会轻易向龙书妥协的，来年一定把它全部攻克一遍。</p><p>装模作样的开发了完善了我的一个小程序，也算在前端开发学到了点东西吧。</p><p>并且我开始认真的维护我的博客了，我想好好维护它，让它和我一起，有一天，能产生价值，嘻嘻嘻。</p><p>我确实不是个聪明人，作为一名长期自卑的选手，我真是靠着“顽强”的意志力，来持续让自己充满动力的，不然也许我就不能当一名程序员了。</p><p>2020年，加油，加油，心想事成～</p>]]></content>
+    <content type="html"><![CDATA[<p>年会开完，基本就说明了，我的2019的工作时光结束了。</p><p>今年的学习收获，还是挺多的，</p><p>第一次开始把Swift用到了生产环境，不再只是写个小Demo这种小打小闹。<a href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="noopener">RxSwift</a>的使用更是让我觉得自己深深爱上了使用swift，当然这其中包含了一些曾经“时髦”的词汇，不过，我觉得吧，这些都不重要，重要的是RXSwift的使用，也确实提升了开发效率，配合一系列的优质swift框架，开发一个简单的 iOS App 其实越来越不是问题了。尤其是今年，苹果推出的<a href="https://developer.apple.com/documentation/combine" target="_blank" rel="noopener">Combine</a>框架，让我对函数响应式编程充满了信心，并且不得不说Rxswift的源码质量非常高，通过阅读源码，也是能获得很多swift的知识的，值得学习和花费时间。</p><p>坚持了一段时间的英语学习，也确实对我阅读英文文档，有了一丢丢的提升，我希望，来年我能像我羡慕的大佬那样，可以直接阅读优质的英文文章，不需要转换成中文，才能理解，不过我也知道，英语学习不可能一蹴而就，需要花费大量的时间来坚持学习，才能有所得，如果来年能实现这个愿望，我一定来还愿，并且愿意献出我来年的年会特等奖的机会（逃～</p><p>尝试阅读了龙书，看了一大半，这种看上去就害怕的书，确实不是那么好下咽的，只能说能学多少就学多少了，不过呢，我还是不会轻易向龙书妥协的，来年一定把它全部攻克一遍。</p><p>装模作样的开发了完善了我的一个小程序，也算在前端开发学到了点东西吧。</p><p>并且我开始认真的维护我的博客了，我想好好维护它，让它和我一起，有一天，能产生价值，嘻嘻嘻。</p><p>我确实不是个聪明人，作为一名长期自卑的选手，我真是靠着“顽强”的意志力，来持续让自己充满动力的，不然也许我就不能当一名程序员了。</p><p>2020年，加油，加油，心想事成～</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;2020年年会开完，基本就说明了，我的2019的工作时光结束了。&lt;/p&gt;
+        &lt;p&gt;年会开完，基本就说明了，我的2019的工作时光结束了。&lt;/p&gt;
 &lt;p&gt;今年的学习收获，还是挺多的，&lt;/p&gt;
-&lt;p&gt;第一次开始把Swift用到了生产环境，不再只是写个小Demo这种小打小闹。&lt;a href=&quot;https://github.com/ReactiveX/
+&lt;p&gt;第一次开始把Swift用到了生产环境，不再只是写个小Demo这种小打小闹。&lt;a href=&quot;https://github.com/ReactiveX/RxSwi
       
     
     </summary>
