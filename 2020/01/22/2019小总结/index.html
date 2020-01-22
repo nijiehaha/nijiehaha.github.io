@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Kingfisher源码阅读:命名空间 · lufei&#39;s Studio</title>
+    <title>2019学习小总结 · lufei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -218,7 +218,7 @@
                 <a href="/" >lufei&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Kingfisher源码阅读:命名空间</a>
+                <a href="#" class="post-name">2019学习小总结</a>
             </div>
     </div>
     
@@ -248,7 +248,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Kingfisher源码阅读:命名空间
+            2019学习小总结
             <!-- 404 -->
             
         </h1>
@@ -267,18 +267,18 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "年少轻狂，幸福时光">年少轻狂，幸福时光</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">335</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">583</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/12/16</span>
+                    <span class="post-intro-time">2020/01/22</span>
                     
                     <span class="shareWrapper">
                         <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -397,21 +397,15 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>拜读喵神的<a href="https://github.com/onevcat/Kingfisher" target="_blank" rel="noopener">Kingfisher</a>，学习Swift，第一个就是这个<code>kf</code>命名空间的实现，好酷。</p>
-<p>以前写OC的时候，给系统方法扩展，官方都是推荐使用增加<code>前缀_</code>的方式，swift的推出，改变了这种情况，因为语言特性和苹果力荐的面向协议编程，有了更酷的实现。</p>
-<ul>
-<li><p><a href="https://github.com/onevcat/Kingfisher/blob/master/Sources/General/Kingfisher.swift" target="_blank" rel="noopener">喵神的实现</a></p>
-</li>
-<li><p><a href="https://github.com/apple/swift/blob/master/stdlib/public/core/LazySequence.swift" target="_blank" rel="noopener">swift中的lazySequence</a></p>
-</li>
-</ul>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>实现一个包裹泛型Base类的Struct或者Class，实现<code>Protocol</code> 和你想要的命名空间，将 Protocol 加载到所需的 Base 类并通过<code>Extension + where Base</code>实现 Base 类的特定代码</p>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>参考上面的源码和思路，我自己试着写了一遍，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/// 包裹NJBase的struct</span><br><span class="line">struct NijieWrapper&lt;NJBase&gt; &#123;</span><br><span class="line">    </span><br><span class="line">    let base:NJBase</span><br><span class="line">    </span><br><span class="line">    init(_ base: NJBase) &#123;</span><br><span class="line">        </span><br><span class="line">        self.base = base</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 实现协议</span><br><span class="line">protocol NijieCompatible: AnyObject &#123;&#125;</span><br><span class="line">extension NijieCompatible &#123;</span><br><span class="line">    </span><br><span class="line">    var nj:NijieWrapper&lt;Self&gt; &#123;</span><br><span class="line">        </span><br><span class="line">        get &#123; return NijieWrapper(self) &#125;</span><br><span class="line">        set &#123;&#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 为UIImageView添加扩展</span><br><span class="line">extension UIImageView: NijieCompatible &#123;&#125;</span><br><span class="line">extension NijieWrapper where NJBase: UIImageView &#123;</span><br><span class="line">    </span><br><span class="line">    func setNijieImage(image:UIImage? = nil) &#123;</span><br><span class="line">        </span><br><span class="line">        base.image = image</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实现协议的时候，之所以使用扩展，是因为需要给所有遵守协议的类型提供默认实现。</p>
-<p>使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let imageView = UIImageView()</span><br><span class="line">imageView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)</span><br><span class="line">imageView.nj.setNijieImage(image: UIImage(named: &quot;test123&quot;))</span><br></pre></td></tr></table></figure>
-<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>这样子，命名空间就实现了，感恩swift</p>
+        <p>2020年年会开完，基本就说明了，我的2019的工作时光结束了。</p>
+<p>今年的学习收获，还是挺多的，</p>
+<p>第一次开始把Swift用到了生产环境，不再只是写个小Demo这种小打小闹。<a href="https://github.com/ReactiveX/RxSwift" target="_blank" rel="noopener">RxSwift</a>的使用更是让我觉得自己深深爱上了使用swift，当然这其中包含了一些曾经“时髦”的词汇，不过，我觉得吧，这些都不重要，重要的是RXSwift的使用，也确实提升了开发效率，配合一系列的优质swift框架，开发一个简单的 iOS App 其实越来越不是问题了。尤其是今年，苹果推出的<a href="https://developer.apple.com/documentation/combine" target="_blank" rel="noopener">Combine</a>框架，让我对函数响应式编程充满了信心，并且不得不说Rxswift的源码质量非常高，通过阅读源码，也是能获得很多swift的知识的，值得学习和花费时间。</p>
+<p>坚持了一段时间的英语学习，也确实对我阅读英文文档，有了一丢丢的提升，我希望，来年我能像我羡慕的大佬那样，可以直接阅读优质的英文文章，不需要转换成中文，才能理解，不过我也知道，英语学习不可能一蹴而就，需要花费大量的时间来坚持学习，才能有所得，如果来年能实现这个愿望，我一定来还愿，并且愿意献出我来年的年会特等奖的机会（逃～</p>
+<p>尝试阅读了龙书，看了一大半，这种看上去就害怕的书，确实不是那么好下咽的，只能说能学多少就学多少了，不过呢，我还是不会轻易向龙书妥协的，来年一定把它全部攻克一遍。</p>
+<p>装模作样的开发了完善了我的一个小程序，也算在前端开发学到了点东西吧。</p>
+<p>并且我开始认真的维护我的博客了，我想好好维护它，让它和我一起，有一天，能产生价值，嘻嘻嘻。</p>
+<p>我确实不是个聪明人，作为一名长期自卑的选手，我真是靠着“顽强”的意志力，来持续让自己充满动力的，不然也许我就不能当一名程序员了。</p>
+<p>2020年，加油，加油，心想事成～</p>
 
     </article>
     <!-- license  -->
@@ -420,17 +414,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/12/18/知识小集/" title= "知识小集">
-                    <div class="nextTitle">知识小集</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/12/04/语义分析/" title= "语义分析">
-                    <div class="prevTitle">语义分析</div>
+                <a href= "/2020/01/20/【译】Objective-C-Direct-Methods/" title= "【译】Objective-C Direct Methods">
+                    <div class="prevTitle">【译】Objective-C Direct Methods</div>
                 </a>
             
         </li>
@@ -535,7 +524,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">3.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结尾"><span class="toc-number">4.</span> <span class="toc-text">结尾</span></a></li></ol>
+        
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
