@@ -394,9 +394,9 @@ height:50vh;
         <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="https://nshipster.com/direct/#objc_direct-propertydirect-and-objc_direct_members" target="_blank" rel="noopener">Objective-C Direct Methods</a></p>
 <h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>当听说OC引入新功能的时候，我已经很难感到兴奋了。最近的一些关于OC的改进，都是为了服务于和Swift的互通，而不是关于OC这门语言本身了（看看<a href="https://developer.apple.com/swift/blog/?id=25" target="_blank" rel="noopener">nullabiltiy</a>和<a href="https://developer.apple.com/documentation/swift/imported_c_and_objective-c_apis/using_imported_lightweight_generics_in_swift" target="_blank" rel="noopener">lightwight generics</a>）</p>
 <p>因此，当我了解到<a href="https://reviews.llvm.org/D69991" target="_blank" rel="noopener">最近的Clang的合并补丁</a>为OC的方法添加了直接分配的机制的时候，感到十分的兴奋。</p>
-<p>这种新功能的起源不是很清楚；我们最多能通过苹果内部的Radar编号(2684889)查询，不过它并不能告诉我们超过它相对年龄的事（根据我们的估计，也许在20年代初期）。幸好，这个功能拥有充足的文档和测试范围，能让我们很好的了解它的原理。（对实施者Pierre Habouzit，审核经理John McCall和其他LLVM贡献者表示由衷的感谢）</p>
-<p>本周在NSHipster上，我们借此机会回顾了OC方法的调度，并试图了解这一新语言功能对未来代码库的潜在影响。</p>
-<p>(Direct 方法最早可能会出现在Xcode 11.x上，但很可能会在WWDC 2020上宣布。)</p>
+<p>这种新功能的起源还不是很清楚；能得到的线索止于苹果内部的 Radar 号（2684889），除了能借此推出这项功能的相对年龄（估计是本世纪初的什么时候），就得不到更多的信息了。幸好，这个功能拥有充足的文档和测试范围，能让我们很好的了解它的原理。(对实施者Pierre Habouzit，审核经理John McCall和其他LLVM贡献者表示由衷的感谢)</p>
+<p>本周在NSHipster上，我们借此机会回顾了OC方法的分派，并试图了解这一新语言功能对未来代码库的潜在影响。</p>
+<p>(<strong>Direct</strong>方法最早可能会出现在Xcode 11.x上，但很可能会在WWDC 2020上宣布。)</p>
 <p>要了解Direct方法的重要性，您需要了解一些有关OC运行时的知识。但是，在此之前，让我们从oop本身的起源开始我们的讨论：</p>
 <h1 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h1><p>Alan Kay在1960年初期创造了这个词，之后，在Adele Goldberg，Dan Ingalls和他在Xerox parc的其他同事的帮助下，Kay通过创建Smalltalk编程语言，在70年代将该想法付诸实践。</p>
 <p>(在此期间，Xerox PARC 的研究人员还开发了 Xerox Alto，这将成为苹果Macintosh和所有其他GUI计算机的灵感来源)</p>
@@ -473,7 +473,7 @@ height:50vh;
 <p>尽管Apple可以使用隐藏可见性来防止混乱和私有API的使用，但这似乎并不是主要动机。</p>
 <p>根据实施此功能的Pierre所说，此优化的主要好处是减少了代码大小。据报道，未使用的O元数据的权重可占已编译二进制文件中<code>__text</code>部分的5 – 10％。</p>
 <p>您可以想象，从现在起到明年的开发者大会，可以有几个工程师遍历每个SDK框架，用<code>objc_direct</code>注释私有方法，并用<code>objc_direct_members</code>注释私有类，这是逐步加强其SDK的轻量级方法。</p>
-<p>如果的确如此，那么我们对Objective-C的新功能也持怀疑态度。我认为既然不是服务于swift语言， 那就是服务于苹果公司。尽管这个功能在编程历史和Apple本身中占有重要地位，但很难不将OC视为历史。</p>
+<p>如果的确如此，那么我们对Objective-C的新功能添加的理由也持怀疑态度。我认为既然不是服务于swift语言， 那应该就是服务于苹果公司的吧。尽管这个功能在编程历史和Apple本身中占有重要地位，但已经很难不把OC视为历史了。</p>
 
     </article>
     <!-- license  -->
@@ -801,12 +801,6 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 18
@@ -936,9 +930,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
@@ -983,9 +977,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
         <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
     
