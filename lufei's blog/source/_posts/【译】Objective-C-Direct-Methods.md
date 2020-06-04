@@ -1,8 +1,9 @@
 ---
 title: 【译】Objective-C Direct Methods
 date: 2020-01-20 13:29:37
-tags:
-categories:
+tags: 翻译计划
+categories: 翻译计划
+copyright: false
 ---
 
 # 原文
