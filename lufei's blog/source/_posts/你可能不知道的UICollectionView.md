@@ -1,6 +1,6 @@
 ---
 title: 你可能不知道的UICollectionView
-date: 2020-04-03 13:36:39
+date: 2020-04-23 13:36:39
 tags: iOS
 categories: iOS
 ---
@@ -91,7 +91,7 @@ collectionView.performBatchUpdates({
 })
 ```
 
-当然还有更酷的方法，那就是 `UIView`的 [performWithoutAnimation(_:)](https://developer.apple.com/documentation/uikit/uiview/1622484-performwithoutanimation) 方法了：
+当然还有更酷的方法，那就是 `UIView` 的 [performWithoutAnimation(_:)](https://developer.apple.com/documentation/uikit/uiview/1622484-performwithoutanimation) 方法了：
 
 ```
 UIView.performWithoutAnimation {
@@ -101,9 +101,32 @@ UIView.performWithoutAnimation {
 
 > 当然，设置 UIView 动画时间为0，也可以算第三种办法，此处就不多说了。
 
-但是不知道为什么 `reloadData` 在这两个个方案中的表现，总是不那么和我美好的想象相符合，尤其是在`performBatchUpdates`里，直接导致 UI 刷新无效了，原因目前还不太清楚，不过 [reloadData](https://developer.apple.com/documentation/uikit/uicollectionview/1618078-reloaddata) 的文档里倒是做了这样的说明：
+但是不知道为什么 `reloadData` 在这两个个方案中的表现，总是不那么和我美好的想象相符合，尤其是在 `performBatchUpdates` 里，直接导致 UI 刷新无效了，原因目前还不太清楚，不过 [reloadData](https://developer.apple.com/documentation/uikit/uicollectionview/1618078-reloaddata) 的文档里倒是做了这样的说明：
 
 > You should not call this method in the middle of animation blocks where items are being inserted or deleted. Insertions and deletions automatically cause the collection’s data to be updated appropriately.
 
 好吧，乖乖听话～～
+
+# Auto layout 和 UICollectionView
+
+在大部分情况下，Auto layout 和 UICollectionView 的配合都还不错，只要你的约束写得正确，是很方便的。
+
+只需要在 UICollectionViewFlowLayout 创建的时候，加一句：
+
+```
+layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+```
+
+基本就可以了。
+
+> 只有 UICollectionViewFlowLayout 可以设置 estimatedItemSize
+
+特殊地，有时候，我们可能需要实现瀑布流，有时候，可能我们的后台也没有把需要展示的图片宽高及时返回，此时如果再使用 auto layout 的话，就有一些需要注意的地方了。
+
+首先，我们可能需要为每一个 item 设置一个临时的宽高。
+
+然后，我们是需要一张一张图片去加载完图片，再一起更新约束的，单独更新约束的话，会导致一些莫名其妙的bug，这一点我还没找到原因。
+
+更新约束的方法，也很简单，在需要更新的时候，使用 [invalidateLayout()](https://developer.apple.com/documentation/uikit/uicollectionviewlayout/1617728-invalidatelayout)
+
 
