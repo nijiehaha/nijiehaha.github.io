@@ -354,6 +354,39 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/18/iOS-%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2/" >
+            
+                <span>iOS 仿射变换</span>
+        </a>
+        <div class="abstract-content">
+            仿射变换简述仿射变换，是指在几何中，对一个向量空间进行一次线性变换并接上一个平移，变换为另一个向量空间。
+具体到 iOS，苹果在 Core Graphics 中使用 CGAffineTransform 来表示这个变化，或者说映射关系。
+简单来说，CGAffineTransform 是一个可以和二维空间向量（例如 CGPoint ）做乘法的矩阵。
+当对图层应用变换矩阵，图层矩形内的每一个点都被相应地做变换，从而形成一个新的四边形的形状。UIView 有一个 transform 属性就是用来接收 CGAffineTransform，并对当前 view 做变换的。
+上面也说了，CGAffine...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/14/Swift-%E9%97%AD%E5%8C%85%E7%9A%84%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/" >
             
                 <span>Swift 闭包的循环引用</span>
@@ -668,42 +701,10 @@ Modal Navigation模态 Navigation 是指「一个 VC，以...
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/04/iOS-%E5%85%B3%E4%BA%8E%E9%94%AE%E7%9B%98/" >
-            
-                <span>iOS 关于键盘</span>
-        </a>
-        <div class="abstract-content">
-            前言iOS 上多个输入框，可能出现的键盘遮挡，始终是一个有一丢丢麻烦的问题，当然，有很好的第三方 IQKeyboardManager，帮助我们一行代码解决了这个问题，不过，我还是想自不量力的做一些小小的总结。
-iOS 键盘的基本知识在 iOS 上，键盘的变化由 NSNotificationCenter 控制的，所以要想拿到这些关于键盘的变化信息，你得提前在 NSNotificationCenter 上添加观察者，来监听这些关于键盘的通知。
-那么具体有哪些通知呢？比如下面这些吧：
-keyboardWillChangeFrameNotification： 在键盘 frame 更改之前立即发出...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&lt; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/archives/">&lt; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -1482,9 +1483,18 @@ keyboardWillChangeFrameNotification： 在键盘 frame 更改之前立即发出.
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 50
+        Total : 51
         </div>
         <!-- search  -->
         
@@ -1497,6 +1507,11 @@ keyboardWillChangeFrameNotification： 在键盘 frame 更改之前立即发出.
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9B%BE%EF%BC%88graph%EF%BC%89/" >数据结构-图（graph）</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1800,9 +1815,9 @@ keyboardWillChangeFrameNotification： 在键盘 frame 更改之前立即发出.
     
         <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
         <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
@@ -1813,6 +1828,8 @@ keyboardWillChangeFrameNotification： 在键盘 frame 更改之前立即发出.
         <span class="sidebar-tag-name" data-tags="翻译计划"><span class="iconfont-archer">&#xe606;</span>翻译计划</span>
     
         <span class="sidebar-tag-name" data-tags="计算机基础"><span class="iconfont-archer">&#xe606;</span>计算机基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="编译原理"><span class="iconfont-archer">&#xe606;</span>编译原理</span>
     
@@ -1853,9 +1870,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
         <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
         <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
@@ -1866,6 +1883,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="翻译计划"><span class="iconfont-archer">&#xe60a;</span>翻译计划</span>
     
         <span class="sidebar-category-name" data-categories="计算机基础"><span class="iconfont-archer">&#xe60a;</span>计算机基础</span>
+    
+        <span class="sidebar-category-name" data-categories="数据结构"><span class="iconfont-archer">&#xe60a;</span>数据结构</span>
     
         <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
     
