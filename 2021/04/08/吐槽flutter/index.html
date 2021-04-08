@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言由于某些原因，我竟然开始了解学习最近火热的跨平台技术 Flutter，并开始尝试改写我的项目，在改写了几个模块后，终于我忍无可忍，一定想要吐槽吐槽它。 必须承认，我目前对 flutter 的了解，也仅仅是初学者的状态，所以很多观点还很幼稚，不成熟，我的吐槽也仅仅是一个初学者的小情绪而已，对于谷歌团队的多年努力，大家还是有目共睹的。 下面我就开吐了！！！ 吐槽首先就是报错信息的不明确，很多时候，">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-04-08T01:45:44.000Z">
-<meta property="article:modified_time" content="2021-04-08T03:24:32.744Z">
+<meta property="article:modified_time" content="2021-04-08T05:23:05.183Z">
 <meta property="article:author" content="路小飞">
 <meta property="article:tag" content="杂七杂八">
 <meta name="twitter:card" content="summary">
@@ -285,7 +285,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">995</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -420,14 +420,15 @@ height:50vh;
 <h1 id="吐槽"><a href="#吐槽" class="headerlink" title="吐槽"></a>吐槽</h1><p>首先就是报错信息的不明确，很多时候，报错信息我都期待能起码告诉我错误出在哪里，但是 flutter 的报错，我就遇到很多时候，根本看不出来哪儿有问题，根本说明不了任何问题，去谷歌上搜，很多时候，都提醒我也许，<code>flutter clean</code> 一下就好了，真是离谱。</p>
 <p>官方文档看上去说的很详细，然而很多我觉得需要讲清楚的地方，也是含糊不清，举个例子，我个人认为在 json 解析这块，是 flutter 项目中很麻烦的地方，官方文档虽然有对 <a href="json_serializable">json_serializable</a> 的简要说明，但是那个说明实在可能实在过于简要，实际使用中有很多坑要踩，让人很心累。</p>
 <p>另外对于 andriod 的工具链，尤其是 andriod studio 这个开发工具，真是太垃圾了，以前我觉得 xcode 就够垃圾的了，自从用过 andriod studio ，看 xcode 都觉得眉清目秀的，使用 andriod studio 的过程真是噩梦一样，以至于我后来一直使用 vs code 来写 flutter 的，确实清爽很多。</p>
-<p>其实 Flutter 仅仅是个不错的跨平台 <em>UI</em> 框架，然而繁重的跨平台三个字真是压得它包袱很重，一旦牵扯到原生能力，Flutter 就变得不那么方便了，虽然又有第三方包帮助你抹平了平台差异，但是这也带来很麻烦的维护问题，尤其是就算是官方维护的第三方包，就我的使用体验来说，也并不是那么好用，有这个时间，为什么不去写原生呢？</p>
-<p>再说说 flutter 最大的卖点热重栽，事实上也并没有说的那么方便，仅仅是关于当前 widget 的更新。</p>
+<p>其实 Flutter 仅仅是个不错的跨平台 <em>UI</em> 框架，然而繁重的跨平台三个字真是压得它包袱很重，一旦牵扯到原生能力，比如相机，蓝牙，Flutter 就变得不那么方便了，虽然也提供了与原生通信的方式，也有第三方包帮助你抹平了平台差异，但是这也带来很麻烦的维护问题，尤其是就算是官方维护的第三方包，就我的使用体验来说，也并不是那么好用，有这个时间，为什么不去直接写原生呢？</p>
+<p>再说说 flutter 最大的卖点热重载，事实上也并没有说的那么方便，仅仅是关于当前 widget 的更新。</p>
 <p>再说布局方面，这一点确实是我在使用过程中，为数不多，觉得 flutter 还不错的地方，起码比 iOS 方便很多，然而代码的美观上真是一言难尽，当然也有我学艺不精的责任，但是我认为，这种类似是在写 xml 的方式，真的能写的很美观吗？</p>
 <p>还有图片资源的管理，真的好烦啊，就不能有再方便一点的方式吗？我的天！</p>
 <p>还有，如果一台普通的 mac pro 上同时装有 xcode 和 andriod studio 是什么感受，可能是世界末日吧，那风扇转的我的心每一分每一秒都在绞痛。。。</p>
 <h1 id="使用-flutter-小结"><a href="#使用-flutter-小结" class="headerlink" title="使用 flutter 小结"></a>使用 flutter 小结</h1><p>对于 flutter 来说，其实最好还是作为一个 UI 框架，以模块的形式集成进原生项目，不会真的有人想做纯 flutter 项目吧，目前来说，我觉得这样的思路很离谱。</p>
 <p>对于 flutter 项目中使用原生原有的模块，我能想到比较好的方式应该是把原生的业务逻辑拆出来，生成插件引入 flutter 项目。</p>
 <p>通过这段时间的学习和使用，确实也算学了点新东西，基本上把手头上的一个 app 改写的差不多了，基本上也能写出个简单跨平台的 app 了，当然细节上，肯定还是不够好，如果以后真的有必要的话，还是会继续学习的，这一阶段的关于 flutter 的学习，先结束吧，累了！</p>
+<p>swift 真是世界上最好的语言啊！</p>
 
     </article>
     <!-- license  -->
@@ -436,7 +437,7 @@ height:50vh;
             <p>原文作者：<a href="https://nijiehaha.github.io">路小飞</a>
             <p>原文链接：<a href="https://nijiehaha.github.io/2021/04/08/%E5%90%90%E6%A7%BDflutter/">https://nijiehaha.github.io/2021/04/08/%E5%90%90%E6%A7%BDflutter/</a>
             <p>发表日期：<a href="https://nijiehaha.github.io/2021/04/08/%E5%90%90%E6%A7%BDflutter/">April 8th 2021, 9:45:44 am</a>
-            <p>更新日期：<a href="https://nijiehaha.github.io/2021/04/08/%E5%90%90%E6%A7%BDflutter/">April 8th 2021, 11:24:32 am</a>
+            <p>更新日期：<a href="https://nijiehaha.github.io/2021/04/08/%E5%90%90%E6%A7%BDflutter/">April 8th 2021, 1:23:05 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -578,6 +579,10 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
     
     
     
@@ -1580,9 +1585,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
     
         <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
@@ -1633,9 +1638,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
     
         <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
