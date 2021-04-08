@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="路小飞">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="路小飞">
+    
+    <meta name="keywords" content="路小飞">
+    
+    <meta name="description" content="">
+    <meta name="description" content="原文Static and Dynamic Callable Types in Swift 正文上周，苹果发布了Xcode 11.4的第一个测试版本，这次更新也被证明为是近期更新中最重要的一次。XCTest(Xcode提供的用于测试的框架)得到了巨大的推动，比如大量便于日常测试的改善，还有模拟器，也得到了一些体贴的优化。但是Swift的变化引发了极大的关注。 在Xcode11.4中，swift的编译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Static and Dynamic Callable Types in Swift">
+<meta property="og:url" content="https://nijiehaha.github.io/2020/02/25/%E3%80%90%E8%AF%91%E3%80%91Static-and-Dynamic-Callable-Types-in-Swift/index.html">
+<meta property="og:site_name" content="lufei&#39;s Blog">
+<meta property="og:description" content="原文Static and Dynamic Callable Types in Swift 正文上周，苹果发布了Xcode 11.4的第一个测试版本，这次更新也被证明为是近期更新中最重要的一次。XCTest(Xcode提供的用于测试的框架)得到了巨大的推动，比如大量便于日常测试的改善，还有模拟器，也得到了一些体贴的优化。但是Swift的变化引发了极大的关注。 在Xcode11.4中，swift的编译">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-25T01:31:20.000Z">
+<meta property="article:modified_time" content="2020-04-01T09:01:08.620Z">
+<meta property="article:author" content="路小飞">
+<meta property="article:tag" content="翻译计划">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>【译】Static and Dynamic Callable Types in Swift · lufei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/lufei.jpg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >lufei&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">【译】Static and Dynamic Callable Types in Swift</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>lufei's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            【译】Static and Dynamic Callable Types in Swift
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "翻译计划">翻译计划</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">4.2k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/02/25</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a target="_blank" rel="noopener" href="https://nshipster.com/callable/">Static and Dynamic Callable Types in Swift</a></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>上周，苹果发布了<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/xcode_release_notes/xcode_11_4_beta_release_notes">Xcode 11.4的第一个测试版本</a>，这次更新也被证明为是近期更新中最重要的一次。<code>XCTest</code>(Xcode提供的用于测试的框架)得到了<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/xcode_release_notes/xcode_11_4_beta_release_notes#3530390">巨大的推动</a>，比如大量便于日常测试的改善，还有<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/xcode_release_notes/xcode_11_4_beta_release_notes#3530393">模拟器</a>，也得到了一些体贴的优化。但是Swift的变化引发了极大的关注。</p>
+<p>在Xcode11.4中，swift的编译时间全面缩短（从许多开发者的回复来估计，大概在他们的项目中改善了10%到20%）。并且由于<a target="_blank" rel="noopener" href="https://swift.org/blog/new-diagnostic-arch-overview/">新的语言检查平台</a>的引入，编译器总能返回有用的错误信息。这也是第一个附带着新的<a target="_blank" rel="noopener" href="https://nshipster.com/language-server-protocol/">sourcekit-lsp服务器</a>的Xcode版本，该服务器使VSCode等编辑器可以更有意义地与Swift一起使用。</p>
+<p>然而，尽管进行了所有这些改进（这确实是Apple开发人员工具团队的一项令人难以置信的成就），但许多早期反馈集中增加最明显的还是关于Swift 5.2。 并且来自Twitter，Hacker News和Reddit的的peanut galleries的回应-坦白地说-是“混乱的”。</p>
+<p>如果您像我们大多数人一样，不适应<a target="_blank" rel="noopener" href="https://apple.github.io/swift-evolution/">Swift演变</a>的来龙去脉，那么Xcode 11.4就是您第一次接触到该语言的两个新功能：<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0249-key-path-literal-function-expressions.md">key path expressions as functions</a>和<a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/master/proposals/0253-callable.md">callable values of user-defined nominal types</a>。</p>
+<p>第一个，就是用那些允许的键路径来替代通过函数展开只有一个表达式的闭包，比如所<code>map</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Swift &gt;&#x3D; 5.2</span><br><span class="line">&quot;🧁🍭🍦&quot;.unicodeScalars.map(\.properties.name)</span><br><span class="line">&#x2F;&#x2F; [&quot;CUPCAKE&quot;, &quot;LOLLIPOP&quot;, &quot;SOFT ICE CREAM&quot;]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Swift &lt;5.2 equivalent</span><br><span class="line">&quot;🧁🍭🍦&quot;.unicodeScalars.map &#123; $0.properties.name &#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个，就是允许拥有<code>callAsFunction</code>方法的类型的实例被调用的时候，就好像它们是函数一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct Sweetener &#123;</span><br><span class="line">    let additives: Set&lt;Character&gt;</span><br><span class="line"></span><br><span class="line">    init&lt;S&gt;(_ sequence: S) where S: Sequence, S.Element &#x3D;&#x3D; Character &#123;</span><br><span class="line">        self.additives &#x3D; Set(sequence)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func callAsFunction(_ message: String) -&gt; String &#123;</span><br><span class="line">        message.split(separator: &quot; &quot;)</span><br><span class="line">               .flatMap &#123; [$0, &quot;\(additives.randomElement()!)&quot;] &#125;</span><br><span class="line">               .joined(separator: &quot; &quot;) + &quot;😋&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let dessertify &#x3D; Sweetener(&quot;🧁🍭🍦&quot;)</span><br><span class="line">dessertify(&quot;Hello, world!&quot;)</span><br><span class="line">&#x2F;&#x2F; &quot;Hello, 🍭 world! 🍦😋&quot;</span><br></pre></td></tr></table></figure>
+
+<p>当然，这两个例子都是可怕的。 那就是问题所在。</p>
+<p>通常，大多数包含“swift新功能”的描述仅仅是对swift推进提案的反驳，充满动机不佳（且经常带有表情符号）的示例。这种处理方式不能很好地描述Swift语言的功能，并且在Swift 5.2的情况下，可以使流行的批评认为这些都是轻浮的补充-仅仅是语法糖。</p>
+<p>(在某种程度上，我们对此感到内………我们的错)</p>
+<p>本周，我们希望通过提供一些历史和理论背景来理解这些新功能，以达到该问题的中心。</p>
+<h1 id="Swift中的语法糖"><a href="#Swift中的语法糖" class="headerlink" title="Swift中的语法糖"></a>Swift中的语法糖</h1><p>如果您对“key path as function”过于关注而感到厌烦，请回想一下，现状并非没有甜头。考虑一下以前的糖精示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;🧁🍭🍦&quot;.unicodeScalars.map &#123; $0.properties.name &#125;</span><br></pre></td></tr></table></figure>
+
+<p>该表达方式至少依赖于四个不同的语法的让步：</p>
+<ul>
+<li>尾随闭包语法，该函数允许省略函数的最终闭包参数标签</li>
+<li>匿名闭包参数，允许闭包中的参数按位置使用（$ 0，$ 1，…），而无需绑定到命名变量。</li>
+<li>推断参数和返回值类型</li>
+<li>单表达式闭包的隐式返回</li>
+</ul>
+<p>如果您想完全减少饮食中的糖分，最好选择Mavis Beacon，因为您将进行更多打字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;🧁🍭🍦&quot;.unicodeScalars.map(transform: &#123; (unicodeScalar: Unicode.Scalar) -&gt; String in</span><br><span class="line">    return unicodeScalar.properties.name</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>(另外，谁知道map中的参数标签是“ transform”？)</p>
+<p>实际上，正如我们在后面的示例中所看到的，从句法上讲，Swift是冬天的棉花糖世界。从初始化程序，方法调用到可选方法和方法链，几乎所有有关Swift的内容都可以描述为棉花糖的旋律-它实际上仅取决于您在“语言功能”和“语法糖”之间的界限。</p>
+<p>要了解原因，您必须首先了解我们如何到达这里，这需要一些历史，数学和计算机科学。准备吃蔬菜</p>
+<h1 id="λ演算和基础计算机科学发展遐想"><a href="#λ演算和基础计算机科学发展遐想" class="headerlink" title="λ演算和基础计算机科学发展遐想"></a>λ演算和基础计算机科学发展遐想</h1><p>所有编程语言都可以看作是表示λ演算的各种尝试。编写代码所需的一切-变量，绑定，应用程序-全部都在那里，被大量希腊字母和数学符号掩埋。</p>
+<p>除了句法上的差异外，每种编程语言都可以通过其能力的组合来理解，以使程序更易于编写和阅读。对象，类，模块，可选，文字和泛型之类的语言功能都只是基于λ微积分的抽象。</p>
+<p>与纯数学形式主义的任何其他偏离都可以归因于现实世界的限制，例如1870年代的打字机，1920年代的打孔卡，1940年代的计算机体系结构或1960年代的字符编码。</p>
+<p>最早的编程语言是 Lisp ，ALGOL 和 COBOL ，几乎所有其他语言都源于这种语言。</p>
+<p>(由于缺少易于访问的 ALGOL 环境，我们在这里使用 FORTRAN 作为替代。)</p>
+<p><em>Lisp</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(defun square (x)</span><br><span class="line">    (* x x))</span><br><span class="line"></span><br><span class="line">(print (square 4)) </span><br><span class="line">;; 16</span><br></pre></td></tr></table></figure>
+
+<p><em>FORTRAN</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pure function square(x)</span><br><span class="line">  integer, intent(in) :: x</span><br><span class="line">  integer :: square</span><br><span class="line">  square &#x3D; x * x</span><br><span class="line">end function</span><br><span class="line"></span><br><span class="line">program main</span><br><span class="line">  integer :: square</span><br><span class="line">  print *, square(4)</span><br><span class="line">end program main</span><br><span class="line">! 16</span><br></pre></td></tr></table></figure>
+
+<p><em>COBOL</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">IDENTIFICATION DIVISION.</span><br><span class="line">       PROGRAM-ID. example.</span><br><span class="line">       DATA DIVISION.</span><br><span class="line">       WORKING-STORAGE SECTION.</span><br><span class="line">       01  x   PIC 9(3) VALUE 4.</span><br><span class="line">       01  y   PIC 9(9).</span><br><span class="line">       PROCEDURE DIVISION.</span><br><span class="line">           CALL &quot;square&quot; USING</span><br><span class="line">               BY CONTENT x</span><br><span class="line">               BY REFERENCE y.</span><br><span class="line">           DISPLAY y.</span><br><span class="line">           STOP RUN.</span><br><span class="line">       END PROGRAM example.</span><br><span class="line"></span><br><span class="line">IDENTIFICATION DIVISION.</span><br><span class="line">       PROGRAM-ID. square.</span><br><span class="line">       DATA DIVISION.</span><br><span class="line">       LINKAGE SECTION.</span><br><span class="line">       01  x   PIC 9(3).</span><br><span class="line">       01  y   PIC 9(3).</span><br><span class="line">       PROCEDURE DIVISION USING x, y.</span><br><span class="line">           MULTIPLY x BY x GIVING y.</span><br><span class="line">           EXIT PROGRAM.</span><br><span class="line">       END PROGRAM square.</span><br><span class="line">* 016000000</span><br></pre></td></tr></table></figure>
+
+<p>在这里，您可以了解三个截然不同的时间表；我们的现实是，ALGOL的语法（第二个）“胜过”了其他选择。在ALGOL 60中，您可以画一条直线，从1963年的CPL到1967年的BCPL和1972年的C，然后是1984年的Objective-C和2014年的Swift。这是一个沿袭，可以告诉您可调用的类型以及如何调用它们。</p>
+<p>现在，我们回到swift</p>
+<h1 id="Swift中的函数类型"><a href="#Swift中的函数类型" class="headerlink" title="Swift中的函数类型"></a>Swift中的函数类型</h1><p>在Swift中，函数是一等对象，这意味着它们可以分配给变量，存储在属性中，并作为参数传递或作为其他函数的值返回。</p>
+<p>函数类型与其他值的区别在于它们是可调用的，这意味着您可以调用它们以产生新的值。</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>Swift的基本功能类型是闭包，即功能齐全的独立单元。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let square: (Int) -&gt; Int &#x3D; &#123; x in x * x &#125;</span><br></pre></td></tr></table></figure>
+
+<p>作为函数类型，您可以通过在开括号和闭括号之间传递必要数量的参数来调用闭包（）</p>
+<blockquote>
+<p>函数类型采用的参数数量取决于它自身的元数</p>
+</blockquote>
+<p>闭包之所以称为闭包，是因为它们关闭并从定义它们的上下文中捕获对任何变量的引用。但是，捕获语义并不总是令人满意的，这就是为什么Swift为特殊的闭包（称为函数）提供专用语法的原因。</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p>在顶级/全局范围内定义的函数称为不捕获任何值的闭包。在Swift中，您可以使用func关键字声明它们：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func square(_ x: Int) -&gt; Int &#123; x * x &#125;</span><br><span class="line">square(4) &#x2F;&#x2F; 16</span><br></pre></td></tr></table></figure>
+
+<p>与闭包相比，函数在传递参数方面具有更大的灵活性。</p>
+<p>函数参数可以使用命名标签，而不是闭包中未标记的位置参数-这对说明代码在其调用位置的作用大有帮助：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func deposit(amount: Decimal,</span><br><span class="line">             from source: Account,</span><br><span class="line">             to destination: Account) throws &#123; … &#125;</span><br><span class="line">try deposit(amount: 1000.00, from: checking, to: savings)</span><br></pre></td></tr></table></figure>
+
+<p>函数可以是通用的，允许将它们用于多种类型的参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func square&lt;T: Numeric&gt;(_ x: T) -&gt; T &#123; x * x &#125;</span><br><span class="line">func increment&lt;T: Numeric&gt;(_ x: T) -&gt; T &#123; x + 1 &#125;</span><br><span class="line">func compose&lt;T&gt;(_ f: @escaping (T) -&gt; T, _ g: @escaping (T) -&gt; T) -&gt; (T) -&gt; T &#123;</span><br><span class="line">    &#123; x in g(f(x)) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">compose(increment, square)(4 as Int) &#x2F;&#x2F; 25 ((4 + 1)²)</span><br><span class="line">compose(increment, square)(4.2 as Double) &#x2F;&#x2F; 27.04 ((4.2 + 1)²)</span><br></pre></td></tr></table></figure>
+
+<p>函数还可以采用可变参数，隐式闭包和默认参数值（允许使用<code>#file</code>和<code>#line</code>这样的魔术表达式文字）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func print(items: Any...) &#123; … &#125;</span><br><span class="line"></span><br><span class="line">func assert(_ condition: @autoclosure () -&gt; Bool,</span><br><span class="line">            _ message: @autoclosure () -&gt; String &#x3D; String(),</span><br><span class="line">            file: StaticString &#x3D; #file,</span><br><span class="line">            line: UInt &#x3D; #line) &#123; … &#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，尽管在接受参数方面具有所有这种灵活性，但是您将遇到的大多数函数都是在隐式自变量上运行的。这些功能称为方法。</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>方法是一种类型所包含的功能。方法自动提供对self的访问权限，从而使它们可以有效地捕获被称为隐式参数的实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">struct Queue&lt;Element&gt; &#123;</span><br><span class="line">    private var elements: [Element] &#x3D; []</span><br><span class="line"></span><br><span class="line">    mutating func push(_ newElement: Element) &#123;</span><br><span class="line">        self.elements.append(newElement)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mutating func pop() -&gt; Element? &#123;</span><br><span class="line">        guard !self.elements.isEmpty else &#123; return nil &#125;</span><br><span class="line">        return self.elements.removeFirst()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Swift未来会更进一步，当成员访问的时候，可以省略<code>self.</code>，使已经隐含的<code>self.</code>变得更加隐含。</p>
+</blockquote>
+<p>通过将所有语法组合在一起，可以使Swift代码表达性强，表达清晰，简洁：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var queue &#x3D; Queue&lt;Int&gt;()</span><br><span class="line">queue.push(1)</span><br><span class="line">queue.push(2)</span><br><span class="line">queue.pop() &#x2F;&#x2F; 1</span><br></pre></td></tr></table></figure>
+
+<p>与Objective-C等更冗长的语言相比，编写Swift的经验非常好。很难想象会有任何Swift开发人员反对我们这里所说的“糖衣”。</p>
+<p>但是就像16盎司的Surge罐头一样，某些东西的含糖量通常令人惊讶。事实证明，以前的例子远非无辜：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var queue &#x3D; Queue&lt;Int&gt;() &#x2F;&#x2F; desugars to &#96;Queue&lt;Int&gt;.init()&#96;</span><br><span class="line">queue.push(1) &#x2F;&#x2F; desugars to &#96;Queue.push(&amp;queue)(1)&#96;</span><br></pre></td></tr></table></figure>
+
+<p>一直以来，我们所谓的对方法和初始化器的“直接”调用实际上是使用部分应用函数的函数的简写形式.</p>
+<blockquote>
+<p>经常将部分应用程序和currying混为一谈。实际上，它们是不同但相关的概念。<br>  Swift的早期版本具有用于currying函数的专用语法，但事实证明它没有最初预期的有用，并且已被第二次Swift Evolution提议删除。<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Swift &lt;3:</span><br><span class="line">func curried(x: Int)(y: String) -&gt; Float &#123;</span><br><span class="line">  return Float(x) + Float(y)!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Swift &gt;&#x3D;3</span><br><span class="line">func curried(x: Int) -&gt; (String) -&gt; Float &#123;</span><br><span class="line">  return &#123; (y: String) -&gt; Float in</span><br><span class="line">      return Float(x) + Float(y)!</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>考虑到这一点，让我们现在更笼统地研究Swift中的可调用类型。</p>
+<h1 id="Type-Instance-Member-⨯-Static-Dynamic"><a href="#Type-Instance-Member-⨯-Static-Dynamic" class="headerlink" title="{Type, Instance, Member} ⨯ {Static, Dynamic}"></a>{Type, Instance, Member} ⨯ {Static, Dynamic}</h1><p>自从分别在Swift 4.2和Swift 5中引入以来，许多开发人员一直难以保持@dynamicMemberLookup和@dynamicCallable的直觉-在Swift 5.2中引入callAsFunction变得更加困难。</p>
+<p>如果您也感到困惑，我们认为下表可以帮助您解决问题：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Static</th>
+<th>Dynamic</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Type</td>
+<td><code>init</code></td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Instance</td>
+<td><code>callAsFunction</code></td>
+<td><code>@dynamicCallable</code></td>
+</tr>
+<tr>
+<td>Member</td>
+<td><code>func</code></td>
+<td><code>@dynamicMemberLookup</code></td>
+</tr>
+</tbody></table>
+<p>Swift一直都有静态的可调用类型和类型成员。新版Swift中的变化是实例现在可以调用，实例和成员都可以动态调用。</p>
+<blockquote>
+<p>您可能已经注意到我们表中的空白处。确实，无法动态调用类型。实际上，除了调用初始化程序外，没有其他方法可以静态地调用类型，这可能是最好的。</p>
+</blockquote>
+<p>让我们看看从静态可调用对象开始的实际含义。</p>
+<h1 id="Static-Callable"><a href="#Static-Callable" class="headerlink" title="Static Callable"></a>Static Callable</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct Static &#123;</span><br><span class="line">    init() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    func callAsFunction() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    static func function() &#123;&#125;</span><br><span class="line">    func function() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过以下方式静态调用此类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let instance &#x3D; Static() &#x2F;&#x2F; ❶ desugars to &#96;Static.init()&#96;</span><br><span class="line"></span><br><span class="line">Static.function() &#x2F;&#x2F; ❷ (no syntactic sugar!)</span><br><span class="line">instance.function() &#x2F;&#x2F; ❸ desugars to Static.function(instance)()</span><br><span class="line"></span><br><span class="line">instance() &#x2F;&#x2F; ❹ desugars to &#96;Static.callAsFunction(instance)()&#96;</span><br></pre></td></tr></table></figure>
+
+<p>❶ 调用静态类型将调用初始化程序</p>
+<p>❷ 在Static类型上调用函数将调用相应的static函数成员，并将Static作为隐式的self参数传递。</p>
+<p>❸ 在Static实例上调用函数将调用相应的函数成员，并将该实例作为隐式的self参数传递。</p>
+<p>❹ 调用Static的实例将调用callAsFunction（）函数成员，并将该实例作为隐式的self参数传递。</p>
+<blockquote>
+<p>为了完整起见，请注意以下几点：</p>
+</blockquote>
+<ul>
+<li>您还可以静态调用下标和变量成员（属性）。</li>
+<li>运算符提供了另一种调用静态成员函数的方法。</li>
+<li>枚举情况是……完全是另外一回事。</li>
+</ul>
+<h1 id="Dynamic-Callable"><a href="#Dynamic-Callable" class="headerlink" title="Dynamic Callable"></a>Dynamic Callable</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@dynamicCallable</span><br><span class="line">@dynamicMemberLookup</span><br><span class="line">struct Dynamic &#123;</span><br><span class="line">    func dynamicallyCall(withArguments args: [Int]) -&gt; Void &#123; () &#125;</span><br><span class="line">    func dynamicallyCall(withKeywordArguments args: KeyValuePairs&lt;String, Int&gt;) -&gt; Void &#123; () &#125;</span><br><span class="line"></span><br><span class="line">    static subscript(dynamicMember member: String) -&gt; (Int) -&gt; Void &#123; &#123; _ in &#125; &#125;</span><br><span class="line">    subscript(dynamicMember member: String) -&gt; (Int) -&gt; Void &#123; &#123; _ in &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过几种不同的方式动态调用此类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let instance &#x3D; Dynamic() &#x2F;&#x2F; desugars to &#96;Dynamic.init()&#96;</span><br><span class="line"></span><br><span class="line">instance(1) &#x2F;&#x2F; ❶ desugars to &#96;Dynamic.dynamicallyCall(instance)(withArguments: [1])&#96;</span><br><span class="line">instance(a: 1) &#x2F;&#x2F; ❷ desugars to &#96;Dynamic.dynamicallyCall(instance)(withKeywordArguments: [&quot;a&quot;: 1])&#96;</span><br><span class="line"></span><br><span class="line">Dynamic.function(1) &#x2F;&#x2F; ❸ desugars to &#96;Dynamic[dynamicMember: &quot;function&quot;](1)&#96;</span><br><span class="line">instance.function(1) &#x2F;&#x2F; ❹ desugars to &#96;instance[dynamicMember: &quot;function&quot;](1)&#96;</span><br></pre></td></tr></table></figure>
+
+<p>❶ 调用Dynamic的实例将调用dynamicCall（withArguments :)方法，并传递参数数组并将Dynamic作为隐式的self参数传递。</p>
+<p>❷ 用至少一个带标签的参数调用Dynamic的实例将调用dynamicCall（withKeywordArguments :)方法，将参数传递给KeyValuePairs对象，并将Dynamic作为隐式的self参数传递。</p>
+<p>❸ 在Dynamic类型上调用function会调用static dynamicMember下标，并以’function’作为键；在这里，我们称为返回的匿名闭包。</p>
+<p>❹ 在Dynamic实例上调用function会调用dynamicMember下标，并将“ function”作为键；在这里，我们称为返回的匿名闭包。</p>
+<h1 id="通过声明属性的Dynamism"><a href="#通过声明属性的Dynamism" class="headerlink" title="通过声明属性的Dynamism"></a>通过声明属性的Dynamism</h1><p><code>@dynamicCallable</code>和<code>@dynamicMemberLookup</code>是声明属性，这意味着它们无法通过扩展名应用于现有声明。</p>
+<p>因此，例如，您无法使用带有Ruby风格的自然语言访问器为Int增添趣味：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@dynamicMemberLookup &#x2F;&#x2F; ⚠︎ Error: &#39;@dynamicMemberLookup&#39; attribute cannot be applied to this declaration</span><br><span class="line">extension Int &#123;</span><br><span class="line">    static subscript(dynamicMember member: String) -&gt; Int? &#123;</span><br><span class="line">        let string &#x3D; member.replacingOccurrences(of: &quot;_&quot;, with: &quot;-&quot;)</span><br><span class="line"></span><br><span class="line">        let formatter &#x3D; NumberFormatter()</span><br><span class="line">        formatter.numberStyle &#x3D; .spellOut</span><br><span class="line">        return formatter.number(from: string)?.intValue</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ⚠︎ Error: Just to be super clear, this doesn&#39;t work</span><br><span class="line">Int.forty_two &#x2F;&#x2F; 42 (hypothetically, if we could apply &#96;@dynamicMemberLookup&#96; in an extension)</span><br></pre></td></tr></table></figure>
+
+<p>将此与<code>callAsFunction</code>进行比较，后者可以添加到扩展中的任何类型。</p>
+<p><code>@dynamicMemberLookup</code>，<code>@dynamicCallable</code>和<code>callAsFunction</code>还有很多要讨论的地方，我们希望在以后的文章中更详细地介绍它们。</p>
+<h1 id="Swift-⨯"><a href="#Swift-⨯" class="headerlink" title="Swift ⨯ _______"></a>Swift ⨯ _______</h1><p>添加到我们的“代码是什么样的”列表中：</p>
+<blockquote>
+<p>Code is like fan fiction.</p>
+</blockquote>
+<p>有时要交付软件，您需要配对并“交付”不同的技术。</p>
+<p>从某种意义上说，Swift的故事是现代计算机中最伟大的悲剧性恋情之一。 我们还能如何描述Objective-C牺牲自身以使Swift成为可能的方式？</p>
+<p>在构建这些功能时，Swift取代了Python成为机器学习的“力量”。 理所当然的认为增量方法是最好的，实现这一目标的方法是允许Swift与Python像与Objective-C一样无缝地互操作。 从Swift 4.2开始，我们已经非常接近了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import Python</span><br><span class="line"></span><br><span class="line">let numpy &#x3D; Python.import(&quot;numpy&quot;)</span><br><span class="line">let zeros &#x3D; numpy.ones([2, 4])</span><br><span class="line">&#x2F;* [[1, 1, 1, 1]</span><br><span class="line">    [1, 1, 1, 1]] *&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Dynamism的外部影响"><a href="#Dynamism的外部影响" class="headerlink" title="Dynamism的外部影响"></a>Dynamism的外部影响</h1><p>附加更改的承诺是，如果您不希望它们进行任何更改，它们不会更改任何内容。您可以继续编写Swift代码，而完全不了解本文中介绍的功能（到目前为止，我们大多数人都知道）。但请明确一点：没有免费的抽象。</p>
+<p>经济学使用负外部性一词来描述决策产生的间接成本。尽管您不使用这些功能就不必付费，但是我们所有人都负担着更复杂的语言的负担，这种语言更加难以教授，学习，记录和推理。</p>
+<p>从一开始就加入Swift的许多人对Swift Evolution感到厌倦。对于那些向外看的人来说，这是不可思议的，我们正在浪费时间在这种无关紧要的“糖”上，而不是像<code>async</code> / <code>await</code>那样真正能够移动针头的功能。</p>
+<p>孤立地，这些建议中的每一个都是真正的周到且有用的。我们已经有机会使用其中一些。但是，当他们沉迷于情感的包裹中时，很难凭自己的技术优势来判断事物。</p>
+<p>每个人都有自己的糖耐量，通常会根据他们的习惯来了解。意识到吊桥效应，老实说，我无法断定我是否失去联系，还是孩子错了……</p>
+<h1 id="翻译感受"><a href="#翻译感受" class="headerlink" title="翻译感受"></a>翻译感受</h1><p>讲实话，这篇文章，对我这个小菜鸟来说有点难了，所以建议还是看英文原文比较好，翻译只是锻炼我的英文能力。</p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/03/04/%E3%80%90%E8%AF%91%E3%80%91Xcode-Build-Configuration-Files/" title= "【译】Xcode Build Configuration Files">
+                    <div class="nextTitle">【译】Xcode Build Configuration Files</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/22/2019%E5%B0%8F%E6%80%BB%E7%BB%93/" title= "2019学习小总结">
+                    <div class="prevTitle">2019学习小总结</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nijiehaha" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E6%96%87"><span class="toc-number">1.</span> <span class="toc-text">原文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Swift%E4%B8%AD%E7%9A%84%E8%AF%AD%E6%B3%95%E7%B3%96"><span class="toc-number">3.</span> <span class="toc-text">Swift中的语法糖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%CE%BB%E6%BC%94%E7%AE%97%E5%92%8C%E5%9F%BA%E7%A1%80%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E5%8F%91%E5%B1%95%E9%81%90%E6%83%B3"><span class="toc-number">4.</span> <span class="toc-text">λ演算和基础计算机科学发展遐想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Swift%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.</span> <span class="toc-text">Swift中的函数类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-number">6.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Type-Instance-Member-%E2%A8%AF-Static-Dynamic"><span class="toc-number">9.</span> <span class="toc-text">{Type, Instance, Member} ⨯ {Static, Dynamic}</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Static-Callable"><span class="toc-number">10.</span> <span class="toc-text">Static Callable</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dynamic-Callable"><span class="toc-number">11.</span> <span class="toc-text">Dynamic Callable</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%A3%B0%E6%98%8E%E5%B1%9E%E6%80%A7%E7%9A%84Dynamism"><span class="toc-number">12.</span> <span class="toc-text">通过声明属性的Dynamism</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Swift-%E2%A8%AF"><span class="toc-number">13.</span> <span class="toc-text">Swift ⨯ _______</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dynamism%E7%9A%84%E5%A4%96%E9%83%A8%E5%BD%B1%E5%93%8D"><span class="toc-number">14.</span> <span class="toc-text">Dynamism的外部影响</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BF%BB%E8%AF%91%E6%84%9F%E5%8F%97"><span class="toc-number">15.</span> <span class="toc-text">翻译感受</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 50
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/%E5%90%90%E6%A7%BDflutter/" >吐槽flutter</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2021/02/22/%E5%85%B3%E4%BA%8E-Unicode/" >关于 Unicode</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/03</span><a class="archive-post-title" href= "/2021/02/03/HandyJSON-%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90/" >HandyJSON 原理浅析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2021/01/20/Swift-%E5%8F%96%E6%95%B4/" >Swift 取整</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2020/12/11/%E4%BD%8D%E8%BF%90%E7%AE%97/" >位运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/iOS-%E5%8F%AF%E8%83%BD%E6%9C%89%E7%94%A8%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%9F%A5%E8%AF%86/" >iOS 可能有用的多线程小知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/15</span><a class="archive-post-title" href= "/2020/10/15/Hexo-%E4%B8%AD%E6%8F%92%E5%85%A5-Bilibili-%E8%A7%86%E9%A2%91/" >Hexo 中插入 Bilibili 视频</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/%E5%8D%87%E7%BA%A7-iOS14-%E4%B9%8B%E5%90%8E/" >升级 iOS 14 之后</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href= "/2020/10/09/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81/" >子网掩码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2020/09/18/iOS-%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2/" >iOS 仿射变换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/Swift-%E9%97%AD%E5%8C%85%E7%9A%84%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/" >Swift 闭包的循环引用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/Swift-Package-Manager-tips/" >Swift Package Manager tips</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/04</span><a class="archive-post-title" href= "/2020/08/04/%E8%8B%B1%E6%96%87%E5%AD%A6%E4%B9%A0%EF%BC%9A%E9%9B%B6/" >英文学习：零</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/iOS-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/" >iOS 图片处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href= "/2020/07/10/Swift-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%97%A0%E8%81%8A%E7%9A%84%E6%B5%8B%E8%AF%95/" >Swift 记一次无聊的测试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2020/07/08/iOS-Auto-Layout/" >iOS Auto Layout</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/07</span><a class="archive-post-title" href= "/2020/07/07/iOS-Push-Modal-Navigation/" >iOS Push & Modal Navigation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2020/06/12/Mac-App-%E5%8A%A8%E6%80%81%E5%BA%93%E6%B3%A8%E5%85%A5/" >Mac App 动态库注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/Git-%E5%8E%8B%E7%BC%A9%E6%8F%90%E4%BA%A4/" >Git 压缩提交</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2020/06/04/iOS-%E5%85%B3%E4%BA%8E%E9%94%AE%E7%9B%98/" >iOS 关于键盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/Swift-%E5%8A%A0%E5%AF%86/" >Swift 加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84UICollectionView/" >你可能不知道的UICollectionView</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/Swift-%E5%93%88%E5%B8%8C%E8%A1%A8/" >Swift 哈希表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/iOS-%E5%85%B3%E4%BA%8E%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/" >iOS 关于离屏渲染</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2020/03/20/iOS13%E7%A7%BB%E9%99%A4UIWebView%E4%B9%8B%E5%90%8E/" >iOS13移除UIWebView之后</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2020/03/18/%E5%9C%A8iOS%E8%AE%BE%E5%A4%87%E4%B8%8A%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0web%E6%9C%8D%E5%8A%A1%E5%99%A8/" >在iOS设备上运行本地web服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2020/03/10/%E7%9F%A5%E8%AF%86%E5%B0%8F%E9%9B%86/" >知识小集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href= "/2020/03/04/%E3%80%90%E8%AF%91%E3%80%91Xcode-Build-Configuration-Files/" >【译】Xcode Build Configuration Files</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/25</span><a class="archive-post-title" href= "/2020/02/25/%E3%80%90%E8%AF%91%E3%80%91Static-and-Dynamic-Callable-Types-in-Swift/" >【译】Static and Dynamic Callable Types in Swift</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href= "/2020/01/22/2019%E5%B0%8F%E6%80%BB%E7%BB%93/" >2019学习小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2020/01/20/%E3%80%90%E8%AF%91%E3%80%91Objective-C-Direct-Methods/" >【译】Objective-C Direct Methods</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/16</span><a class="archive-post-title" href= "/2019/12/16/Kingfisher%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" >Kingfisher源码阅读:命名空间</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2019/12/04/%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" >语义分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/03</span><a class="archive-post-title" href= "/2019/12/03/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" >语法分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/02</span><a class="archive-post-title" href= "/2019/12/02/%E6%89%8B%E5%B7%A5%E6%89%93%E9%80%A0%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" >手工打造词法分析器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2019/11/29/%E5%9D%91%E7%88%B9%E7%9A%84Swift-REPL/" >坑爹的Swift REPL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/2019/11/28/LLDB%E8%B0%83%E8%AF%95C%E7%A8%8B%E5%BA%8F/" >LLDB调试C程序</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2019/11/26/%E5%85%B3%E4%BA%8E%E9%81%AE%E7%BD%A9-mask/" >关于遮罩(mask)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2019/11/15/hybrid%E6%A1%86%E6%9E%B6-js%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83%E5%AE%9E%E7%8E%B0/" >hybrid框架:js异步回调实现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2019/11/15/swift%E4%B8%8A%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8/" >swift上的装饰器(Decorator)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2019/06/03/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" >内存管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/24</span><a class="archive-post-title" href= "/2019/05/24/%E5%B0%91%E5%B9%B4%E6%8E%A2%E6%A1%88/" >少年探案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2019/04/30/iOS-dSYM/" >iOS 符号表(dSYM)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/08</span><a class="archive-post-title" href= "/2018/10/08/%E6%B5%85%E8%B0%88runloop/" >浅谈runloop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2018/09/11/NTA%E6%89%93%E6%B4%9E/" >NTA打洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2018/09/11/NAT%E4%B8%8E%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" >NAT与内网穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/2018/09/07/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" >第一次写博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2017/02/27/iOS%E4%B8%AD%E7%9A%84%E5%BA%93-%E5%88%9D%E8%AF%86/" >iOS中的库----初识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2017/01/09/%E5%88%9D%E5%AD%A6Method-Swizzling/" >初学Method Swizzling</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/" >杂七杂八小合集</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
+    
+        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
+    
+        <span class="sidebar-tag-name" data-tags="翻译计划"><span class="iconfont-archer">&#xe606;</span>翻译计划</span>
+    
+        <span class="sidebar-tag-name" data-tags="计算机基础"><span class="iconfont-archer">&#xe606;</span>计算机基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译原理"><span class="iconfont-archer">&#xe606;</span>编译原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="英文学习"><span class="iconfont-archer">&#xe606;</span>英文学习</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
+    
+        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
+    
+        <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
+    
+        <span class="sidebar-category-name" data-categories="翻译计划"><span class="iconfont-archer">&#xe60a;</span>翻译计划</span>
+    
+        <span class="sidebar-category-name" data-categories="计算机基础"><span class="iconfont-archer">&#xe60a;</span>计算机基础</span>
+    
+        <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="英文学习"><span class="iconfont-archer">&#xe60a;</span>英文学习</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "路小飞"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
