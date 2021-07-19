@@ -354,6 +354,38 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/09/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81/" >
+            
+                <span>子网掩码</span>
+        </a>
+        <div class="abstract-content">
+            一直对子网掩码的概念很模糊，总结一下。
+子网掩码是一种用来指明一个 IP 地址的哪些位标识的是主机所在的网络地址以及哪些位标识的是主机地址的位掩码。
+子网掩码的表示方法通常情况下，子网掩码的表示方法和地址本身的表示方法是一样的。在 IPv4 中，就是点分十进制四组表示法（四个取值从 0 到 255 的数字由点隔开，比如 255.128.0.0）
+另一种更为简短的形式叫做无类别域间路由（CIDR）表示法，它给出的是一个地址加上一个斜杠以及网络掩码的二进制表示法中 “1” 的位数（即网络号中和网络掩码相关的是哪些位）。例如，192.0.2.96/28 表示的是一个前28位被用作网络号的IP地...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/09/18/iOS-%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2/" >
             
                 <span>iOS 仿射变换</span>
@@ -651,44 +683,6 @@ Modal Navigation模态 Navigation 是指「一个 VC，以...
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "杂七杂八">杂七杂八</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/10/Git-%E5%8E%8B%E7%BC%A9%E6%8F%90%E4%BA%A4/" >
-            
-                <span>Git 压缩提交</span>
-        </a>
-        <div class="abstract-content">
-            前言对于有点强迫症的我来说，Git 分支上过多冗余的 commit 记录是我心中的痛，于是「压缩提交」就成了一个必须要解决的问题。
-通过各种搜索，查资料，总结下来，大概下面几种办法。
-方法一删掉 .git 文件夹，重新 git init，从零开始，吧啦吧啦。。。
-简单粗暴～
-如果项目只有一个分支的话，可以这么做，如果还有其他的，建议不要这样做，因为这样就把其他分支的 commit 记录 都删了
-方法二使用 git rebase -i，合并 commit 。。。
-优雅～
-方法三使用 git reset --soft, 吧啦吧啦。。。
-优雅～
-方法四假设我们要压缩的是 master 上的 提...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/10</span>
             </div>
             <!-- tags  -->
             
@@ -1500,9 +1494,22 @@ Modal Navigation模态 Navigation 是指「一个 VC，以...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 51
+        Total : 52
         </div>
         <!-- search  -->
         
@@ -1515,6 +1522,11 @@ Modal Navigation模态 Navigation 是指「一个 VC，以...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2021/07/19/Bohemian-Rhapsody/" >Bohemian Rhapsody</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1823,9 +1835,11 @@ Modal Navigation模态 Navigation 是指「一个 VC，以...
     
         <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lyrics"><span class="iconfont-archer">&#xe606;</span>Lyrics</span>
+    
+        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
     
         <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
@@ -1837,9 +1851,9 @@ Modal Navigation模态 Navigation 是指「一个 VC，以...
     
         <span class="sidebar-tag-name" data-tags="计算机基础"><span class="iconfont-archer">&#xe606;</span>计算机基础</span>
     
-        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
-    
         <span class="sidebar-tag-name" data-tags="编译原理"><span class="iconfont-archer">&#xe606;</span>编译原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
     
         <span class="sidebar-tag-name" data-tags="英文学习"><span class="iconfont-archer">&#xe606;</span>英文学习</span>
     
@@ -1878,9 +1892,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
     
-        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
     
         <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
@@ -1892,9 +1906,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="计算机基础"><span class="iconfont-archer">&#xe60a;</span>计算机基础</span>
     
-        <span class="sidebar-category-name" data-categories="数据结构"><span class="iconfont-archer">&#xe60a;</span>数据结构</span>
-    
         <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="数据结构"><span class="iconfont-archer">&#xe60a;</span>数据结构</span>
     
         <span class="sidebar-category-name" data-categories="英文学习"><span class="iconfont-archer">&#xe60a;</span>英文学习</span>
     
