@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="路小飞">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="路小飞">
+    
+    <meta name="keywords" content="路小飞">
+    
+    <meta name="description" content="">
+    <meta name="description" content="2016.8.18UITextField 两个属性：  inputView  自定义键盘 inputAccessoryView  键盘附属视图  后端技术杂谈 iOS 推送APNS 的 推送机制 当你的iPhone收到推送信息后到底会发生什么呢？总共有三种可能性：  app在前台运行. 接收到推送信息时屏幕上不会有任何显示，也不会有提示音，但你的app　delegate会收到这个推送信息。你可以在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂七杂八小合集">
+<meta property="og:url" content="https://nijiehaha.github.io/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/index.html">
+<meta property="og:site_name" content="lufei&#39;s Blog">
+<meta property="og:description" content="2016.8.18UITextField 两个属性：  inputView  自定义键盘 inputAccessoryView  键盘附属视图  后端技术杂谈 iOS 推送APNS 的 推送机制 当你的iPhone收到推送信息后到底会发生什么呢？总共有三种可能性：  app在前台运行. 接收到推送信息时屏幕上不会有任何显示，也不会有提示音，但你的app　delegate会收到这个推送信息。你可以在">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-08-18T01:24:30.000Z">
+<meta property="article:modified_time" content="2020-04-30T03:03:51.230Z">
+<meta property="article:author" content="路小飞">
+<meta property="article:tag" content="杂七杂八">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>杂七杂八小合集 · lufei&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/lufei.jpg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >lufei&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">杂七杂八小合集</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>lufei's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            杂七杂八小合集
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "杂七杂八">杂七杂八</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">8.2k</span>阅读时长: <span class="post-count reading-time">29 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2016/08/18</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="2016-8-18"><a href="#2016-8-18" class="headerlink" title="2016.8.18"></a>2016.8.18</h1><p>UITextField 两个属性：</p>
+<ul>
+<li>inputView  自定义键盘</li>
+<li>inputAccessoryView  键盘附属视图</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.rowkey.me/blog/2016/08/27/server-basic-tech-stack/">后端技术杂谈</a></p>
+<h1 id="iOS-推送"><a href="#iOS-推送" class="headerlink" title="iOS 推送"></a>iOS 推送</h1><p>APNS 的 推送机制</p>
+<p>当你的iPhone收到推送信息后到底会发生什么呢？总共有三种可能性：</p>
+<ul>
+<li><p>app在前台运行. 接收到推送信息时屏幕上不会有任何显示，也不会有提示音，但你的app　delegate会收到这个推送信息。你可以在这里加入代码来处理接收到的信息。</p>
+</li>
+<li><p>app不在前台运行。iPhone可能停留在主界面或者另一个app正在运行.一个提示窗口会弹出，可能伴随着提示音。用户可以点击Close按钮来关闭这个窗口或者点击View按钮来打开你的app。如果用户点击的时Close按钮，那你的app不会处理这个推送的信息。</p>
+</li>
+<li><p>iPhone在锁屏状态下. 同样一个提示窗口弹出，并伴随着提示音，但是这个窗口不会有Close和View按钮。屏幕解锁后会自动进入你的app。</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/5862">手把手教你做iOS推送</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20667886">讨论</a></p>
+<h1 id="小知识-1-0"><a href="#小知识-1-0" class="headerlink" title="小知识 1.0"></a>小知识 1.0</h1><p><a target="_blank" rel="noopener" href="http://www.oschina.net/ios/codingList/383/ios-popup-view">弹框 第三方</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/huoran1120/p/5903089.html">iOS10适配</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22471890">iOS开发 适配iOS10以及Xcode8</a></p>
+<h2 id="cocopods-一些-问题"><a href="#cocopods-一些-问题" class="headerlink" title="cocopods 一些 问题"></a>cocopods 一些 问题</h2><p>出现 Setting up CocoaPods master repo，说明 Cocoapods 在将它的信息下载到  ~/.cocoapods 里；</p>
+<p>cd  到该目录里，用 <code>du -sh *</code> 命令来查看文件大小，</p>
+<p>每隔几分钟查看一次，这个目录最终大小是100多M（ 本人这里大概 800M + ），就是完成了</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f65ca53fc9ba">tableView 的编辑模式</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/18cb6632064e">详细易懂的二维码的扫描、识别与生成</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/de64b16bbaa4">iOS10本地推送实践记录（Objective-C）</a></p>
+<p><a target="_blank" rel="noopener" href="https://zsisme.gitbooks.io/ios-/content/chapter5/3d-transform.html">3D变换</a></p>
+<blockquote>
+<p>将坐标系上下翻转。对于底层的绘制引擎来说，屏幕的左下角是（0, 0）坐标。而对于上层的 UIKit 来说，左上角是 (0, 0) 坐标。所以我们为了之后的坐标系描述按 UIKit 来做，所以先在这里做一个坐标系的上下翻转操作。翻转之后，底层和上层的 (0, 0) 坐标就是重合的了。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mengxiangyue/article/details/50753839">OC项目中使用Swift</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wlq861025/article/details/52763150">Xcode 8 size class</a></p>
+<h2 id="应用间跳转"><a href="#应用间跳转" class="headerlink" title="应用间跳转"></a>应用间跳转</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xubaoaichiyu/archive/2016/04/09/5372493.html">跳转到指定app的实现</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/17855">iOS开发–一步步教你彻底学会『iOS应用间相互跳转』</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0811ccd6a65d">打开另一个APP（URL Scheme与openURL）</a></p>
+<h2 id="打包静态库相关"><a href="#打包静态库相关" class="headerlink" title="打包静态库相关"></a>打包静态库相关</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/468f8da385e7">在一个Xcode页面建立多个工程</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013604612/article/details/43197465">iOS开发——创建你自己的Framework</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Damonvvong/DevNotes/blob/master/Notes/framework2.md">iOS 开发中的『库』(二)</a></p>
+<h2 id="UIImageView-上下和左右翻转"><a href="#UIImageView-上下和左右翻转" class="headerlink" title="UIImageView 上下和左右翻转"></a>UIImageView 上下和左右翻转</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 左右</span><br><span class="line">imageView.transform &#x3D; CGAffineTransformMakeScale(-1.0, 1.0)</span><br><span class="line"># 上下</span><br><span class="line">imageView.transform &#x3D; CGAffineTransformMakeScale(1.0, -1.0)</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p><a target="_blank" rel="noopener" href="https://halfrost.com/ios_block_retain_circle/">深入研究 Block 用 weakSelf、strongSelf、@weakify、@strongify 解决循环引用</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qaz13177_58_/article/details/27544177">如何生成ssh公钥</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aaronjs/p/4165049.html">四种常见的 POST 提交数据方式</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/que_li/article/details/49640535">UITableViewStyleGrouped和plain的两种格式的区别</a></p>
+<p><a target="_blank" rel="noopener" href="http://io.upyun.com/2016/03/23/the-real-files-in-alasset-and-phasset/">ALAsset/PHAsset 中的图片和视频文件</a></p>
+<p><a target="_blank" rel="noopener" href="http://kittenyang.com/collectionview/">快速用Storyboard创建一个UICollectionView</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/touch929/article/details/72896223">iOS架构师之路：制定代码规范</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cneducation/article/details/54729106">macOS: 使用新版plutil命令操作Plist文件更方便</a></p>
+<h2 id="PhotoKit"><a href="#PhotoKit" class="headerlink" title="PhotoKit"></a>PhotoKit</h2><p><a target="_blank" rel="noopener" href="https://objccn.io/issue-21-4/">照片框架</a></p>
+<blockquote>
+<p>照片库中有两种资源可供获取：PHAsset 和 PHCollection，前者代表图像或视频对象，后者是前者的集合或自身类型的集合。PHCollection是个基类，有PHAssetCollection和 PhCollectionList两个子类，分别代表Photos里的相册和文件夹。以往使用Photos时，并没有注意到可以建立文件夹，似乎是从Photos才支持这个功能，而 PHCollectionList里可嵌套PHAssetCollection和自身类型，还支持多重嵌套。获取PhAsset以及PHAssetCollection的过程类似于Core Data，如下所示，只能通过类方法来返回PHFetchResult，遍历返回的结果来获取需要的资源。</p>
+</blockquote>
+<h1 id="小知识-2-0"><a href="#小知识-2-0" class="headerlink" title="小知识 2.0"></a>小知识 2.0</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30513483/article/details/51611653">iOS: 玩转UICollectionViewLayout</a></p>
+<h2 id="关于为什么我在-使用-SDWebImage-的过程中，为何没有出现-tableView-卡顿和内存泄露的原因"><a href="#关于为什么我在-使用-SDWebImage-的过程中，为何没有出现-tableView-卡顿和内存泄露的原因" class="headerlink" title="关于为什么我在 使用 SDWebImage 的过程中，为何没有出现 tableView 卡顿和内存泄露的原因"></a>关于为什么我在 使用 SDWebImage 的过程中，为何没有出现 tableView 卡顿和内存泄露的原因</h2><p>首先，我们理解一个概念：图片加载的三级缓存：1.内存缓存 优先加载，速度最快。2.本地缓存 次优先加载 速度稍快 3.网络缓存 最后加载 速度由网络速度决定（浪费流量）</p>
+<p>第二，结合图片的三级缓存，SDWebImage 的 图片加载原理为：1.异步加载 2根据 URL 开始处理图片 3.从缓存查找图片是否已经下载 （先从内存缓存开始搜索，然后是本地缓存，注意：从本地缓存读取到照片后，并不立即返回，而是加载到内存缓存）4.缓存找不到，就从URL下载，并且本地和内存缓存同步</p>
+<p>第三，我在使用的时候，是使用了cell的重用的，sd_setImage的方法是在刷新cell的地方调用的，而因为三级缓存的机制，无论怎样重用，都不会重复加载，但是如果滑动速度很快，而且Cell的个数足够多的话，会导致内存暴增，这时候，应该采用“不定时”调用清除内存缓存的方法</p>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/ziip/p/4664234.html">使用SDWebImage加载大量图片后造成内存泄露的解决办法</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/guojiezhi/article/details/52033796">使用SDWebImage和YYImage下载高分辨率图，导致内存暴增的解决办法</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ba4cbf8dfe49">SDWebImage底层实现原理及内部实现过程</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/wuyinlei/article/details/50606455">浅谈图片加载的三级缓存（一）</a></p>
+<h2 id="其他-2"><a href="#其他-2" class="headerlink" title="其他"></a>其他</h2><p><a target="_blank" rel="noopener" href="https://my.oschina.net/u/2340880/blog/795680">iOS开发CoreGraphics核心图形框架之七——图像处理</a></p>
+<p><a target="_blank" rel="noopener" href="http://southpeak.github.io/2015/01/05/quartz2d-11/">Quartz 2D编程指南之十一：位图与图像遮罩</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5c22eaf1f265da611b5863b2">深入浅出iOS编译</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/17704">ios实现颜色渐变的几种方法</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/9573">苹果官方Apple Pay开发文档（中文版）：开始使用Apple Pay</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiajiayouba/article/details/9130783">递归和分治思想的典型应用—汉诺塔问题</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cocoachina.com/articles/15262">iOS 开发之动画篇 - 从 UIView 动画说起</a></p>
+<p><a target="_blank" rel="noopener" href="http://jpache.com/2016/03/18/iOS-VoIP-VoIP-Push-%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90/">iOS VoIP (VoIP Push)开发集成</a></p>
+<p><a target="_blank" rel="noopener" href="https://oopsr.github.io/2016/06/20/voip/">iOS利用voip push实现类似微信(QQ)电话连续响铃效果</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxOTc0NzExNg==&mid=2665513387&idx=1&sn=99665948d0b968cf15c5e7a01ffe166c&chksm=80d679e8b7a1f0febad077b57e8ad73bfb4b08de74814c45e1b1bd61ab4017b5041942403afb&scene=21#wechat_redirect">张大胖的socket</a></p>
+<blockquote>
+<p>我所知道的java中的socket值得是套接字，就是你的tcp之类的请求， websocket是在http协议的基础上对socket的升级封装，作用是实现你的客户端和服务端的通信，就相当于你做聊天的话，如果是不用这个东西，你的客户端是不是要做到和服务端的连接请求，一直不断的连他，看看有没有数据，然后拿到这个数据， websocket的话就是你的客户端和服务端建立起来一个链接，比如我发送一个消息给客户端，然后客户端自动把这个消息发给你了，不需要你一直链接服务端。mq的话是做消息队列的，里面两种模式，这个相当于，你给我发了很多的消息，我可以一个一个的点开，慢慢处理事情，就差不多是这么个意思</p>
+</blockquote>
+<h2 id="为什么会需要消息队列-MQ-？"><a href="#为什么会需要消息队列-MQ-？" class="headerlink" title="为什么会需要消息队列(MQ)？"></a>为什么会需要消息队列(MQ)？</h2><p>主要原因是由于在高并发环境下，由于来不及同步处理，请求往往会发生堵塞，比如说，大量的insert，update之类的请求同时到达MySQL，直接导致无数的行锁表锁，甚至最后请求会堆积过多，从而触发too many connections错误。通过使用消息队列，我们可以异步处理请求，从而缓解系统的压力。</p>
+<p>用mq可以避免消息的遗失，就打比方很多人同事给我发东西，我可能好多消息就没接收到，或者接受到了立马就被挤下去了，mq可以解决这个问题</p>
+<h1 id="几道题目"><a href="#几道题目" class="headerlink" title="几道题目"></a>几道题目</h1><p><em><strong>1.什么是arc？（arc是为了解决什么问题诞生的？）</strong></em></p>
+<p>答：首先解释ARC: automatic reference counting 自动引用计数。 </p>
+<p>ARC几个要点： </p>
+<ul>
+<li><p>在对象被创建时 retain count +1，在对象被release时 retain count -1.当retain count 为0 时，销毁对象。 </p>
+</li>
+<li><p>程序中加入autoreleasepool的对象会由系统自动加上autorelease方法，如果该对象引用计数为0，则销毁。 </p>
+</li>
+<li><p>那么ARC是为了解决什么问题诞生的呢？这个得追溯到MRC手动内存管理时代说起。 </p>
+</li>
+</ul>
+<p>MRC下内存管理的缺点： </p>
+<ul>
+<li><p>当我们要释放一个堆内存时，首先要确定指向这个堆空间的指针都被release了。（避免提前释放） </p>
+</li>
+<li><p>释放指针指向的堆空间，首先要确定哪些指针指向同一个堆，这些指针只能释放一次。（MRC下即谁创建，谁释放，避免重复释放） </p>
+</li>
+<li><p>模块化操作时，对象可能被多个模块创建和使用，不能确定最后由谁去释放。 </p>
+</li>
+<li><p>多线程操作时，不确定哪个线程最后使用完毕</p>
+</li>
+</ul>
+<p><em><strong>2.请解释以下keywords的区别： assign vs weak, __block vs __weak</strong></em></p>
+<p>答：assign 适用于基本数据类型，weak 是适用于 NSObject 对象，并且是一个弱引用。 </p>
+<p>assign 其实也可以用来修饰对象，那么我们为什么不用它呢？因为被 assign 修饰的对象在释放之后，指针的地址还是存在的，也就是说指针并没有被置为nil。如果在后续的内存分配中，刚好分到了这块地址，程序就会崩溃掉。 </p>
+<p>而 weak 修饰的对象在释放之后，指针地址会被置为 nil。所以现在一般弱引用就是用weak。 </p>
+<p>首先 __block 是用来修饰一个变量，这个变量就可以在 block 中被修改（参考block实现原理） </p>
+<p>__block：使用__block修饰的变量在 block 代码快中会被 retain（ARC下，MRC下不会retain） </p>
+<p>__weak：使用 __weak 修饰的变量不会在 block 代码块中被 retain </p>
+<p>同时，在 ARC 下，要避免 block 出现循环引用 <code>__weak typedof(self)weakSelf = self</code></p>
+<p><em><strong>3.__block在arc和非arc下含义一样吗？</strong></em></p>
+<p>答：是不一样的。 </p>
+<p>在MRC中__block variable在block中使用是不会retain的 </p>
+<p>但是ARC中__block则是会Retain的。 </p>
+<p>取而代之的是用__weak或是__unsafe_unretained來更精确的描述weak reference的目的 </p>
+<p>其中前者只能在iOS5之后可以使用，但是比较好 (该物件release之后，此pointer会自动设成nil) </p>
+<p>而後者是ARC的环境下为了相容4.x的解決方案。 </p>
+<p><em><strong>4.使用atomic一定是线程安全的吗？</strong></em></p>
+<p>答：不是的。 </p>
+<p>atomic原子操作，系统会为setter方法加锁。 具体使用 @synchronized(self){//code } </p>
+<p>nonatomic不会为setter方法加锁。 </p>
+<p>atomic：线程安全，需要消耗大量系统资源来为属性加锁 </p>
+<p>nonatomic：非线程安全，适合内存较小的移动设备</p>
+<p><em><strong>5.描述一个你遇到过的retain cycle例子。(别撒谎，你肯定遇到过)</strong></em></p>
+<p>答：循环引用</p>
+<p><em><strong>6.+(void)load; +(void)initialize；有什么用处？</strong></em></p>
+<p>答：在OC中，runtime会自动调用每个类的两个方法。+load会在类初始加载时调用，+initialize会在第一次调用类的类方法或实例方法之前被调用。这两个方法是可选的，且只有在实现了它们时才会被调用。 </p>
+<p>共同点：两个方法都只会被调用一次。</p>
+<p><em><strong>7.为什么其他语言里叫函数调用， objective c里则是给对象发消息（或者谈下对runtime的理解）</strong></em></p>
+<p>答：<a target="_blank" rel="noopener" href="http://blog.csdn.net/hanangellove/article/details/45033453">http://blog.csdn.net/hanangellove/article/details/45033453</a></p>
+<p><em><strong>8.什么是method swizzling?</strong></em></p>
+<p>答：见我的简书</p>
+<p><em><strong>9.UIView和CALayer是啥关系?</strong></em></p>
+<p>答：UIView是iOS系统中界面元素的基础，所有的界面元素都继承自它。它本身完全是由CoreAnimation来实现的 （Mac下似乎不是这样）。它真正的绘图部分，是由一个叫CALayer（Core Animation Layer）的类来管理。 UIView本身，更像是一个CALayer的管理器，访问它的跟绘图和跟坐标有关的属性，例如frame，bounds等 等，实际上内部都是在访问它所包含的CALayer的相关属性。</p>
+<p>UIView有个layer属性，可以返回它的主CALayer实例，UIView有一个layerClass方法，返回主layer所使用的 类，UIView的子类，可以通过重载这个方法，来让UIView使用不同的CALayer来显示，例如通过</p>
+<pre><code>- (class) layerClass &#123;
+
+     return ([CAEAGLLayer class]);
+
+&#125;
+</code></pre>
+<p>使某个UIView的子类使用GL来进行绘制。</p>
+<p><em><strong>10.如何高性能的给UIImageView加个圆角？（不准说layer.cornerRadius!）</strong></em></p>
+<p>答：用 Quartz2D </p>
+<p><em><strong>11.使用drawRect有什么影响？（这个可深可浅，你至少得用过。。）</strong></em></p>
+<p><em><strong>12.ASIHttpRequest或者SDWebImage里面给UIImageView加载图片的逻辑是什么样的？（把UIImageView放到UITableViewCell里面问更赞）</strong></em></p>
+<p><em><strong>13.麻烦你设计个简单的图片内存缓存器（移除策略是一定要说的）</strong></em></p>
+<p><em><strong>14.讲讲你用Instrument优化动画性能的经历吧（别问我什么是Instrument）</strong></em></p>
+<p><em><strong>15.loadView是干嘛用的？</strong></em></p>
+<p><em><strong>16.viewWillLayoutSubView你总是知道的。。</strong></em></p>
+<p>答：横竖屏切换的时候，系统会响应一些函数，其中 viewWillLayoutSubviews 和 viewDidLayoutSubviews。</p>
+<p>注意：viewWillLayoutSubviews只能用在ViewController里面，在view里面没有响应。</p>
+<p><em><strong>17.GCD里面有哪几种Queue？你自己建立过串行queue吗？背后的线程模型是什么样的？</strong></em></p>
+<p>答：主队列 dispatch_main_queue(); 串行 ，更新UI </p>
+<p>全局队列 dispatch_global_queue(); 并行，四个优先级：background，low，default，high </p>
+<p>自定义队列 dispatch_queue_t queue ; 可以自定义是并行：DISPATCH_QUEUE_CONCURRENT或者串行DISPATCH_QUEUE_SERIAL</p>
+<p><em><strong>18.用过coredata或者sqlite吗？读写是分线程的吗？遇到过死锁没？咋解决的？</strong></em></p>
+<p><em><strong>19.http的post和get啥区别？（区别挺多的，麻烦多说点）</strong></em></p>
+<p><em><strong>20.我知道你大学毕业过后就没接触过算法数据结构了，但是请你一定告诉我什么是Binary search tree? search的时间复杂度是多少？我很想知道！</strong></em></p>
+<h1 id="关于CGBitmapContextCreate的认识"><a href="#关于CGBitmapContextCreate的认识" class="headerlink" title="关于CGBitmapContextCreate的认识"></a>关于CGBitmapContextCreate的认识</h1><p>一般情况下，一个像素点所占内存为4个字节</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CGContextRef CGBitmapContextCreate （</span><br><span class="line">　　void *data，</span><br><span class="line">　　size_t width，</span><br><span class="line">　　size_t height，</span><br><span class="line">　　size_t bitsPerComponent，</span><br><span class="line">　　size_t bytesPerRow，</span><br><span class="line">　　CGColorSpaceRef colorspace，</span><br><span class="line">　　CGBitmapInfo bitmapInfo</span><br><span class="line">　　）；</span><br></pre></td></tr></table></figure>
+<p>参数data指向绘图操作被渲染的内存区域，这个内存区域大小应该为（bytesPerRow*height）个字节。如果对绘制操作被渲染的内存区域并无特别的要求，那么可以传递NULL给参数data。</p>
+<p>参数width代表被渲染内存区域的宽度。</p>
+<p>参数height代表被渲染内存区域的高度。</p>
+<p>参数bitsPerComponent被渲染内存区域中组件在屏幕每个像素点上需要使用的bits位，举例来说，如果使用32-bit像素和RGB颜色格式，那么RGBA颜色格式中(例如R这应该是一个组件吧，我暂时的理解)在屏幕每个像素点上需要使用的bits位就为32/4=8。</p>
+<p>参数bytesPerRow代表被渲染内存区域中每行所使用的(字节)bytes位数(一般情况下，4 * 宽度)。</p>
+<p>参数colorspace用于被渲染内存区域的“位图上下文”（一般情况下，RGB空间）。</p>
+<p>参数bitmapInfo指定被渲染内存区域的“视图”是否包含一个alpha（透视）通道以及每个像素相应的位置，除此之外还可以指定组件式是浮点值还是整数值。</p>
+<h1 id="HTTP权威指南（阅读笔记）"><a href="#HTTP权威指南（阅读笔记）" class="headerlink" title="HTTP权威指南（阅读笔记）"></a>HTTP权威指南（阅读笔记）</h1><p>HTTP：Web的基础</p>
+<p>Web浏览器，服务器和相关的Web应用程序都是通过HTTP相互通信的。HTTP是现代全球因特网中使用的公共语言</p>
+<p>浏览器 向 服务器 HTTP 解析过程</p>
+<p>1.浏览器从URL中解析出服务器的主机名</p>
+<p>2.浏览器将服务器的主机名转换成服务器的IP地址</p>
+<p>3.浏览器将端口号（如果有的话）从URL中解析出来</p>
+<p>4.浏览器建立一条与Web服务器的TCP连接</p>
+<p>5.浏览器向服务器发送一条HTTP请求报文</p>
+<p>6.服务器向浏览器回送一条HTTP响应报文</p>
+<p>7.关闭连接，浏览器显示文档</p>
+<p>几个词语：</p>
+<p>代理：位于客户端和服务器之间的HTTP中间实体</p>
+<p>缓存：HTTP的仓库，使常用页面的副本可以保存在离客户端更近的地方</p>
+<p>网关：连接其他应用程序的特殊Web服务器</p>
+<p>隧道：对HTTP通信报文进行盲转发的特殊代理</p>
+<p>Agent代理：发起自动HTTP请求的半智能Web客户端</p>
+<h1 id="CoreGraphics学习笔记"><a href="#CoreGraphics学习笔记" class="headerlink" title="CoreGraphics学习笔记"></a>CoreGraphics学习笔记</h1><p>概述：</p>
+<p>CoreGraphics也称为Quartz 2D ，是UIKit下的主要绘图系统，频繁的用于绘制自定义视图。Core Graphics是高度集成于UIView和其他UIKit部分的。Core Graphics数据结构和函数可以通过前缀CG来识别。</p>
+<p>注意：</p>
+<p>视图可以通过子视图、图层或实现drawRect：方法来表现内容，如果说实现了drawRect：方法，那么最好就不要混用其他方法了，如图层和子视图。自定义绘图大部分是由UIKit或者Core Graphics来实现的。</p>
+<p>2D绘图一般可以拆分成以下几个操作：</p>
+<p>1.线条</p>
+<p>2.路径</p>
+<p>3.文本</p>
+<p>4.图片</p>
+<p>5.渐变</p>
+<p>重要：由于像素是依赖于目标的，所以2D绘图并不能操作单独的像素，我们可以从上下文（Context）读取它。</p>
+<p>绘图就好比在画布上拿着画笔机械的进行画画，通过制定不同的参数来进行不同的绘制。</p>
+<p>一. 绘入字符串</p>
+<p>调用NSString类里的实例方法drawAtPoint: withFont:方法可以进行绘制。<br>我们可以遍历设备支持的字体来随机选择一个，然后绘制到drawRect中。</p>
+<p>二. 连续绘制线条，并设置交界样式</p>
+<p>上下文在绘制一条直线后会定格在刚才绘制的线的末端，这样我们可以再通过CGContextAddLineToPoint方法来设置立即进行下一条线的绘制。在线的交界处，我们可以设置交界的样式（CGLineJoin），这个枚举中有三种样式：<br>kCGLineJoinMiter——尖角<br>kCGLineJoinBevel——平角<br>kCGLineJoinRound——圆形</p>
+<p>三.绘制线性渐变效果</p>
+<p>绘制渐变效果首相要创建一个CGGradientRef，创建它需要调用一个方法CGGradientRef CGGradientCreateWithColors(<br>CGColorSpaceRef space,<br>CFArrayRef colors,<br>const CGFloat locations[]<br>);<br>需要一个色彩空间梯度，还有颜色的数组以及只读位置数组。</p>
+<p>首先先把之前填充颜色的代码注释掉，然后开始绘制渐变。</p>
+<p>几个问题：</p>
+<p>1.绘图需要 CGContextRef<br>CGContextRef即图形上下文。可以这么理解，我们绘图是需要一个载体或者说输出目标，它用来显示绘图信息，并且决定绘制的东西输出到哪个地方。可以形象的比喻context就像一个“画板”，我们得把图形绘制到这个画板上。所以，绘图必须要先有context。</p>
+<p>2.怎么拿到context？</p>
+<p>第一种方法是利用cocoa为你生成的图形上下文。当你子类化了一个UIView并实现了自己的drawRect：方法后，一旦drawRect：方法被调用，Cocoa就会为你创建一个图形上下文，此时你对图形上下文的所有绘图操作都会显示在UIView上。</p>
+<p>第二种方法就是创建一个图片类型的上下文。调用UIGraphicsBeginImageContextWithOptions函数就可获得用来处理图片的图形上下文。利用该上下文，你就可以在其上进行绘图，并生成图片。调用UIGraphicsGetImageFromCurrentImageContext函数可从当前上下文中获取一个UIImage对象。记住在你所有的绘图操作后别忘了调用UIGraphicsEndImageContext函数关闭图形上下文。</p>
+<p>简言之：</p>
+<p>1.重写UIView的drawRect方法，在该方法里便可得到context；</p>
+<ol start="2">
+<li>调用UIGraphicsBeginImageContextWithOptions方法得到context；</li>
+</ol>
+<p>3.注意<br>并不是说一提到绘图，就一定得重写drawRect方法，只是因为通常情况下我们一般采用在drawRect方法里获取context这种方式。</p>
+<p>4.drawRect方法什么时候触发</p>
+<p>1.当view第一次显示到屏幕上时；</p>
+<p>2.当调用view的setNeedsDisplay或者setNeedsDisplayInRect:方法时。</p>
+<p>步骤：</p>
+<p>1.先在drawRect方法中获得上下文context</p>
+<p>2.绘制图形（线，图形，图片等）</p>
+<p>3.设置一些修饰属性</p>
+<p>4.渲染到上下文，完成绘图</p>
+<h1 id="web学习"><a href="#web学习" class="headerlink" title="web学习"></a>web学习</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Ray-liang/p/4837850.html">Flask + Gunicorn + Nginx 部署</a></p>
+<h1 id="iphone-X-及iOS11"><a href="#iphone-X-及iOS11" class="headerlink" title="iphone X 及iOS11"></a>iphone X 及iOS11</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247488209&amp;idx=1&amp;sn=c419dd9e0a3b028f1b84e158e8ee20a2&source=41#wechat_redirect">iPhone X 交互设计官方指南</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.skyfox.org/iphone-x-10-screen-resolution-adaptation.html">iPhone X(10)屏幕分辨率与适配</a>  </p>
+<p>iOS11 UItableView新特性：performsFirstActionWithFullSwipe，一滑到底</p>
+<h1 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h1><p><a target="_blank" rel="noopener" href="https://onevcat.com/2014/01/black-magic-in-macro/">宏定义的黑魔法 - 宏菜鸟起飞手册</a></p>
+<h1 id="算法小记"><a href="#算法小记" class="headerlink" title="算法小记"></a>算法小记</h1><p>1.选择排序法：第一轮从下标为 0 到下标为 n-1 的元素中选取最小值，若小于第一个数，则交换；第二轮从下标为 1 到下标为 n-1 的元素中选取最小值，若小于无序列的第一个，也就是下标为1的值，则交换；以此类推</p>
+<p>2.冒泡排序法：将前后每两个数进行比较，较大的数往后排，一轮下来最大的数就排到最后去了。然后再进行第二轮比较，第二大的数也排到倒数第二了，以此类推</p>
+<h1 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/QianChia/p/6391989.html">iOS - CFSocket 的使用</a></p>
+<h1 id="c-primer-读后笔记"><a href="#c-primer-读后笔记" class="headerlink" title="c++ primer 读后笔记"></a>c++ primer 读后笔记</h1><p>拷贝控制</p>
+<p>当定义一个类时，我们显式地或隐式地指定在此类型地对象，移动，赋值和销毁时做什么。一个类通过定义五种特殊地成员函数来控制这些操作，包括：</p>
+<ul>
+<li><p>拷贝构造函数（copy constructor）</p>
+</li>
+<li><p>拷贝赋值运算符（copy-assignment operator）</p>
+</li>
+<li><p>移动构造函数（move constructor）</p>
+</li>
+<li><p>移动赋值运算符（move-assignment operator）</p>
+</li>
+<li><p>析构函数（destructor）</p>
+</li>
+</ul>
+<p>拷贝构造函数和移动构造函数 定义了 当用同类型地另一个对象初始化本对象时做什么</p>
+<p>拷贝和移动赋值运算符 定义了 将一个对象赋予同类型地另一个对象时做什么</p>
+<p>析构函数 定义了 当此类型对象销毁时做什么</p>
+<p>以上操作 称为 拷贝控制操作</p>
+<p>拷贝构造函数：如果一个构造函数的第一个参数是自身类类型的引用，且任何额外参数都有默认值，则此构造函数是拷贝构造函数</p>
+<p>c++中的explicit关键字只能用于修饰只有一个参数的类构造函数，它的作用是表明该构造函数是显式的，而非隐式的，跟它对应的另一个关键字式implicit，意思是隐式的，类构造函数默认情况下即声明为implicit(隐式)</p>
+<p>1.1 合成拷贝构造函数</p>
+<p>如果我们没有为一个类定义拷贝构造函数，编译器会为我们定义一个</p>
+<p>与合成默认构造函数不同，即使我们定义了其他构造函数，编译器也会为我们合成一个拷贝构造函数</p>
+<p>直接初始化：要求编译器使用普通的函数匹配来选择与我们提供的参数最匹配的构造函数</p>
+<p>拷贝初始化：要求编译器将右侧运算对象拷贝到正在创建的对象中，如果需要的话，还要进行类型转换</p>
+<p>拷贝初始化不仅在我们用=定义变量时会发生，在下列情况 也会发生：</p>
+<ul>
+<li>将一个对象作为实参传递给一个非引用类型的形参</li>
+<li>从一个返回类型为非引用类型的函数返回一个对象</li>
+<li>用花括号列表初始化一个数组中的元素或一个聚合类中的成员</li>
+<li>某些类类型还会对它们所分配的对象使用拷贝初始化，例如调用标准库的insert或push成员时，容器会对其元素进行拷贝初始化，而emplace成员创建的元素则是进行直接初始化</li>
+</ul>
+<p>1.2 参数和返回值<br>在函数调用过程中，具有非引用类型的参数要进行拷贝初始化</p>
+<p>当一个函数具有非引用的返回类型时，返回值会被用来初始化调用方的结果</p>
+<p>1.3 重载赋值运算符</p>
+<p>重载运算符本质上是函数，其名字由operator关键字后接表示要定义的运算符的符号组成</p>
+<p>赋值运算符就是一个名为operator=的函数，也有返回类型和参数列表</p>
+<p>重载运算符的参数表示运算符的运算对象</p>
+<p>1.4 析构函数</p>
+<p>构造函数初始化对象的非static数据成员，还可能做一些其他工作</p>
+<p>析构函数释放对象使用的资源，并销毁对象的非 static数据成员</p>
+<p>析构函数是类的一个成员函数，名字由波浪号+类名构成，没有返回值，也不接受参数</p>
+<p>在一个构造函数中，成员的初始化是在函数体执行之前完成的，且按照它们在类中出</p>
+<p>在一个析构函数中，首先执行函数体，然后销毁成员，成员按照初始化顺序的逆序销毁</p>
+<p>在对象最后一次使用之后，析构函数的函数体可执行类设计者希望执行的任何收尾工作。通常，析构函数释放对象在生存期分配的所有资源</p>
+<p>什么时候调用析构函数：</p>
+<p>1.变量在离开其作用域时被销毁</p>
+<p>2.当一个对象被销毁时，其成员被销毁</p>
+<p>3.容器被销毁时，其元素被销毁</p>
+<p>4.对于动态分配的对象，当对指向它的指针应用delete运算符时被销毁</p>
+<p>5.对于临时对象，当创建它的完整表达式结束时被销毁</p>
+<p>重载运算与类型转换</p>
+<p>基本概念：</p>
+<p>重载的运算符是具有特殊名字的函数：它们的名字由关键字operator和其后要定义的运算符号共同组成。和其他函数一样，重载的运算符也包含返回类型，参数列表以及函数体<br>重载运算符函数的参数数量与该运算符作用的运算对象数量一样多。一元运算符有一个参数，二元运算符有两个<br>对于二元运算符来说，左侧运算对象传递给第一个参数，而右侧运算对象传递给第二个参数。除了重载的函数调用运算符operator（）之外，其他重载运算符不能含有默认实参。<br>如果一个运算符函数是成员函数，则它的第一个（左侧）运算对象绑定到隐式的this指针上，因为，成员运算符函数的（显式）参数数量比运算符的运算对象总数少一个<br>当一个重载的运算符是成员函数时，this绑定到左侧运算对象。成员运算符函数的（显式）参数数量比运算对象的数量少一个</p>
+<p>面向对象程序设计</p>
+<p>面向对象程序设计三个理念：数据抽象，继承，动态绑定</p>
+<p>继承和动态绑定对程序的编写有两方面的影响：</p>
+<p>1.我们可以更容易地定义与其他类相似但不完全相同的新类。</p>
+<p>2.在使用这些彼此相似的类编写程序时，我们可以在一定程度上忽略它们的区别</p>
+<p>继承（inheritance）:</p>
+<p>通常在层次关系的根部有一个基类（base class），其他类则直接或间接地从基类继承而来，这些继承得到地类称为派生类（derived class）<br>在c++语言中，基类将类型相关的函数与派生类不做改变直接继承的函数区别对待。对于某些函数，基类希望它的派生类各自定义适合自身的版本，此时就将这些函数声明成虚函数（virtual function）<br>派生类必须通过使用类派生列表（class derivation list）明确指出它是从哪个（哪些）基类继承而来的。每个基类前面可以有访问说明符</p>
+<p>动态绑定（dynamic binding）: 在运行时选择函数的版本<br>基类通常都应该定义一个虚析构函数，即使该函数不执行任何实际操作也是如此<br>成员函数与继承：</p>
+<p>派生类可以继承其基类的成员，然而当遇到与类型相关的操作时，派生类必须对其重新定义。<br>派生类需要对这些操作提供自己的新定义以覆盖（override）从基类继承而来的旧定义<br>在c++语言中，基类必须将它的两种成员函数区分开：</p>
+<p>1.基类希望其派生类进行覆盖的函数</p>
+<p>2.基类希望派生类直接继承而不要改变的函数</p>
+<p>第一种，基类通常将其定义为虚函数（virtual）</p>
+<p>当我们使用指针或引用调用虚函数时，该调用将被动态绑定，根据引用或指针所绑定的对象类型不同，该调用可能执行基类的版本，也可能执行某个派生类的版本<br>基类通过在其成员函数的声明语句之前加上关键字virtual使得该函数执行动态绑定。任何构造函数之外的非静态函数都可以是虚函数。<br>关键字virtual只能出现在类内部的声明语句之前而不能用于类外部的函数定义。</p>
+<p>如果基类把一个函数声明成虚函数，则该函数在派生类中隐式地也是虚函数</p>
+<p>成员函数如果没被声明为虚函数，则其解析过程发生在编译时而非运行时</p>
+<p>访问控制与继承：</p>
+<p>派生类可以继承定义在基类中的成员，但是派生类的成员函数不一定有权访问从基类继承而来的成员。</p>
+<p>和其他使用基类的代码一样，派生类能访问共有成员，而不能访问私有成员</p>
+<p>不过在某些时候基类中还有这样一种成员，基类希望它的派生类有权访问该成员，同时禁止其他用户访问。我们用受保护的（protected）访问运算符说明这样的成员</p>
+<p>派生类对象及派生类向基类的类型转换：</p>
+<p>一个派生类对象包含多个组成部分：一个含有派生类自己定义的（非静态）成员的子对象，以及一个与该派生类继承的基类对应的子对象，如果有多个基类，那么这样的子对象也有多个。</p>
+<p>派生类构造函数：</p>
+<p>每个类控制它自己的成员初始化过程</p>
+<p>首先初始化基类的部分，然后按照声明的顺序依次初始化派生类的成员</p>
+<h1 id="阅读FLAnimatedImage源码笔记"><a href="#阅读FLAnimatedImage源码笔记" class="headerlink" title="阅读FLAnimatedImage源码笔记"></a>阅读FLAnimatedImage源码笔记</h1><p>NS_UNAVAILABLE 与 NS_DESIGNATED_INITIALIZER：</p>
+<p>当面对多个初始化方法时，外部调用者往往会手足无措，不知道哪一个才是正确的初始化方法，对此，苹果提供了两个关键字：NS_UNAVAILABLE 与 NS_DESIGNATED_INITIALIZER 来帮助我们约束定义方式，使得接口描述更加清晰。</p>
+<p>NS_DESIGNATED_INITIALIZER 与 NS_UNAVAILABLE 都能清晰的告知调用者应该如何调用方法。</p>
+<p>如果是可以给出默认值初始化方法，那么使用 NS_DESIGNATED_INITIALIZER 就可以。</p>
+<p>如果是必须要用某参数来初始化的，可以使用 NS_UNAVAILABLE。</p>
+<p>如果需要在内部验证参数是否合法，如果不合法就一定不能成功的，也可以在实现的时候，验证并抛出异常。</p>
+<p>具体选择使用哪一种方式，可以根据具体的情况来看。</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://juejin.im/entry/58c11bb444d9040068e190fb">https://juejin.im/entry/58c11bb444d9040068e190fb</a></p>
+<p>__has_attribute：编译器检查指定属性的可用性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#ifndef NS_DESIGNATED_INITIALIZER</span><br><span class="line"></span><br><span class="line">    #if __has_attribute(objc_designated_initializer)</span><br><span class="line"></span><br><span class="line">        #define NS_DESIGNATED_INITIALIZER __attribute((objc_designated_initializer))</span><br><span class="line"></span><br><span class="line">    #else</span><br><span class="line"></span><br><span class="line">        #define NS_DESIGNATED_INITIALIZER</span><br><span class="line"></span><br><span class="line">    #endif</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>以上确保初始化过程代码的健壮性</p>
+<p>关键字：static extern const</p>
+<p>NSProxy：NSProxy 是一个抽象基类，它为一些表现的像是其它对象替身或者并不存在的对象定义API。一般的，发送给代理的消息被转发给一个真实的对象或者代理本身引起加载(或者将本身转换成)一个真实的对象。NSProxy的基类可以被用来透明的转发消息或者耗费巨大的对象的lazy 初始化</p>
+<h1 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h1><p><a target="_blank" rel="noopener" href="https://www.dllhook.com/post/238.html">dyld详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1f22d1e667e3">Mach-O文件结构</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5c7b43976fb9a04a05406312">fishhook的实现原理浅析</a></p>
+<h1 id="自动布局"><a href="#自动布局" class="headerlink" title="自动布局"></a>自动布局</h1><p><a target="_blank" rel="noopener" href="https://ming1016.github.io/2015/11/03/deeply-analyse-autolayout/">深入剖析Auto Layout，分析iOS各版本新增特性</a></p>
+<p><a target="_blank" rel="noopener" href="http://awhisper.github.io/2017/05/01/DSLandLayoutEngine/">动态界面：DSL&amp;布局引擎</a></p>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>树：一棵树是一些节点的集合。这个集合可以是空集；若非空，则一棵树由称作根（root）的节点r以及0个或多个非空的（子）树T1，T2.。。组成，这些子树中的每一棵的根都来自根r的一条有向的边（edge）所连接<br>每一棵子树的根叫做根r的儿子（child），而r是每一棵子树的根的父亲（parent）。<br>一棵树是N个节点和N-1条边的集合，其中的一个节点叫做 根。</p>
+<p>二叉树：二叉树（binary tree）是一棵树，其中每个节点都不能有多于两个的儿子</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://nijiehaha.github.io">路小飞</a>
+            <p>原文链接：<a href="https://nijiehaha.github.io/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/">https://nijiehaha.github.io/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/</a>
+            <p>发表日期：<a href="https://nijiehaha.github.io/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/">August 18th 2016, 9:24:30 am</a>
+            <p>更新日期：<a href="https://nijiehaha.github.io/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/">April 30th 2020, 11:03:51 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2017/01/09/%E5%88%9D%E5%AD%A6Method-Swizzling/" title= "初学Method Swizzling">
+                    <div class="nextTitle">初学Method Swizzling</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+    
+        
+            
+                <a href="https://github.com/nijiehaha" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2016-8-18"><span class="toc-number">1.</span> <span class="toc-text">2016.8.18</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS-%E6%8E%A8%E9%80%81"><span class="toc-number">2.</span> <span class="toc-text">iOS 推送</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.1.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%9F%A5%E8%AF%86-1-0"><span class="toc-number">3.</span> <span class="toc-text">小知识 1.0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cocopods-%E4%B8%80%E4%BA%9B-%E9%97%AE%E9%A2%98"><span class="toc-number">3.1.</span> <span class="toc-text">cocopods 一些 问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">3.2.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E9%97%B4%E8%B7%B3%E8%BD%AC"><span class="toc-number">3.3.</span> <span class="toc-text">应用间跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85%E9%9D%99%E6%80%81%E5%BA%93%E7%9B%B8%E5%85%B3"><span class="toc-number">3.4.</span> <span class="toc-text">打包静态库相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UIImageView-%E4%B8%8A%E4%B8%8B%E5%92%8C%E5%B7%A6%E5%8F%B3%E7%BF%BB%E8%BD%AC"><span class="toc-number">3.5.</span> <span class="toc-text">UIImageView 上下和左右翻转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96-1"><span class="toc-number">3.6.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PhotoKit"><span class="toc-number">3.7.</span> <span class="toc-text">PhotoKit</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%9F%A5%E8%AF%86-2-0"><span class="toc-number">4.</span> <span class="toc-text">小知识 2.0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E5%9C%A8-%E4%BD%BF%E7%94%A8-SDWebImage-%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8C%E4%B8%BA%E4%BD%95%E6%B2%A1%E6%9C%89%E5%87%BA%E7%8E%B0-tableView-%E5%8D%A1%E9%A1%BF%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">4.1.</span> <span class="toc-text">关于为什么我在 使用 SDWebImage 的过程中，为何没有出现 tableView 卡顿和内存泄露的原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">4.1.1.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96-2"><span class="toc-number">4.2.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E9%9C%80%E8%A6%81%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97-MQ-%EF%BC%9F"><span class="toc-number">4.3.</span> <span class="toc-text">为什么会需要消息队列(MQ)？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%A0%E9%81%93%E9%A2%98%E7%9B%AE"><span class="toc-number">5.</span> <span class="toc-text">几道题目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ECGBitmapContextCreate%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="toc-number">6.</span> <span class="toc-text">关于CGBitmapContextCreate的认识</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">HTTP权威指南（阅读笔记）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CoreGraphics%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">8.</span> <span class="toc-text">CoreGraphics学习笔记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web%E5%AD%A6%E4%B9%A0"><span class="toc-number">9.</span> <span class="toc-text">web学习</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iphone-X-%E5%8F%8AiOS11"><span class="toc-number">10.</span> <span class="toc-text">iphone X 及iOS11</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8F"><span class="toc-number">11.</span> <span class="toc-text">宏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%B0%8F%E8%AE%B0"><span class="toc-number">12.</span> <span class="toc-text">算法小记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">13.</span> <span class="toc-text">socket</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#c-primer-%E8%AF%BB%E5%90%8E%E7%AC%94%E8%AE%B0"><span class="toc-number">14.</span> <span class="toc-text">c++ primer 读后笔记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%85%E8%AF%BBFLAnimatedImage%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0"><span class="toc-number">15.</span> <span class="toc-text">阅读FLAnimatedImage源码笔记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Runtime"><span class="toc-number">16.</span> <span class="toc-text">Runtime</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80"><span class="toc-number">17.</span> <span class="toc-text">自动布局</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">18.</span> <span class="toc-text">数据结构</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 67
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2024 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/" >iOS OpenCV 初体验</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2023/01/20/2022%E5%B9%B4%E7%BB%88%E5%B0%8F%E6%80%BB%E7%BB%93/" >2022年终小总结</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2022 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2022/12/11/%E5%BC%80%E8%BD%A6tips%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/" >开车tips（持续更新中）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/iOS-%E4%B8%80%E9%94%AE%E6%8A%A0%E5%9B%BE/" >iOS 一键抠图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2022/07/27/iOS-OCR/" >iOS OCR</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2022/07/27/iOS-home-screen-quick-action/" >iOS home screen quick action</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2022/07/25/flutter-boost-%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90/" >flutter_boost 原理浅析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2022/05/06/%E7%9F%A5%E8%AF%86%E5%B0%8F%E9%9B%86/" >知识小集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2022/04/13/%E6%8A%8A-Flutter-module-%E5%BC%95%E5%85%A5%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8/" >把 Flutter module 引入原生应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span><a class="archive-post-title" href= "/2022/01/30/2021%E5%B9%B4%E7%BB%88%E5%B0%8F%E6%80%BB%E7%BB%93/" >2021年终小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/19</span><a class="archive-post-title" href= "/2022/01/19/iOS-%E4%BC%98%E9%9B%85%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" >iOS 优雅的实现数据绑定</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2021/09/22/iOS-%E5%85%B3%E4%BA%8E%E5%86%85%E8%B4%AD/" >iOS 关于内购</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/iOS-%E5%85%B3%E4%BA%8EUINavigationBarDelegate/" >iOS 关于UINavigationBarDelegate</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/iOS-%E5%85%B3%E4%BA%8E-1px-%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98/" >iOS 关于 1px 的小问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/swift-%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4/" >swift 类型擦除</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2021/07/19/Bohemian-Rhapsody/" >Bohemian Rhapsody</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9B%BE%EF%BC%88graph%EF%BC%89/" >数据结构-图（graph）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/%E5%90%90%E6%A7%BD-flutter/" >吐槽 flutter</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2021/02/22/%E5%85%B3%E4%BA%8E-Unicode/" >关于 Unicode</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/03</span><a class="archive-post-title" href= "/2021/02/03/HandyJSON-%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90/" >HandyJSON 原理浅析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2021/01/20/Swift-%E5%8F%96%E6%95%B4/" >Swift 取整</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2020/12/11/%E4%BD%8D%E8%BF%90%E7%AE%97/" >位运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/iOS-%E5%8F%AF%E8%83%BD%E6%9C%89%E7%94%A8%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%9F%A5%E8%AF%86/" >iOS 可能有用的多线程小知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/15</span><a class="archive-post-title" href= "/2020/10/15/Hexo-%E4%B8%AD%E6%8F%92%E5%85%A5-Bilibili-%E8%A7%86%E9%A2%91/" >Hexo 中插入 Bilibili 视频</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/%E5%8D%87%E7%BA%A7-iOS14-%E4%B9%8B%E5%90%8E/" >升级 iOS 14 之后</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/09</span><a class="archive-post-title" href= "/2020/10/09/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81/" >子网掩码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2020/09/18/iOS-%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2/" >iOS 仿射变换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/Swift-%E9%97%AD%E5%8C%85%E7%9A%84%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8/" >Swift 闭包的循环引用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/Swift-Package-Manager-tips/" >Swift Package Manager tips</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/04</span><a class="archive-post-title" href= "/2020/08/04/%E8%8B%B1%E6%96%87%E5%AD%A6%E4%B9%A0%EF%BC%9A%E9%9B%B6/" >英文学习：零</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/iOS-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/" >iOS 图片处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/10</span><a class="archive-post-title" href= "/2020/07/10/Swift-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%97%A0%E8%81%8A%E7%9A%84%E6%B5%8B%E8%AF%95/" >Swift 记一次无聊的测试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2020/07/08/iOS-Auto-Layout/" >iOS Auto Layout</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/07</span><a class="archive-post-title" href= "/2020/07/07/iOS-Push-Modal-Navigation/" >iOS Push & Modal Navigation</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2020/06/12/Mac-App-%E5%8A%A8%E6%80%81%E5%BA%93%E6%B3%A8%E5%85%A5/" >Mac App 动态库注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/Git-%E5%8E%8B%E7%BC%A9%E6%8F%90%E4%BA%A4/" >Git 压缩提交</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2020/06/04/iOS-%E5%85%B3%E4%BA%8E%E9%94%AE%E7%9B%98/" >iOS 关于键盘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2020/04/29/Swift-%E5%8A%A0%E5%AF%86/" >Swift 加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84UICollectionView/" >你可能不知道的UICollectionView</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2020/04/23/Swift-%E5%93%88%E5%B8%8C%E8%A1%A8/" >Swift 哈希表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/iOS-%E5%85%B3%E4%BA%8E%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/" >iOS 关于离屏渲染</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2020/03/20/iOS13%E7%A7%BB%E9%99%A4UIWebView%E4%B9%8B%E5%90%8E/" >iOS13移除UIWebView之后</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2020/03/18/%E5%9C%A8iOS%E8%AE%BE%E5%A4%87%E4%B8%8A%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0web%E6%9C%8D%E5%8A%A1%E5%99%A8/" >在iOS设备上运行本地web服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/04</span><a class="archive-post-title" href= "/2020/03/04/%E3%80%90%E8%AF%91%E3%80%91Xcode-Build-Configuration-Files/" >【译】Xcode Build Configuration Files</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/25</span><a class="archive-post-title" href= "/2020/02/25/%E3%80%90%E8%AF%91%E3%80%91Static-and-Dynamic-Callable-Types-in-Swift/" >【译】Static and Dynamic Callable Types in Swift</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href= "/2020/01/22/2019%E5%B0%8F%E6%80%BB%E7%BB%93/" >2019学习小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2020/01/20/%E3%80%90%E8%AF%91%E3%80%91Objective-C-Direct-Methods/" >【译】Objective-C Direct Methods</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/16</span><a class="archive-post-title" href= "/2019/12/16/Kingfisher%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" >Kingfisher源码阅读:命名空间</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2019/12/04/%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" >语义分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/03</span><a class="archive-post-title" href= "/2019/12/03/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" >语法分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/02</span><a class="archive-post-title" href= "/2019/12/02/%E6%89%8B%E5%B7%A5%E6%89%93%E9%80%A0%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8/" >手工打造词法分析器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2019/11/29/%E5%9D%91%E7%88%B9%E7%9A%84Swift-REPL/" >坑爹的Swift REPL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/2019/11/28/LLDB%E8%B0%83%E8%AF%95C%E7%A8%8B%E5%BA%8F/" >LLDB调试C程序</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2019/11/26/%E5%85%B3%E4%BA%8E%E9%81%AE%E7%BD%A9-mask/" >关于遮罩(mask)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2019/11/15/hybrid%E6%A1%86%E6%9E%B6-js%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83%E5%AE%9E%E7%8E%B0/" >hybrid框架:js异步回调实现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2019/11/15/swift%E4%B8%8A%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8/" >swift上的装饰器(Decorator)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2019/09/06/%E5%85%B3%E4%BA%8E-URL-%E7%BC%96%E7%A0%81/" >关于 URL 编码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2019/06/03/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" >内存管理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/24</span><a class="archive-post-title" href= "/2019/05/24/%E5%B0%91%E5%B9%B4%E6%8E%A2%E6%A1%88/" >少年探案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2019/04/30/iOS-dSYM/" >iOS 符号表(dSYM)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/08</span><a class="archive-post-title" href= "/2018/10/08/%E6%B5%85%E8%B0%88runloop/" >浅谈runloop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2018/09/11/NTA%E6%89%93%E6%B4%9E/" >NTA打洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/11</span><a class="archive-post-title" href= "/2018/09/11/NAT%E4%B8%8E%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" >NAT与内网穿透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/2018/09/07/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" >第一次写博客</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2017/02/27/iOS%E4%B8%AD%E7%9A%84%E5%BA%93-%E5%88%9D%E8%AF%86/" >iOS中的库----初识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2017/01/09/%E5%88%9D%E5%AD%A6Method-Swizzling/" >初学Method Swizzling</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2016/08/18/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB%E5%B0%8F%E5%90%88%E9%9B%86/" >杂七杂八小合集</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe606;</span>年少轻狂，幸福时光</span>
+    
+        <span class="sidebar-tag-name" data-tags="Lyrics"><span class="iconfont-archer">&#xe606;</span>Lyrics</span>
+    
+        <span class="sidebar-tag-name" data-tags="杂七杂八"><span class="iconfont-archer">&#xe606;</span>杂七杂八</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
+    
+        <span class="sidebar-tag-name" data-tags="Flutter"><span class="iconfont-archer">&#xe606;</span>Flutter</span>
+    
+        <span class="sidebar-tag-name" data-tags="翻译计划"><span class="iconfont-archer">&#xe606;</span>翻译计划</span>
+    
+        <span class="sidebar-tag-name" data-tags="计算机基础"><span class="iconfont-archer">&#xe606;</span>计算机基础</span>
+    
+        <span class="sidebar-tag-name" data-tags="生活小技巧"><span class="iconfont-archer">&#xe606;</span>生活小技巧</span>
+    
+        <span class="sidebar-tag-name" data-tags="编译原理"><span class="iconfont-archer">&#xe606;</span>编译原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据结构"><span class="iconfont-archer">&#xe606;</span>数据结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="英文学习"><span class="iconfont-archer">&#xe606;</span>英文学习</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="年少轻狂，幸福时光"><span class="iconfont-archer">&#xe60a;</span>年少轻狂，幸福时光</span>
+    
+        <span class="sidebar-category-name" data-categories="杂七杂八"><span class="iconfont-archer">&#xe60a;</span>杂七杂八</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
+    
+        <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
+    
+        <span class="sidebar-category-name" data-categories="翻译计划"><span class="iconfont-archer">&#xe60a;</span>翻译计划</span>
+    
+        <span class="sidebar-category-name" data-categories="计算机基础"><span class="iconfont-archer">&#xe60a;</span>计算机基础</span>
+    
+        <span class="sidebar-category-name" data-categories="生活小技巧"><span class="iconfont-archer">&#xe60a;</span>生活小技巧</span>
+    
+        <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="Flutter"><span class="iconfont-archer">&#xe60a;</span>Flutter</span>
+    
+        <span class="sidebar-category-name" data-categories="数据结构"><span class="iconfont-archer">&#xe60a;</span>数据结构</span>
+    
+        <span class="sidebar-category-name" data-categories="英文学习"><span class="iconfont-archer">&#xe60a;</span>英文学习</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "路小飞"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
