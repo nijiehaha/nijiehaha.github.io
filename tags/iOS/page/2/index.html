@@ -354,6 +354,42 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/29/iOS-%E5%8F%AF%E8%83%BD%E6%9C%89%E7%94%A8%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%9F%A5%E8%AF%86/" >
+            
+                <span>iOS 可能有用的多线程小知识</span>
+        </a>
+        <div class="abstract-content">
+            前言Grand Central Dispatch (简称 GCD) 是一套苹果提供的用来更方便的操作线程的 api。
+基于 Grand Central Dispatch，我们可以了解一下，关于多线程的一些小知识。
+一些概念Queues中文可以翻译为「队列」，是一种先进先出（FIFO, First-in First-out）的数据结构。
+Serial vs Concurrent这两个是反义词，主要是在描述当每项任务（task）被执行时，跟其他任务的关系。
+
+Serial（照顺序执行的）
+
+serial queues 的意思就是指这个队列里的任务是按照顺序执行的，一次执行一个，前一个执行完，...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/10/10/%E5%8D%87%E7%BA%A7-iOS14-%E4%B9%8B%E5%90%8E/" >
             
                 <span>升级 iOS 14 之后</span>
@@ -645,38 +681,6 @@ CALayer 的内容渲染工作可以放在一个独立线程中
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/18/%E5%9C%A8iOS%E8%AE%BE%E5%A4%87%E4%B8%8A%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0web%E6%9C%8D%E5%8A%A1%E5%99%A8/" >
-            
-                <span>在iOS设备上运行本地web服务器</span>
-        </a>
-        <div class="abstract-content">
-            前言有这个奇怪想法的起因是因为，突然有个「H5离线展示」的需求，最简单的方法就是将前端代码下发到本地，直接加载，不过还有个办法就是通过起本地服务的方式，这样的方式，似乎更加优雅。
-有了这个想法之后，我就开始寻找比较好的 socket 框架，想试一试，不过令我比较失望的是，大多数都是 OC 的，或者不支持最新的 swift 版本，理想情况下，我想找个纯 swift 的 socket 框架，这可难住我了，最终只能求助于苹果开源的一个偏底层的网络框架SwiftNio
-开始SwiftNio虽说跨平台，但是移植到 iOS 上还需要一些特殊的扩展NIOTransportServices
-依赖管理利用...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/18</span>
             </div>
             <!-- tags  -->
             
@@ -1770,9 +1774,24 @@ CALayer 的内容渲染工作可以放在一个独立线程中
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 67
+        Total : 68
         </div>
         <!-- search  -->
         
@@ -1785,6 +1804,11 @@ CALayer 的内容渲染工作可以放在一个独立线程中
     
     <div class="archive-year"> 2024 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/" >iOS 关于相机的所有</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2206,9 +2230,9 @@ CALayer 的内容渲染工作可以放在一个独立线程中
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
-        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
@@ -2265,9 +2289,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
-    
         <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
         <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
     
@@ -2275,11 +2299,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="计算机基础"><span class="iconfont-archer">&#xe60a;</span>计算机基础</span>
     
-        <span class="sidebar-category-name" data-categories="Flutter"><span class="iconfont-archer">&#xe60a;</span>Flutter</span>
-    
         <span class="sidebar-category-name" data-categories="生活小技巧"><span class="iconfont-archer">&#xe60a;</span>生活小技巧</span>
     
         <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="Flutter"><span class="iconfont-archer">&#xe60a;</span>Flutter</span>
     
         <span class="sidebar-category-name" data-categories="数据结构"><span class="iconfont-archer">&#xe60a;</span>数据结构</span>
     

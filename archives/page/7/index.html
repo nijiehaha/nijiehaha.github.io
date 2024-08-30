@@ -354,6 +354,39 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/04/30/iOS-dSYM/" >
+            
+                <span>iOS 符号表(dSYM)</span>
+        </a>
+        <div class="abstract-content">
+            今天是个适合学习的日子，嘻嘻嘻QAQ
+什么是符号表它是内存地址与函数名，文件名，行号的映射表。大概长这样：&lt;起始地址&gt; &lt;结束地址&gt; &lt;函数&gt; [&lt;文件名:行号&gt;]
+符号表文件.dSYM实际上是从Mach-O文件中抽取调试信息而得到的文件目录，实际用于保存调试信息的文件夹是DWARF
+如果利用这些二进制的地址信息来定位问题是不可能的，因此我们需要将这些二进制的地址信息还原成源代码种的函数以及行号，这时候就需要符号表了。
+特别地，如果使用bugly来做crash上报管理，只需要将构建时的符号表上传到bugly，当应用crash时，bugly会...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/30</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2018/10/08/%E6%B5%85%E8%B0%88runloop/" >
             
                 <span>浅谈runloop</span>
@@ -1675,9 +1708,24 @@ app不在前台运行。iPhone可能停留在主界面或者另一个app正在�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 67
+        Total : 68
         </div>
         <!-- search  -->
         
@@ -1690,6 +1738,11 @@ app不在前台运行。iPhone可能停留在主界面或者另一个app正在�
     
     <div class="archive-year"> 2024 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/30</span><a class="archive-post-title" href= "/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/" >iOS 关于相机的所有</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2111,9 +2164,9 @@ app不在前台运行。iPhone可能停留在主界面或者另一个app正在�
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
-        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="LLDB"><span class="iconfont-archer">&#xe606;</span>LLDB</span>
     
         <span class="sidebar-tag-name" data-tags="Swift"><span class="iconfont-archer">&#xe606;</span>Swift</span>
     
@@ -2170,9 +2223,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
-    
         <span class="sidebar-category-name" data-categories="网络"><span class="iconfont-archer">&#xe60a;</span>网络</span>
+    
+        <span class="sidebar-category-name" data-categories="LLDB"><span class="iconfont-archer">&#xe60a;</span>LLDB</span>
     
         <span class="sidebar-category-name" data-categories="Swift"><span class="iconfont-archer">&#xe60a;</span>Swift</span>
     
@@ -2180,11 +2233,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="计算机基础"><span class="iconfont-archer">&#xe60a;</span>计算机基础</span>
     
-        <span class="sidebar-category-name" data-categories="Flutter"><span class="iconfont-archer">&#xe60a;</span>Flutter</span>
-    
         <span class="sidebar-category-name" data-categories="生活小技巧"><span class="iconfont-archer">&#xe60a;</span>生活小技巧</span>
     
         <span class="sidebar-category-name" data-categories="编译原理"><span class="iconfont-archer">&#xe60a;</span>编译原理</span>
+    
+        <span class="sidebar-category-name" data-categories="Flutter"><span class="iconfont-archer">&#xe60a;</span>Flutter</span>
     
         <span class="sidebar-category-name" data-categories="数据结构"><span class="iconfont-archer">&#xe60a;</span>数据结构</span>
     

@@ -20,22 +20,22 @@
     <meta name="keywords" content="路小飞">
     
     <meta name="description" content="">
-    <meta name="description" content="前言出于兴趣，开始学习 OpenCV （其实是领导安排QAQ，需要实现一个小需求），正好好久没更新博客，那就边写边学吧～ 过程安装的部分就跳过了，手动导入，或者 pod 导入，都可以，有一点要说的是目前来说，因为 OpenCV 的语言是 C++，所以不可避免的你需要一个支持和 C++ 混编的环境，如果你的项目的主要语言是 Swift，那么比较好的选择就是使用 OC 作为媒介来与 C++ 交互。 具">
+    <meta name="description" content="相机的工作原理轻轻一按，你的相机就把光子转换为了比特，于是一张相片就保存到了你的 iPhone 里，像这样的神奇能力是如何实现的呢？ 让我们假设一下你身处室外，环顾四周。三亿里之外，太阳无时无刻不在发射光子。它们需要花上 8 分钟之久才能到达我们舒适的星球。有一些光子撞击到你周围的物体，并反射到你眼睛的视网膜上，这会使你的大脑以这些物体为基准，创建一副图像，我们将其称之为视觉。 摄影要做的就是捕获">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS OpenCV 初体验">
-<meta property="og:url" content="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
+<meta property="og:title" content="iOS 关于相机的所有">
+<meta property="og:url" content="https://nijiehaha.github.io/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/index.html">
 <meta property="og:site_name" content="lufei&#39;s Blog">
-<meta property="og:description" content="前言出于兴趣，开始学习 OpenCV （其实是领导安排QAQ，需要实现一个小需求），正好好久没更新博客，那就边写边学吧～ 过程安装的部分就跳过了，手动导入，或者 pod 导入，都可以，有一点要说的是目前来说，因为 OpenCV 的语言是 C++，所以不可避免的你需要一个支持和 C++ 混编的环境，如果你的项目的主要语言是 Swift，那么比较好的选择就是使用 OC 作为媒介来与 C++ 交互。 具">
+<meta property="og:description" content="相机的工作原理轻轻一按，你的相机就把光子转换为了比特，于是一张相片就保存到了你的 iPhone 里，像这样的神奇能力是如何实现的呢？ 让我们假设一下你身处室外，环顾四周。三亿里之外，太阳无时无刻不在发射光子。它们需要花上 8 分钟之久才能到达我们舒适的星球。有一些光子撞击到你周围的物体，并反射到你眼睛的视网膜上，这会使你的大脑以这些物体为基准，创建一副图像，我们将其称之为视觉。 摄影要做的就是捕获">
 <meta property="og:locale">
-<meta property="article:published_time" content="2024-03-01T06:50:29.000Z">
-<meta property="article:modified_time" content="2024-03-05T03:25:43.570Z">
+<meta property="article:published_time" content="2024-08-30T05:44:32.000Z">
+<meta property="article:modified_time" content="2024-08-30T07:05:12.880Z">
 <meta property="article:author" content="路小飞">
 <meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>iOS OpenCV 初体验 · lufei&#39;s Studio</title>
+    <title>iOS 关于相机的所有 · lufei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -230,7 +230,7 @@
                 <a href="/" >lufei&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">iOS OpenCV 初体验</a>
+                <a href="#" class="post-name">iOS 关于相机的所有</a>
             </div>
     </div>
     
@@ -260,7 +260,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            iOS OpenCV 初体验
+            iOS 关于相机的所有
             <!-- 404 -->
             
         </h1>
@@ -285,12 +285,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2024/03/01</span>
+                    <span class="post-intro-time">2024/08/30</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -414,32 +414,61 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于兴趣，开始学习 OpenCV （其实是领导安排QAQ，需要实现一个小需求），正好好久没更新博客，那就边写边学吧～</p>
-<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>安装的部分就跳过了，手动导入，或者 pod 导入，都可以，有一点要说的是目前来说，因为 OpenCV 的语言是 C++，所以不可避免的你需要一个支持和 C++ 混编的环境，如果你的项目的主要语言是 Swift，那么比较好的选择就是使用 OC 作为媒介来与 C++ 交互。</p>
-<p>具体地，你需要创建一个 .mm 文件，在这个文件里面编写 OpenCV 相关代码，然后通过桥接文件暴露给 Swift 使用，大概是这样的过程。</p>
-<p>当然 OC 里的 UIImage 和 OpenCV 的 Mat 你也是需要提供一个互相转换的方法的，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (Mat)_matFrom:(UIImage *)source &#123;    </span><br><span class="line">    CGImageRef image &#x3D; CGImageCreateCopy(source.CGImage);</span><br><span class="line">    CGFloat cols &#x3D; CGImageGetWidth(image);</span><br><span class="line">    CGFloat rows &#x3D; CGImageGetHeight(image);</span><br><span class="line">    Mat result(rows, cols, CV_8UC4);</span><br><span class="line">    </span><br><span class="line">    CGBitmapInfo bitmapFlags &#x3D; kCGImageAlphaNoneSkipLast | kCGBitmapByteOrderDefault;</span><br><span class="line">    size_t bitsPerComponent &#x3D; 8;</span><br><span class="line">    size_t bytesPerRow &#x3D; result.step[0];</span><br><span class="line">    CGColorSpaceRef colorSpace &#x3D; CGImageGetColorSpace(image);</span><br><span class="line">    </span><br><span class="line">    CGContextRef context &#x3D; CGBitmapContextCreate(result.data, cols, rows, bitsPerComponent, bytesPerRow, colorSpace, bitmapFlags);</span><br><span class="line">    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, cols, rows), image);</span><br><span class="line">    CGContextRelease(context);</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (UIImage *)_imageFrom:(Mat)source &#123;    </span><br><span class="line">    NSData *data &#x3D; [NSData dataWithBytes:source.data length:source.elemSize() * source.total()];</span><br><span class="line">    CGDataProviderRef provider &#x3D; CGDataProviderCreateWithCFData((__bridge CFDataRef)data);</span><br><span class="line"></span><br><span class="line">    CGBitmapInfo bitmapFlags &#x3D; kCGImageAlphaNone | kCGBitmapByteOrderDefault;</span><br><span class="line">    size_t bitsPerComponent &#x3D; 8;</span><br><span class="line">    size_t bytesPerRow &#x3D; source.step[0];</span><br><span class="line">    CGColorSpaceRef colorSpace &#x3D; (source.elemSize() &#x3D;&#x3D; 1 ? CGColorSpaceCreateDeviceGray() : CGColorSpaceCreateDeviceRGB());</span><br><span class="line">    </span><br><span class="line">    CGImageRef image &#x3D; CGImageCreate(source.cols, source.rows, bitsPerComponent, bitsPerComponent * source.elemSize(), bytesPerRow, colorSpace, bitmapFlags, provider, NULL, false, kCGRenderingIntentDefault);</span><br><span class="line">    UIImage *result &#x3D; [UIImage imageWithCGImage:image];</span><br><span class="line">    </span><br><span class="line">    CGImageRelease(image);</span><br><span class="line">    CGDataProviderRelease(provider);</span><br><span class="line">    CGColorSpaceRelease(colorSpace);</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h1 id="相机的工作原理"><a href="#相机的工作原理" class="headerlink" title="相机的工作原理"></a>相机的工作原理</h1><p>轻轻一按，你的相机就把光子转换为了比特，于是一张相片就保存到了你的 iPhone 里，像这样的神奇能力是如何实现的呢？</p>
+<p>让我们假设一下你身处室外，环顾四周。三亿里之外，太阳无时无刻不在发射光子。它们需要花上 8 分钟之久才能到达我们舒适的星球。有一些光子撞击到你周围的物体，并反射到你眼睛的视网膜上，这会使你的大脑以这些物体为基准，创建一副图像，我们将其称之为视觉。</p>
+<p>摄影要做的就是捕获这幅图像。摄影是在 200 年前被发明的，但在此之前的好几千年里，人类已经通过绘画的方式来捕捉他们所看到的东西了。</p>
+<p>我们中的很多人其实每天都相机不离身：当今智能手机已经是最常用的相机之一了。在数码摄影的时代之前，摄影通常是记录在纸上或者胶卷上的。而今天，摄影将光转换为比特信息。</p>
+<h2 id="快门速度，感光度-ISO-，光圈"><a href="#快门速度，感光度-ISO-，光圈" class="headerlink" title="快门速度，感光度 (ISO)，光圈"></a>快门速度，感光度 (ISO)，光圈</h2><p>在我们深入将光子转换为 JPEG 文件之前，我们先来看看相片的一些基本概念。这些概念不仅在过去的胶卷摄影时有效，在今天也是同样的。在不久之前，几乎所有的摄影都是通过胶卷完成的。与今天使用数码感光器不同，那时候成像依赖的是受光照影响的生化反应。但因为在拍摄相片中其他所有东西都遵循同样的原则，所以对笨重的胶卷相机和胶卷摄影适用的规律一样会在使用 iPhone 拍摄时适用。</p>
+<h2 id="进光量"><a href="#进光量" class="headerlink" title="进光量"></a>进光量</h2><p>拍摄一张相片的过程有时候被称之为曝光。曝光也指单位面积上光的数量。为了相片亮度合适，光的数量也需要在一定的范围内。</p>
+<p>如果我们没有捕获足够的光，那么相片就会欠曝 - 图像被湮没在图像传感器或者胶卷的固有噪声中。</p>
+<p>如果我们捕获的光太多，图像就会过曝 - 图片传感器/胶卷所接受的光过于饱和，无法区分不同的光的数量，这意味着几乎所有区域看上去曝光程度都是一样的。</p>
+<p>当拍摄照片时，我们必须将相机调整到光线的量既不太高也不太低，在欠曝图像中，即使我们尝试将它调亮，图像的暗部依然被 “卡” 在黑色，我们没有办法让图像中的笔确实拥有不同的颜色。过曝图像中也有大部分区域被卡在白色或者灰色：编织带和硬币细节已经完全丢失了。</p>
+<h2 id="曝光档数"><a href="#曝光档数" class="headerlink" title="曝光档数"></a>曝光档数</h2><p>有三个要素可以影响曝光的进光量：快门速度，光圈和感光度 (ISO)。</p>
+<p>在摄影中，通过调整这三者中任意一个来让进光量翻倍或者减半，就叫做改变了 “一档” 曝光。每一档曝光对于这三者 (快门速度，光圈和曝光度) 来说对应的是不同的数字变化。但如果我们将快门速度调整一档，我们需要通过调整 ISO 或者光圈一档来进行补偿，才能获取同样的进光量。</p>
+<h2 id="光圈"><a href="#光圈" class="headerlink" title="光圈"></a>光圈</h2><p>相机 (更确切地说是相机的镜头) 的光圈是用来衡量到达图像感应器的光所通过的通孔的大小的。光圈值以 F 比例 (焦比) 来进行标定，比如 ƒ/5.6，其中 5.6 表示镜头焦距与光圈 (也就是通孔) 的有效直径的比例。</p>
+<p>可能 F 比例会让人有点迷惑。F 比例所对应的一档指的是当前值与根号 2 (√₂ ≃ 1.4) 相乘或者相除。在 ƒ/4 时，我们所得到的光的量是 ƒ/2.8 时的一半。</p>
+<p>除了影响进光量，光圈还会对景深造成影响。这和对焦有关系。相机中的光学系统会将与相机一定距离范围内的物体渲染清晰。当我们改变光圈时，这个距离范围将变宽或者变窄。我们可以用这个特性来达到一些很好的效果 (译者注：比如人像的背景虚化等)。但很遗憾的是，我们不能调整 iPhone 的光圈大小。</p>
+<h2 id="结合起来说"><a href="#结合起来说" class="headerlink" title="结合起来说"></a>结合起来说</h2><p>现在我们知道一些基础知识了，那么相机实际上是如何捕捉图像的呢？</p>
+<p>在你的 iPhone 相机里面，有一个图像传感器。这个部分就相当于我们眼睛里的视网膜。图像传感器可以将光或者光子转换为电信号。</p>
+<p>图像传感器是由海量的独个的像素传感器串起来的巨大矩形区域。我们可以将每个像素传感器想象成一个装电荷的桶。当光子撞击到像素传感器的光二极管时，它们将在这个像素的桶中缓慢地积攒电荷。最后，每个像素都会有它自己的一小桶电子。这些电荷的数量是依赖于光子数量的 - 或者说是决定于打到这个特定的点上的光的强度。</p>
+<p>因为我们有一个像素传感器的二维阵列，我们现在就拥有能够反应出所有这些位置的光的强度的一组二维电荷阵列了。</p>
+<p>现在，我们需要明白两件事情：第一，我们需要有重置这些电荷的能力；其次，一旦像素传感器曝光了，我们需要能够读出这些电荷的数量。重置这件事情可以全局地对所有像素一起进行。但是对这样的八百万个小电荷，我们倾向于单独处理，以将它们转换为伏特量级的量，以方便读取。</p>
+<p>数码相机通常会去移动一行中的像素：图像传感器首先读取一行中第一个电荷桶中的电荷，然后所有的桶将它们中存放的电荷转移给相邻的前一个桶。这样第一个电荷桶现在就保存了本来在第二个桶中的电荷，并准备好了再次被读取。重复这样的步骤，所有像素的值都将被读入到传感器的行中。</p>
+<p>正在被读取的桶，或者说像素传感器中的值将会被一个模数转换器 (ADC) 转换为数字信号。ADC 的输出是一个对应每个像素传感器所接收到的进光量的数字。最终，这些值被传递到一个数字图像处理器中进行处理。</p>
+<h1 id="iOS-上的相机捕捉"><a href="#iOS-上的相机捕捉" class="headerlink" title="iOS 上的相机捕捉"></a>iOS 上的相机捕捉</h1><p>古早的 iOS 开发如果想使用 iPhone 上的相机，只能使用 <code>UIImagePickerController</code>，幸好，后来有了更灵活的 <code>AVFoundation</code>。</p>
+<p>关于 <code>AVFoundation</code>，我自己写了一个简单的相机使用框架 <a target="_blank" rel="noopener" href="https://github.com/nijiehaha/NJCamera">NJCamera</a>，如果不需要多么复杂的功能的话，可以试试.</p>
+<h2 id="使用-AVFoundation-的注意事项"><a href="#使用-AVFoundation-的注意事项" class="headerlink" title="使用 AVFoundation 的注意事项"></a>使用 <code>AVFoundation</code> 的注意事项</h2><ul>
+<li><p>首先 iOS10 之后，<code>AVCapturePhotoOutput</code> 被用来 <code>AVCaptureStillImageOutput</code>, 所以如果你需要捕获照片，那么 <code>AVCapturePhotoOutput</code> 是更好的选择。</p>
+</li>
+<li><p><code>AVCaptureSession</code> 的所有调用都是线程阻塞的，所以我们最好创建一条线程来异步调用。</p>
+</li>
+<li><p><code>AVCaptureMovieFileOutput</code> 和 <code>AVCaptureVideoDataOutput</code> 不能同时使用，所以如果你需要同时处理视频帧和视频录制的话，可能需要自己实现了 QAQ</p>
+</li>
+<li><p>经过测试，事实上把所有 <code>AVCaptureSession</code> 实例的操作都放到同一个线程中，会有效提高销毁再创建的速度，如果需要在不同的页面操作多个相机实例的话，这也许是个实用的小技巧。</p>
+</li>
+<li><p>如果对相机的初始化速度要求很高的话，那么最好把 <code>AVCaptureSession</code> 的操作提前到 VC 的页面出现之前。</p>
+</li>
+<li><p><code>AVCaptureVideoPreviewLayer</code> 持有 <code>AVCaptureSession</code> 实例，<code>AVCaptureSession</code> 实例 持有 所有 outputs。</p>
+</li>
+<li><p>如果你需要对实时预览图进行操作或使用滤镜的话，那么就需要使用 <code>AVCaptureVideoDataOutput</code> 获得每一帧的图片进行处理，并绘制到 view 上显示出来。（比如使用 <code>OpenGL</code>）</p>
+</li>
+</ul>
+<h1 id="分级捕获"><a href="#分级捕获" class="headerlink" title="分级捕获"></a>分级捕获</h1><p>分级捕获，英文全称叫 Bracketed Capture，是 iOS8 就有的 API，所以在 <code>AVCapturePhotoOutput</code> 还没出世的时候就已经诞生了。分级捕获，其实际上就是在拍照的时候设置多组参数（目前支持曝光和 ISO ），系统会拍出多张图片，<code>AVCapturePhotoCaptureDelegate的photoOutput(_:didFinishProcessingPhoto:error:)</code> 方法会跟着成倍回调，调用者可以使用某种算法（如 HDR ）对图片进行融合，得到一张令人满意的图片。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let bracketedStillImageSettings &#x3D; [</span><br><span class="line">AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings(exposureTargetBias: -1), AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings(exposureTargetBias: 0), AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings(exposureTargetBias: 1),</span><br><span class="line">]</span><br><span class="line">photoSettings &#x3D; AVCapturePhotoBracketSettings.init(rawPixelFormatType: 0, processedFormat: nil, bracketedSettings: bracketedStillImageSettings)</span><br><span class="line"></span><br><span class="line">self.photoOutput.capturePhoto(with: photoSettings, delegate: photoCaptureProcessor)</span><br></pre></td></tr></table></figure>
 
-<p>然后你就可以尝试用 OpenCV 实现一些简单的图片处理，我第一个想实现的就是利用 Vision 检测出当前图片的嘴唇的所有点位，并修改唇色，这个功能很多美妆 app 都可以实现，思考起来好像也不是很难，如果不用 OpenCV ，直接使用原生的 api 来做的，大概是这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">func detectFaceLandmarks(in image: UIImage) -&gt; VNFaceLandmarks2D? &#123;</span><br><span class="line">    let faceLandmarksRequest &#x3D; VNDetectFaceLandmarksRequest()</span><br><span class="line">    guard let cgImage &#x3D; image.cgImage else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    let handler &#x3D; VNImageRequestHandler(cgImage: cgImage, orientation: .up, options: [:])</span><br><span class="line"></span><br><span class="line">    guard (try? handler.perform([faceLandmarksRequest])) !&#x3D; nil else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    guard let observation &#x3D; faceLandmarksRequest.results?.first as? VNFaceObservation,</span><br><span class="line">            let landmarks &#x3D; observation.landmarks</span><br><span class="line">    else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    return landmarks</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func drawLandmarks(image: UIImage, landmarks: VNFaceLandmarks2D) -&gt; UIImage? &#123;</span><br><span class="line">    guard let cgImage &#x3D; image.cgImage else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    let outerLips &#x3D; landmarks.outerLips?.pointsInImage(imageSize: image.size)</span><br><span class="line"></span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(image.size, true, image.scale)</span><br><span class="line"></span><br><span class="line">    guard let context &#x3D; UIGraphicsGetCurrentContext() else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    context.translateBy(x: 0, y: image.size.height)</span><br><span class="line">    context.scaleBy(x: 1.0, y: -1.0)</span><br><span class="line"></span><br><span class="line">    context.draw(cgImage, in: CGRect(origin: CGPoint.zero, size: image.size))</span><br><span class="line"></span><br><span class="line">    context.setFillColor(UIColor.blue.cgColor)</span><br><span class="line"></span><br><span class="line">    if let outerLips &#x3D; outerLips &#123;</span><br><span class="line">        let outerLipsPath &#x3D; UIBezierPath(cgPath: createPath(from: outerLips))</span><br><span class="line">        context.addPath(outerLipsPath.cgPath)</span><br><span class="line">        context.fillPath()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let colorizedImage &#x3D; UIGraphicsGetImageFromCurrentImageContext()</span><br><span class="line">    UIGraphicsEndImageContext()</span><br><span class="line"></span><br><span class="line">    return colorizedImage</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func createPath(from points: [CGPoint]) -&gt; CGPath &#123;</span><br><span class="line">    let path &#x3D; CGMutablePath()</span><br><span class="line">    guard let firstPoint &#x3D; points.first else &#123; return path &#125;</span><br><span class="line">    path.move(to: firstPoint)</span><br><span class="line">    for point in points.dropFirst() &#123;</span><br><span class="line">        path.addLine(to: point)</span><br><span class="line">    &#125;</span><br><span class="line">    path.closeSubpath()</span><br><span class="line"></span><br><span class="line">    return path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func changeLipColorToBlue(in image: UIImage) -&gt; UIImage? &#123;</span><br><span class="line">    guard let landmarks &#x3D; detectFaceLandmarks(in: image) else &#123; return image &#125;</span><br><span class="line">    return drawLandmarks(image: image, landmarks: landmarks)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>参考这个过程，如果使用 OpenCV 的话，其实思路是类似的，特别注意的话就是，坐标系的转换，因为 UIKit 和 OpenCV 的原点坐标不同，所以在传入 OpenCV api 里前，需要提前转换一下坐标，查找到合适的 api 后，大概的实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)changeLipColorInImage:(UIImage *)image lipPoints:(NSArray&lt;NSValue *&gt; *)points &#123;</span><br><span class="line">    </span><br><span class="line">    Mat matImage &#x3D; [OpenCVWrapper _matFrom:image];</span><br><span class="line">    </span><br><span class="line">    std::vector&lt;cv::Point2f&gt; cvPoints;</span><br><span class="line">    for (NSValue *pointValue in points) &#123;</span><br><span class="line">        CGPoint cgPoint &#x3D; [pointValue CGPointValue];</span><br><span class="line">        cv::Point2f cvPoint &#x3D; cv::Point2f(cgPoint.x, image.size.height - cgPoint.y); &#x2F;&#x2F; 垂直翻转</span><br><span class="line">        cvPoints.push_back(cvPoint);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 将点的vector转换为点的数组</span><br><span class="line">    std::vector&lt;cv::Point&gt; pts;</span><br><span class="line">    for (const auto&amp; pt2f : cvPoints)</span><br><span class="line">        pts.push_back(cv::Point(pt2f.x, pt2f.y));</span><br><span class="line">    &#x2F;&#x2F; 绘制不规则图形</span><br><span class="line">    cv::polylines(matImage, pts, true, cv::Scalar(255, 0, 0));</span><br><span class="line">    &#x2F;&#x2F; 填充图形</span><br><span class="line">    cv::fillPoly(matImage, std::vector&lt;std::vector&lt;cv::Point&gt;&gt;&#123;pts&#125;, cv::Scalar(255, 0, 0));</span><br><span class="line">    </span><br><span class="line">    UIImage *result &#x3D; [OpenCVWrapper _imageFrom:matImage];</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>最终实现的效果还可以，成就感拉满QAQ～</p>
-<p>不过想要深入，还是继续学习，不光是 OpenCV 的 api，C++ 的语法什么的，也都要继续学习，任重而道远</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d5/da3/tutorial_ios_install.html">iOS OpenCV</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/vision/">Vision</a></p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/salt-pepper/opencv-swift-wrapper-6947ba236809">OpenCV Swift Wrapper</a></p>
+<p>调用完拍照后，<code>AVCapturePhotoCaptureDelegate的photoOutput(_:didFinishProcessingPhoto:error:)</code> 会回调三次，从左到右曝光度分别为-1，0，1。</p>
+<p>然后利用某种 HDR 算法，将三张图融合即可。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/avfoundation/">AVFoundation</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.objc.io/issues/21-camera-and-photos/">Camera and Photos</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="https://nijiehaha.github.io">路小飞</a>
-            <p>原文链接：<a href="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/">https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/</a>
-            <p>发表日期：<a href="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/">March 1st 2024, 2:50:29 pm</a>
-            <p>更新日期：<a href="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/">March 5th 2024, 11:25:43 am</a>
+            <p>原文链接：<a href="https://nijiehaha.github.io/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/">https://nijiehaha.github.io/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/</a>
+            <p>发表日期：<a href="https://nijiehaha.github.io/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/">August 30th 2024, 1:44:32 pm</a>
+            <p>更新日期：<a href="https://nijiehaha.github.io/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/">August 30th 2024, 3:05:12 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -447,17 +476,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/" title= "iOS 关于相机的所有">
-                    <div class="nextTitle">iOS 关于相机的所有</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2023/01/20/2022%E5%B9%B4%E7%BB%88%E5%B0%8F%E6%80%BB%E7%BB%93/" title= "2022年终小总结">
-                    <div class="prevTitle">2022年终小总结</div>
+                <a href= "/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/" title= "iOS OpenCV 初体验">
+                    <div class="prevTitle">iOS OpenCV 初体验</div>
                 </a>
             
         </li>
@@ -573,7 +597,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">3.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">相机的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%97%A8%E9%80%9F%E5%BA%A6%EF%BC%8C%E6%84%9F%E5%85%89%E5%BA%A6-ISO-%EF%BC%8C%E5%85%89%E5%9C%88"><span class="toc-number">1.1.</span> <span class="toc-text">快门速度，感光度 (ISO)，光圈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%89%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">进光量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%9D%E5%85%89%E6%A1%A3%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">曝光档数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%89%E5%9C%88"><span class="toc-number">1.4.</span> <span class="toc-text">光圈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E8%B5%B7%E6%9D%A5%E8%AF%B4"><span class="toc-number">1.5.</span> <span class="toc-text">结合起来说</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS-%E4%B8%8A%E7%9A%84%E7%9B%B8%E6%9C%BA%E6%8D%95%E6%8D%89"><span class="toc-number">2.</span> <span class="toc-text">iOS 上的相机捕捉</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-AVFoundation-%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.1.</span> <span class="toc-text">使用 AVFoundation 的注意事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E6%8D%95%E8%8E%B7"><span class="toc-number">3.</span> <span class="toc-text">分级捕获</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

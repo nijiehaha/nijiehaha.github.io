@@ -20,22 +20,17 @@
     <meta name="keywords" content="路小飞">
     
     <meta name="description" content="">
-    <meta name="description" content="前言出于兴趣，开始学习 OpenCV （其实是领导安排QAQ，需要实现一个小需求），正好好久没更新博客，那就边写边学吧～ 过程安装的部分就跳过了，手动导入，或者 pod 导入，都可以，有一点要说的是目前来说，因为 OpenCV 的语言是 C++，所以不可避免的你需要一个支持和 C++ 混编的环境，如果你的项目的主要语言是 Swift，那么比较好的选择就是使用 OC 作为媒介来与 C++ 交互。 具">
-<meta property="og:type" content="article">
-<meta property="og:title" content="iOS OpenCV 初体验">
-<meta property="og:url" content="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="lufei&#39;s Blog">
+<meta property="og:url" content="https://nijiehaha.github.io/archives/2024/08/index.html">
 <meta property="og:site_name" content="lufei&#39;s Blog">
-<meta property="og:description" content="前言出于兴趣，开始学习 OpenCV （其实是领导安排QAQ，需要实现一个小需求），正好好久没更新博客，那就边写边学吧～ 过程安装的部分就跳过了，手动导入，或者 pod 导入，都可以，有一点要说的是目前来说，因为 OpenCV 的语言是 C++，所以不可避免的你需要一个支持和 C++ 混编的环境，如果你的项目的主要语言是 Swift，那么比较好的选择就是使用 OC 作为媒介来与 C++ 交互。 具">
 <meta property="og:locale">
-<meta property="article:published_time" content="2024-03-01T06:50:29.000Z">
-<meta property="article:modified_time" content="2024-03-05T03:25:43.570Z">
 <meta property="article:author" content="路小飞">
-<meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>iOS OpenCV 初体验 · lufei&#39;s Studio</title>
+    <title>lufei&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -216,23 +211,12 @@
 <meta name="generator" content="Hexo 5.4.0"></head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >lufei&#39;s Studio.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">iOS OpenCV 初体验</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>lufei's Studio.</a>
 </header>
@@ -244,74 +228,24 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            iOS OpenCV 初体验
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2024/03/01</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -412,74 +346,42 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于兴趣，开始学习 OpenCV （其实是领导安排QAQ，需要实现一个小需求），正好好久没更新博客，那就边写边学吧～</p>
-<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>安装的部分就跳过了，手动导入，或者 pod 导入，都可以，有一点要说的是目前来说，因为 OpenCV 的语言是 C++，所以不可避免的你需要一个支持和 C++ 混编的环境，如果你的项目的主要语言是 Swift，那么比较好的选择就是使用 OC 作为媒介来与 C++ 交互。</p>
-<p>具体地，你需要创建一个 .mm 文件，在这个文件里面编写 OpenCV 相关代码，然后通过桥接文件暴露给 Swift 使用，大概是这样的过程。</p>
-<p>当然 OC 里的 UIImage 和 OpenCV 的 Mat 你也是需要提供一个互相转换的方法的，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (Mat)_matFrom:(UIImage *)source &#123;    </span><br><span class="line">    CGImageRef image &#x3D; CGImageCreateCopy(source.CGImage);</span><br><span class="line">    CGFloat cols &#x3D; CGImageGetWidth(image);</span><br><span class="line">    CGFloat rows &#x3D; CGImageGetHeight(image);</span><br><span class="line">    Mat result(rows, cols, CV_8UC4);</span><br><span class="line">    </span><br><span class="line">    CGBitmapInfo bitmapFlags &#x3D; kCGImageAlphaNoneSkipLast | kCGBitmapByteOrderDefault;</span><br><span class="line">    size_t bitsPerComponent &#x3D; 8;</span><br><span class="line">    size_t bytesPerRow &#x3D; result.step[0];</span><br><span class="line">    CGColorSpaceRef colorSpace &#x3D; CGImageGetColorSpace(image);</span><br><span class="line">    </span><br><span class="line">    CGContextRef context &#x3D; CGBitmapContextCreate(result.data, cols, rows, bitsPerComponent, bytesPerRow, colorSpace, bitmapFlags);</span><br><span class="line">    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, cols, rows), image);</span><br><span class="line">    CGContextRelease(context);</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (UIImage *)_imageFrom:(Mat)source &#123;    </span><br><span class="line">    NSData *data &#x3D; [NSData dataWithBytes:source.data length:source.elemSize() * source.total()];</span><br><span class="line">    CGDataProviderRef provider &#x3D; CGDataProviderCreateWithCFData((__bridge CFDataRef)data);</span><br><span class="line"></span><br><span class="line">    CGBitmapInfo bitmapFlags &#x3D; kCGImageAlphaNone | kCGBitmapByteOrderDefault;</span><br><span class="line">    size_t bitsPerComponent &#x3D; 8;</span><br><span class="line">    size_t bytesPerRow &#x3D; source.step[0];</span><br><span class="line">    CGColorSpaceRef colorSpace &#x3D; (source.elemSize() &#x3D;&#x3D; 1 ? CGColorSpaceCreateDeviceGray() : CGColorSpaceCreateDeviceRGB());</span><br><span class="line">    </span><br><span class="line">    CGImageRef image &#x3D; CGImageCreate(source.cols, source.rows, bitsPerComponent, bitsPerComponent * source.elemSize(), bytesPerRow, colorSpace, bitmapFlags, provider, NULL, false, kCGRenderingIntentDefault);</span><br><span class="line">    UIImage *result &#x3D; [UIImage imageWithCGImage:image];</span><br><span class="line">    </span><br><span class="line">    CGImageRelease(image);</span><br><span class="line">    CGDataProviderRelease(provider);</span><br><span class="line">    CGColorSpaceRelease(colorSpace);</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后你就可以尝试用 OpenCV 实现一些简单的图片处理，我第一个想实现的就是利用 Vision 检测出当前图片的嘴唇的所有点位，并修改唇色，这个功能很多美妆 app 都可以实现，思考起来好像也不是很难，如果不用 OpenCV ，直接使用原生的 api 来做的，大概是这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">func detectFaceLandmarks(in image: UIImage) -&gt; VNFaceLandmarks2D? &#123;</span><br><span class="line">    let faceLandmarksRequest &#x3D; VNDetectFaceLandmarksRequest()</span><br><span class="line">    guard let cgImage &#x3D; image.cgImage else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    let handler &#x3D; VNImageRequestHandler(cgImage: cgImage, orientation: .up, options: [:])</span><br><span class="line"></span><br><span class="line">    guard (try? handler.perform([faceLandmarksRequest])) !&#x3D; nil else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    guard let observation &#x3D; faceLandmarksRequest.results?.first as? VNFaceObservation,</span><br><span class="line">            let landmarks &#x3D; observation.landmarks</span><br><span class="line">    else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    return landmarks</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func drawLandmarks(image: UIImage, landmarks: VNFaceLandmarks2D) -&gt; UIImage? &#123;</span><br><span class="line">    guard let cgImage &#x3D; image.cgImage else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    let outerLips &#x3D; landmarks.outerLips?.pointsInImage(imageSize: image.size)</span><br><span class="line"></span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(image.size, true, image.scale)</span><br><span class="line"></span><br><span class="line">    guard let context &#x3D; UIGraphicsGetCurrentContext() else &#123; return nil &#125;</span><br><span class="line"></span><br><span class="line">    context.translateBy(x: 0, y: image.size.height)</span><br><span class="line">    context.scaleBy(x: 1.0, y: -1.0)</span><br><span class="line"></span><br><span class="line">    context.draw(cgImage, in: CGRect(origin: CGPoint.zero, size: image.size))</span><br><span class="line"></span><br><span class="line">    context.setFillColor(UIColor.blue.cgColor)</span><br><span class="line"></span><br><span class="line">    if let outerLips &#x3D; outerLips &#123;</span><br><span class="line">        let outerLipsPath &#x3D; UIBezierPath(cgPath: createPath(from: outerLips))</span><br><span class="line">        context.addPath(outerLipsPath.cgPath)</span><br><span class="line">        context.fillPath()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let colorizedImage &#x3D; UIGraphicsGetImageFromCurrentImageContext()</span><br><span class="line">    UIGraphicsEndImageContext()</span><br><span class="line"></span><br><span class="line">    return colorizedImage</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func createPath(from points: [CGPoint]) -&gt; CGPath &#123;</span><br><span class="line">    let path &#x3D; CGMutablePath()</span><br><span class="line">    guard let firstPoint &#x3D; points.first else &#123; return path &#125;</span><br><span class="line">    path.move(to: firstPoint)</span><br><span class="line">    for point in points.dropFirst() &#123;</span><br><span class="line">        path.addLine(to: point)</span><br><span class="line">    &#125;</span><br><span class="line">    path.closeSubpath()</span><br><span class="line"></span><br><span class="line">    return path</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func changeLipColorToBlue(in image: UIImage) -&gt; UIImage? &#123;</span><br><span class="line">    guard let landmarks &#x3D; detectFaceLandmarks(in: image) else &#123; return image &#125;</span><br><span class="line">    return drawLandmarks(image: image, landmarks: landmarks)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>参考这个过程，如果使用 OpenCV 的话，其实思路是类似的，特别注意的话就是，坐标系的转换，因为 UIKit 和 OpenCV 的原点坐标不同，所以在传入 OpenCV api 里前，需要提前转换一下坐标，查找到合适的 api 后，大概的实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)changeLipColorInImage:(UIImage *)image lipPoints:(NSArray&lt;NSValue *&gt; *)points &#123;</span><br><span class="line">    </span><br><span class="line">    Mat matImage &#x3D; [OpenCVWrapper _matFrom:image];</span><br><span class="line">    </span><br><span class="line">    std::vector&lt;cv::Point2f&gt; cvPoints;</span><br><span class="line">    for (NSValue *pointValue in points) &#123;</span><br><span class="line">        CGPoint cgPoint &#x3D; [pointValue CGPointValue];</span><br><span class="line">        cv::Point2f cvPoint &#x3D; cv::Point2f(cgPoint.x, image.size.height - cgPoint.y); &#x2F;&#x2F; 垂直翻转</span><br><span class="line">        cvPoints.push_back(cvPoint);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 将点的vector转换为点的数组</span><br><span class="line">    std::vector&lt;cv::Point&gt; pts;</span><br><span class="line">    for (const auto&amp; pt2f : cvPoints)</span><br><span class="line">        pts.push_back(cv::Point(pt2f.x, pt2f.y));</span><br><span class="line">    &#x2F;&#x2F; 绘制不规则图形</span><br><span class="line">    cv::polylines(matImage, pts, true, cv::Scalar(255, 0, 0));</span><br><span class="line">    &#x2F;&#x2F; 填充图形</span><br><span class="line">    cv::fillPoly(matImage, std::vector&lt;std::vector&lt;cv::Point&gt;&gt;&#123;pts&#125;, cv::Scalar(255, 0, 0));</span><br><span class="line">    </span><br><span class="line">    UIImage *result &#x3D; [OpenCVWrapper _imageFrom:matImage];</span><br><span class="line">    </span><br><span class="line">    return result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>最终实现的效果还可以，成就感拉满QAQ～</p>
-<p>不过想要深入，还是继续学习，不光是 OpenCV 的 api，C++ 的语法什么的，也都要继续学习，任重而道远</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d5/da3/tutorial_ios_install.html">iOS OpenCV</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/vision/">Vision</a></p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/salt-pepper/opencv-swift-wrapper-6947ba236809">OpenCV Swift Wrapper</a></p>
-
-    </article>
-    <!-- license  -->
+            <main class="main index-page">
     
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://nijiehaha.github.io">路小飞</a>
-            <p>原文链接：<a href="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/">https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/</a>
-            <p>发表日期：<a href="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/">March 1st 2024, 2:50:29 pm</a>
-            <p>更新日期：<a href="https://nijiehaha.github.io/2024/03/01/iOS-OpenCV-%E5%88%9D%E4%BD%93%E9%AA%8C/">March 5th 2024, 11:25:43 am</a>
-            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/" >
+            
+                <span>iOS 关于相机的所有</span>
+        </a>
+        <div class="abstract-content">
+            相机的工作原理轻轻一按，你的相机就把光子转换为了比特，于是一张相片就保存到了你的 iPhone 里，像这样的神奇能力是如何实现的呢？
+让我们假设一下你身处室外，环顾四周。三亿里之外，太阳无时无刻不在发射光子。它们需要花上 8 分钟之久才能到达我们舒适的星球。有一些光子撞击到你周围的物体，并反射到你眼睛的视网膜上，这会使你的大脑以这些物体为基准，创建一副图像，我们将其称之为视觉。
+摄影要做的就是捕获这幅图像。摄影是在 200 年前被发明的，但在此之前的好几千年里，人类已经通过绘画的方式来捕捉他们所看到的东西了。
+我们中的很多人其实每天都相机不离身：当今智能手机已经是最常用的相机之一了。在数...
         </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2024/08/30</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "iOS">iOS</a>
+    
+</div>
+            
+        </div>
+    </article>
     
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2024/08/30/iOS-%E5%85%B3%E4%BA%8E%E7%9B%B8%E6%9C%BA%E7%9A%84%E6%89%80%E6%9C%89/" title= "iOS 关于相机的所有">
-                    <div class="nextTitle">iOS 关于相机的所有</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2023/01/20/2022%E5%B9%B4%E7%BB%88%E5%B0%8F%E6%80%BB%E7%BB%93/" title= "2022年终小总结">
-                    <div class="prevTitle">2022年终小总结</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
-    
-    <!-- gitalk评论 -->
-
-    <!-- utteranc评论 -->
-
-    <!-- partial('_partial/comment/changyan') -->
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -557,24 +459,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">3.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -2140,8 +2024,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
